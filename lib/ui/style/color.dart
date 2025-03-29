@@ -23,6 +23,12 @@ abstract interface class AppColor {
   /// グリーン。
   static const green = Color(0xFF22C55E);
 
+  /// イエロー。
+  static const yellow = Color(0xFFFFD700);
+
+  /// ブルー。
+  static const blue = Color(0xFF3B82F6);
+
   /// レッド。
   static const red = Color(0xFFEF4444);
 
