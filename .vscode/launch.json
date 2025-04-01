@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug",
+      "program": "lib/main.dart",
+      "request": "launch",
+      "type": "dart",
+      "deviceId": "${input:device}",
+      "args": ["--debug"]
+    }
+  ],
+  "inputs": [
+    {
+      "id": "device",
+      "type": "pickString",
+      "description": "Select your Device",
+      "options": [
+        // Chrome
+        "chrome"
+      ],
+      "default": "chrome"
+    }
+  ]
+}

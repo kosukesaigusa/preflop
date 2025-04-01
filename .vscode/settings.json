@@ -1,0 +1,45 @@
+{
+  "dart.flutterSdkPath": ".fvm/versions/3.29.2",
+  "search.exclude": {
+    "**/.pub-cache/**": true,
+    "**/.fvm": true,
+    "**/*.freezed.dart": true,
+    "**/*.g.dart": true,
+    "**/*.gr.dart": true,
+    "**/.dart_tool": true,
+    "**/*.mocks.dart": true,
+    "**/*.gen.dart": true,
+    "**/flutter_module/**": true
+  },
+  "files.watcherExclude": {
+    "**/.pub-cache/**": true,
+    "**/.fvm": true,
+    "**/*.freezed.dart": true,
+    "**/*.g.dart": true,
+    "**/*.gr.dart": true,
+    "**/.dart_tool": true,
+    "**/*.mocks.dart": true,
+    "**/*.gen.dart": true,
+    "**/flutter_module/**": true
+  },
+  "dart.runPubGetOnPubspecChanges": "never",
+  "files.insertFinalNewline": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.rulers": [80],
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "explicit",
+    "source.organizeImports": "explicit",
+    "quickfix.insertSemicolon": "explicit"
+  },
+  "cSpell.words": [],
+  "cSpell.ignorePaths": [
+    "**/.vscode/**",
+    "**/fvm/**",
+    "**/.pub-cache/**",
+    "analysis_options.yaml",
+    "**/pubspec.yaml/**",
+    "**/pubspec.lock/**"
+  ],
+  "dart.showTodos": false
+}
