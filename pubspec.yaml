@@ -43,4 +43,11 @@ flutter_gen:
 flutter:
   uses-material-design: true
   assets:
-  - assets/svg/
+    - assets/svg/
+  fonts:
+    - family: NotoSansJP
+      fonts:
+        - asset: lib/fonts/NotoSansJP-Light.ttf
+          weight: 300
+        - asset: lib/fonts/NotoSansJP-SemiBold.ttf
+          weight: 600

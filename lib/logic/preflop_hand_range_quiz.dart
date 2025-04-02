@@ -9,13 +9,15 @@ part 'preflop_hand_range_quiz.g.dart';
 
 /// プリフロップのハンドレンジクイズを管理する。
 @riverpod
-class PreflopHandRangeQuizzzesNotifier
-    extends _$PreflopHandRangeQuizzzesNotifier {
+class PreflopHandRangeQuizzzesNotifier extends _$PreflopHandRangeQuizzzesNotifier {
   @override
   List<PreflopHandRangeQuiz> build() {
     // プリフロップハンドレンジ表を監視して、変更されたらハンドレンジクイズをリビルドする。
     ref.watch(preflopHandRangeMatricesNotifierProvider);
-    return [];
+
+    // 最初の未回答のクイズを生成する。
+    final hand = Hand.random();
+    return [PreflopHandRangeQuiz.unanswered(hand: hand)];
   }
 
   /// プリフロップのハンドレンジクイズを生成する。
