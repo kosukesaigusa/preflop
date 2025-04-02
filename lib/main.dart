@@ -61,74 +61,79 @@ class MainApp extends ConsumerWidget {
                     ),
                   )
                   : switch (quizzes.last) {
-                    UnansweredPreflopHandRangeQuiz(:final hand) => Column(
-                      spacing: 32,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          children: [
-                            if (availableRanges.isNotEmpty)
-                              Container(
-                                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  border: Border.all(color: Colors.grey.shade200),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black.withValues(alpha: 0.05),
-                                      blurRadius: 8,
-                                      offset: const Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: DropdownButton<PreflopHandRangeMatrix>(
-                                  value: selectedRange,
-                                  items: [
-                                    for (final matrix in availableRanges)
-                                      DropdownMenuItem<PreflopHandRangeMatrix>(
-                                        value: matrix,
-                                        child: Text(
-                                          matrix.name,
-                                          style: const TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w600,
+                    UnansweredPreflopHandRangeQuiz(:final hand) => SingleChildScrollView(
+                      child: Column(
+                        spacing: 32,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            children: [
+                              if (availableRanges.isNotEmpty)
+                                Container(
+                                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    border: Border.all(color: Colors.grey.shade200),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black.withValues(alpha: 0.05),
+                                        blurRadius: 8,
+                                        offset: const Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: DropdownButton<PreflopHandRangeMatrix>(
+                                    value: selectedRange,
+                                    items: [
+                                      for (final matrix in availableRanges)
+                                        DropdownMenuItem<PreflopHandRangeMatrix>(
+                                          value: matrix,
+                                          child: Text(
+                                            matrix.name,
+                                            style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                  ],
-                                  onChanged: (newValue) {
-                                    if (newValue == null) {
-                                      return;
-                                    }
-                                    ref
-                                        .read(preflopHandRangeMatricesNotifierProvider.notifier)
-                                        .update(newValue);
-                                  },
-                                  underline: Container(),
-                                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                                    ],
+                                    onChanged: (newValue) {
+                                      if (newValue == null) {
+                                        return;
+                                      }
+                                      ref
+                                          .read(preflopHandRangeMatricesNotifierProvider.notifier)
+                                          .update(newValue);
+                                    },
+                                    underline: Container(),
+                                    style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                          ],
-                        ),
-                        const Text(
-                          'このハンドのランクは？',
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                        ),
-                        _Hand(hand),
-                        Wrap(
-                          spacing: 16,
-                          runSpacing: 16,
-                          alignment: WrapAlignment.center,
-                          children: [
-                            for (final rank in selectedRange.preflopRanks)
-                              _RankDisplay.answerButton(
-                                rank: rank,
-                                onPressed: () => notifier.answer(rank),
-                              ),
-                          ],
-                        ),
-                      ],
+                            ],
+                          ),
+                          const Text(
+                            'このハンドのランクは？',
+                            style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          ),
+                          _Hand(hand),
+                          Wrap(
+                            spacing: 16,
+                            runSpacing: 16,
+                            alignment: WrapAlignment.center,
+                            children: [
+                              for (final rank in selectedRange.preflopRanks)
+                                _RankDisplay.answerButton(
+                                  rank: rank,
+                                  onPressed: () => notifier.answer(rank),
+                                ),
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
                     AnsweredPreflopHandRangeQuiz(
                       :final hand,
