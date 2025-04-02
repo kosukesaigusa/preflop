@@ -7,7 +7,10 @@
       "request": "launch",
       "type": "dart",
       "deviceId": "${input:device}",
-      "args": ["--debug"]
+      "args": [
+        "--debug"
+        // "--web-experimental-hot-reload"
+      ]
     }
   ],
   "inputs": [

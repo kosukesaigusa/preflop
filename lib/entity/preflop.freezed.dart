@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PreflopHandRangeMatrix {
-  int get maxRank => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  List<PreflopRank> get preflopRanks => throw _privateConstructorUsedError;
   Map<PreflopHand, PreflopRank> get rangeData =>
       throw _privateConstructorUsedError;
 
@@ -35,7 +36,11 @@ abstract class $PreflopHandRangeMatrixCopyWith<$Res> {
     $Res Function(PreflopHandRangeMatrix) then,
   ) = _$PreflopHandRangeMatrixCopyWithImpl<$Res, PreflopHandRangeMatrix>;
   @useResult
-  $Res call({int maxRank, Map<PreflopHand, PreflopRank> rangeData});
+  $Res call({
+    String name,
+    List<PreflopRank> preflopRanks,
+    Map<PreflopHand, PreflopRank> rangeData,
+  });
 }
 
 /// @nodoc
@@ -55,14 +60,23 @@ class _$PreflopHandRangeMatrixCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? maxRank = null, Object? rangeData = null}) {
+  $Res call({
+    Object? name = null,
+    Object? preflopRanks = null,
+    Object? rangeData = null,
+  }) {
     return _then(
       _value.copyWith(
-            maxRank:
-                null == maxRank
-                    ? _value.maxRank
-                    : maxRank // ignore: cast_nullable_to_non_nullable
-                        as int,
+            name:
+                null == name
+                    ? _value.name
+                    : name // ignore: cast_nullable_to_non_nullable
+                        as String,
+            preflopRanks:
+                null == preflopRanks
+                    ? _value.preflopRanks
+                    : preflopRanks // ignore: cast_nullable_to_non_nullable
+                        as List<PreflopRank>,
             rangeData:
                 null == rangeData
                     ? _value.rangeData
@@ -83,7 +97,11 @@ abstract class _$$PreflopHandRangeImplCopyWith<$Res>
   ) = __$$PreflopHandRangeImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int maxRank, Map<PreflopHand, PreflopRank> rangeData});
+  $Res call({
+    String name,
+    List<PreflopRank> preflopRanks,
+    Map<PreflopHand, PreflopRank> rangeData,
+  });
 }
 
 /// @nodoc
@@ -99,14 +117,23 @@ class __$$PreflopHandRangeImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? maxRank = null, Object? rangeData = null}) {
+  $Res call({
+    Object? name = null,
+    Object? preflopRanks = null,
+    Object? rangeData = null,
+  }) {
     return _then(
       _$PreflopHandRangeImpl(
-        maxRank:
-            null == maxRank
-                ? _value.maxRank
-                : maxRank // ignore: cast_nullable_to_non_nullable
-                    as int,
+        name:
+            null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                    as String,
+        preflopRanks:
+            null == preflopRanks
+                ? _value._preflopRanks
+                : preflopRanks // ignore: cast_nullable_to_non_nullable
+                    as List<PreflopRank>,
         rangeData:
             null == rangeData
                 ? _value._rangeData
@@ -121,13 +148,23 @@ class __$$PreflopHandRangeImplCopyWithImpl<$Res>
 
 class _$PreflopHandRangeImpl extends _PreflopHandRange {
   const _$PreflopHandRangeImpl({
-    required this.maxRank,
+    required this.name,
+    required final List<PreflopRank> preflopRanks,
     required final Map<PreflopHand, PreflopRank> rangeData,
-  }) : _rangeData = rangeData,
+  }) : _preflopRanks = preflopRanks,
+       _rangeData = rangeData,
        super._();
 
   @override
-  final int maxRank;
+  final String name;
+  final List<PreflopRank> _preflopRanks;
+  @override
+  List<PreflopRank> get preflopRanks {
+    if (_preflopRanks is EqualUnmodifiableListView) return _preflopRanks;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_preflopRanks);
+  }
+
   final Map<PreflopHand, PreflopRank> _rangeData;
   @override
   Map<PreflopHand, PreflopRank> get rangeData {
@@ -138,7 +175,7 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
 
   @override
   String toString() {
-    return 'PreflopHandRangeMatrix(maxRank: $maxRank, rangeData: $rangeData)';
+    return 'PreflopHandRangeMatrix(name: $name, preflopRanks: $preflopRanks, rangeData: $rangeData)';
   }
 
   @override
@@ -146,7 +183,11 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PreflopHandRangeImpl &&
-            (identical(other.maxRank, maxRank) || other.maxRank == maxRank) &&
+            (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(
+              other._preflopRanks,
+              _preflopRanks,
+            ) &&
             const DeepCollectionEquality().equals(
               other._rangeData,
               _rangeData,
@@ -156,7 +197,8 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    maxRank,
+    name,
+    const DeepCollectionEquality().hash(_preflopRanks),
     const DeepCollectionEquality().hash(_rangeData),
   );
 
@@ -174,13 +216,16 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
 
 abstract class _PreflopHandRange extends PreflopHandRangeMatrix {
   const factory _PreflopHandRange({
-    required final int maxRank,
+    required final String name,
+    required final List<PreflopRank> preflopRanks,
     required final Map<PreflopHand, PreflopRank> rangeData,
   }) = _$PreflopHandRangeImpl;
   const _PreflopHandRange._() : super._();
 
   @override
-  int get maxRank;
+  String get name;
+  @override
+  List<PreflopRank> get preflopRanks;
   @override
   Map<PreflopHand, PreflopRank> get rangeData;
 
@@ -194,20 +239,23 @@ abstract class _PreflopHandRange extends PreflopHandRangeMatrix {
 
 /// @nodoc
 mixin _$PreflopRank {
+  String get description => throw _privateConstructorUsedError;
+  String get colorCode => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int rank) ranked,
-    required TResult Function() fold,
+    required TResult Function(int rank, String description, String colorCode)
+    ranked,
+    required TResult Function(String description, String colorCode) fold,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int rank)? ranked,
-    TResult? Function()? fold,
+    TResult? Function(int rank, String description, String colorCode)? ranked,
+    TResult? Function(String description, String colorCode)? fold,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int rank)? ranked,
-    TResult Function()? fold,
+    TResult Function(int rank, String description, String colorCode)? ranked,
+    TResult Function(String description, String colorCode)? fold,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -226,6 +274,12 @@ mixin _$PreflopRank {
     TResult Function(FoldPreflopRank value)? fold,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
+
+  /// Create a copy of PreflopRank
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $PreflopRankCopyWith<PreflopRank> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -234,6 +288,8 @@ abstract class $PreflopRankCopyWith<$Res> {
     PreflopRank value,
     $Res Function(PreflopRank) then,
   ) = _$PreflopRankCopyWithImpl<$Res, PreflopRank>;
+  @useResult
+  $Res call({String description, String colorCode});
 }
 
 /// @nodoc
@@ -248,16 +304,37 @@ class _$PreflopRankCopyWithImpl<$Res, $Val extends PreflopRank>
 
   /// Create a copy of PreflopRank
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? description = null, Object? colorCode = null}) {
+    return _then(
+      _value.copyWith(
+            description:
+                null == description
+                    ? _value.description
+                    : description // ignore: cast_nullable_to_non_nullable
+                        as String,
+            colorCode:
+                null == colorCode
+                    ? _value.colorCode
+                    : colorCode // ignore: cast_nullable_to_non_nullable
+                        as String,
+          )
+          as $Val,
+    );
+  }
 }
 
 /// @nodoc
-abstract class _$$RankedPreflopRankImplCopyWith<$Res> {
+abstract class _$$RankedPreflopRankImplCopyWith<$Res>
+    implements $PreflopRankCopyWith<$Res> {
   factory _$$RankedPreflopRankImplCopyWith(
     _$RankedPreflopRankImpl value,
     $Res Function(_$RankedPreflopRankImpl) then,
   ) = __$$RankedPreflopRankImplCopyWithImpl<$Res>;
+  @override
   @useResult
-  $Res call({int rank});
+  $Res call({int rank, String description, String colorCode});
 }
 
 /// @nodoc
@@ -273,13 +350,28 @@ class __$$RankedPreflopRankImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? rank = null}) {
+  $Res call({
+    Object? rank = null,
+    Object? description = null,
+    Object? colorCode = null,
+  }) {
     return _then(
       _$RankedPreflopRankImpl(
-        null == rank
-            ? _value.rank
-            : rank // ignore: cast_nullable_to_non_nullable
-                as int,
+        rank:
+            null == rank
+                ? _value.rank
+                : rank // ignore: cast_nullable_to_non_nullable
+                    as int,
+        description:
+            null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                    as String,
+        colorCode:
+            null == colorCode
+                ? _value.colorCode
+                : colorCode // ignore: cast_nullable_to_non_nullable
+                    as String,
       ),
     );
   }
@@ -287,15 +379,23 @@ class __$$RankedPreflopRankImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$RankedPreflopRankImpl implements RankedPreflopRank {
-  const _$RankedPreflopRankImpl(this.rank);
+class _$RankedPreflopRankImpl extends RankedPreflopRank {
+  const _$RankedPreflopRankImpl({
+    required this.rank,
+    required this.description,
+    required this.colorCode,
+  }) : super._();
 
   @override
   final int rank;
+  @override
+  final String description;
+  @override
+  final String colorCode;
 
   @override
   String toString() {
-    return 'PreflopRank.ranked(rank: $rank)';
+    return 'PreflopRank.ranked(rank: $rank, description: $description, colorCode: $colorCode)';
   }
 
   @override
@@ -303,11 +403,15 @@ class _$RankedPreflopRankImpl implements RankedPreflopRank {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RankedPreflopRankImpl &&
-            (identical(other.rank, rank) || other.rank == rank));
+            (identical(other.rank, rank) || other.rank == rank) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.colorCode, colorCode) ||
+                other.colorCode == colorCode));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, rank);
+  int get hashCode => Object.hash(runtimeType, rank, description, colorCode);
 
   /// Create a copy of PreflopRank
   /// with the given fields replaced by the non-null parameter values.
@@ -323,30 +427,31 @@ class _$RankedPreflopRankImpl implements RankedPreflopRank {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int rank) ranked,
-    required TResult Function() fold,
+    required TResult Function(int rank, String description, String colorCode)
+    ranked,
+    required TResult Function(String description, String colorCode) fold,
   }) {
-    return ranked(rank);
+    return ranked(rank, description, colorCode);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int rank)? ranked,
-    TResult? Function()? fold,
+    TResult? Function(int rank, String description, String colorCode)? ranked,
+    TResult? Function(String description, String colorCode)? fold,
   }) {
-    return ranked?.call(rank);
+    return ranked?.call(rank, description, colorCode);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int rank)? ranked,
-    TResult Function()? fold,
+    TResult Function(int rank, String description, String colorCode)? ranked,
+    TResult Function(String description, String colorCode)? fold,
     required TResult orElse(),
   }) {
     if (ranked != null) {
-      return ranked(rank);
+      return ranked(rank, description, colorCode);
     }
     return orElse();
   }
@@ -383,24 +488,38 @@ class _$RankedPreflopRankImpl implements RankedPreflopRank {
   }
 }
 
-abstract class RankedPreflopRank implements PreflopRank {
-  const factory RankedPreflopRank(final int rank) = _$RankedPreflopRankImpl;
+abstract class RankedPreflopRank extends PreflopRank {
+  const factory RankedPreflopRank({
+    required final int rank,
+    required final String description,
+    required final String colorCode,
+  }) = _$RankedPreflopRankImpl;
+  const RankedPreflopRank._() : super._();
 
   int get rank;
+  @override
+  String get description;
+  @override
+  String get colorCode;
 
   /// Create a copy of PreflopRank
   /// with the given fields replaced by the non-null parameter values.
+  @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$RankedPreflopRankImplCopyWith<_$RankedPreflopRankImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$FoldPreflopRankImplCopyWith<$Res> {
+abstract class _$$FoldPreflopRankImplCopyWith<$Res>
+    implements $PreflopRankCopyWith<$Res> {
   factory _$$FoldPreflopRankImplCopyWith(
     _$FoldPreflopRankImpl value,
     $Res Function(_$FoldPreflopRankImpl) then,
   ) = __$$FoldPreflopRankImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String description, String colorCode});
 }
 
 /// @nodoc
@@ -414,54 +533,97 @@ class __$$FoldPreflopRankImplCopyWithImpl<$Res>
 
   /// Create a copy of PreflopRank
   /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({Object? description = null, Object? colorCode = null}) {
+    return _then(
+      _$FoldPreflopRankImpl(
+        description:
+            null == description
+                ? _value.description
+                : description // ignore: cast_nullable_to_non_nullable
+                    as String,
+        colorCode:
+            null == colorCode
+                ? _value.colorCode
+                : colorCode // ignore: cast_nullable_to_non_nullable
+                    as String,
+      ),
+    );
+  }
 }
 
 /// @nodoc
 
-class _$FoldPreflopRankImpl implements FoldPreflopRank {
-  const _$FoldPreflopRankImpl();
+class _$FoldPreflopRankImpl extends FoldPreflopRank {
+  const _$FoldPreflopRankImpl({
+    required this.description,
+    required this.colorCode,
+  }) : super._();
+
+  @override
+  final String description;
+  @override
+  final String colorCode;
 
   @override
   String toString() {
-    return 'PreflopRank.fold()';
+    return 'PreflopRank.fold(description: $description, colorCode: $colorCode)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$FoldPreflopRankImpl);
+        (other.runtimeType == runtimeType &&
+            other is _$FoldPreflopRankImpl &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.colorCode, colorCode) ||
+                other.colorCode == colorCode));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, description, colorCode);
+
+  /// Create a copy of PreflopRank
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$FoldPreflopRankImplCopyWith<_$FoldPreflopRankImpl> get copyWith =>
+      __$$FoldPreflopRankImplCopyWithImpl<_$FoldPreflopRankImpl>(
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function(int rank) ranked,
-    required TResult Function() fold,
+    required TResult Function(int rank, String description, String colorCode)
+    ranked,
+    required TResult Function(String description, String colorCode) fold,
   }) {
-    return fold();
+    return fold(description, colorCode);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(int rank)? ranked,
-    TResult? Function()? fold,
+    TResult? Function(int rank, String description, String colorCode)? ranked,
+    TResult? Function(String description, String colorCode)? fold,
   }) {
-    return fold?.call();
+    return fold?.call(description, colorCode);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function(int rank)? ranked,
-    TResult Function()? fold,
+    TResult Function(int rank, String description, String colorCode)? ranked,
+    TResult Function(String description, String colorCode)? fold,
     required TResult orElse(),
   }) {
     if (fold != null) {
-      return fold();
+      return fold(description, colorCode);
     }
     return orElse();
   }
@@ -498,6 +660,22 @@ class _$FoldPreflopRankImpl implements FoldPreflopRank {
   }
 }
 
-abstract class FoldPreflopRank implements PreflopRank {
-  const factory FoldPreflopRank() = _$FoldPreflopRankImpl;
+abstract class FoldPreflopRank extends PreflopRank {
+  const factory FoldPreflopRank({
+    required final String description,
+    required final String colorCode,
+  }) = _$FoldPreflopRankImpl;
+  const FoldPreflopRank._() : super._();
+
+  @override
+  String get description;
+  @override
+  String get colorCode;
+
+  /// Create a copy of PreflopRank
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$FoldPreflopRankImplCopyWith<_$FoldPreflopRankImpl> get copyWith =>
+      throw _privateConstructorUsedError;
 }

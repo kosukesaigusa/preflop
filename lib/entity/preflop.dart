@@ -6,25 +6,34 @@ part 'preflop.freezed.dart';
 @freezed
 abstract class PreflopHandRangeMatrix with _$PreflopHandRangeMatrix {
   const factory PreflopHandRangeMatrix({
-    required int maxRank,
+    required String name,
+    required List<PreflopRank> preflopRanks,
     required Map<PreflopHand, PreflopRank> rangeData,
   }) = _PreflopHandRange;
 
   /// 指定されたマップからプリフロップハンドレンジ表を生成する。
-  factory PreflopHandRangeMatrix.fromMap(Map<String, int> map) =>
-      PreflopHandRangeMatrix(
-        maxRank: map.values.fold(0, (max, value) => max > value ? max : value),
-        rangeData: map.map(
-          (key, value) => MapEntry(
-            PreflopHand.fromString(key),
-            PreflopRank.fromValue(value),
-          ),
-        ),
-      );
+  factory PreflopHandRangeMatrix.fromMap(Map<String, dynamic> map) {
+    final preflopRanks =
+        (map['ranks'] as List<dynamic>)
+            .map((e) => PreflopRank.fromJson(e as Map<String, dynamic>))
+            .toList();
+    final handRanksMap = map['handRanks'] as Map<String, dynamic>;
+    return PreflopHandRangeMatrix(
+      name: map['name'] as String? ?? 'ハンドレンジ',
+      preflopRanks: preflopRanks,
+      rangeData: handRanksMap.map(
+        (key, value) =>
+            MapEntry(PreflopHand.fromString(key), preflopRanks.where((e) => e.rank == value).first),
+      ),
+    );
+  }
 
   const PreflopHandRangeMatrix._();
 
-  /// 当該プリフロップハンドレンジ表において、指定したプリフロップハンドのランクを返す。
+  /// 当該プリフロップハンドレンジ表における最大ランク。
+  int get maxRank => preflopRanks.fold(0, (max, value) => max > value.rank ? max : value.rank);
+
+  /// 当該プリフロップハンドレンジ表において、指定したプリフロップハンドのランク。
   PreflopRank getRank(PreflopHand hand) {
     final preflopRank = rangeData[hand];
     if (preflopRank == null) {
@@ -37,19 +46,35 @@ abstract class PreflopHandRangeMatrix with _$PreflopHandRangeMatrix {
 /// プリフロップハンドレンジ表における、あるハンドのランク。
 @freezed
 sealed class PreflopRank with _$PreflopRank {
-  /// ランクが指定されたランクであることを示す。
-  const factory PreflopRank.ranked(int rank) = RankedPreflopRank;
+  /// ランクが指定されたランク。
+  const factory PreflopRank.ranked({
+    required int rank,
+    required String description,
+    required String colorCode,
+  }) = RankedPreflopRank;
 
-  /// フォールドであることを示す。
-  const factory PreflopRank.fold() = FoldPreflopRank;
+  /// フォールドするべきランク。
+  const factory PreflopRank.fold({required String description, required String colorCode}) =
+      FoldPreflopRank;
 
-  /// ランクを表す整数値（大きいほどランクが高い）からプリフロップランクを生成する。
-  factory PreflopRank.fromValue(int rank) {
+  /// JSON からプリフロップランクを生成する。
+  factory PreflopRank.fromJson(Map<String, dynamic> map) {
+    final rank = map['rank'] as int;
+    final description = map['description'] as String;
+    final colorCode = map['colorCode'] as String;
     if (rank <= 0) {
-      return const FoldPreflopRank();
+      return PreflopRank.fold(description: description, colorCode: colorCode);
     }
-    return RankedPreflopRank(rank);
+    return PreflopRank.ranked(rank: rank, description: description, colorCode: colorCode);
   }
+
+  const PreflopRank._();
+
+  /// ランクの値を取得する。
+  int get rank => switch (this) {
+    RankedPreflopRank(:final rank) => rank,
+    FoldPreflopRank() => 0,
+  };
 }
 
 /// プリフロップのハンド一覧。

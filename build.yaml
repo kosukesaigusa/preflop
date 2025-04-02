@@ -6,4 +6,4 @@ targets:
           # JSON のパースに失敗した際に CheckedFromJsonException をスローさせる。
           checked: true
           # スネークケースに変換する。
-          field_rename: snake
+          # field_rename: snake
