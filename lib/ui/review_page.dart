@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../model/entity/preflop_hand_range_quiz.dart';
 import '../../../model/logic/preflop_hand_range_quiz.dart';
 import '../../../ui/style/color.dart';
+import 'page/matrix/matrix_page.dart';
 import 'style/typography.dart';
 import 'widget/rank_display.dart';
 
@@ -27,6 +28,24 @@ class ReviewPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(),
+      floatingActionButton: Row(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 8,
+        children: [
+          FloatingActionButton.small(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => const MatrixPage(),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
+            tooltip: 'ハンドレンジを確認する',
+            child: const Icon(Icons.grid_on),
+          ),
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: CustomScrollView(
