@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../entity/preflop.dart';
-import '../../logic/preflop_hand_range_matrix.dart';
-import '../../style/color.dart';
-import '../../style/typography.dart';
+import '../../model/entity/preflop.dart';
+import '../../model/logic/preflop_hand_range_matrix.dart';
+import '../style/color.dart';
+import '../style/typography.dart';
 
 /// プリフロップハンドレンジ表を選択するドロップダウン。
 class PreflopHandRangeMatrixDropdown extends ConsumerWidget {

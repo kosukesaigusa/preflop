@@ -3,11 +3,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import 'app/page/quiz/quiz_page.dart';
-import 'style/color.dart';
-import 'style/typography.dart';
-import 'util/logger.dart';
-import 'util/package_info.dart';
+import 'model/util/logger.dart';
+import 'model/util/package_info.dart';
+import 'ui/page/quiz/quiz_page.dart';
+import 'ui/style/color.dart';
+import 'ui/style/typography.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();

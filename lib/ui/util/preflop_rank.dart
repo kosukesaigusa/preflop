@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../entity/preflop.dart';
+import '../../model/entity/preflop.dart';
 
 /// [PreflopRank] の拡張クラス。
 extension PreflopRankExtension on PreflopRank {

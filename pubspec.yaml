@@ -48,13 +48,14 @@ flutter:
   uses-material-design: true
   assets:
     - assets/svg/
+    - assets/fonts/
   fonts:
     - family: NotoSansJP
       fonts:
-        - asset: lib/fonts/NotoSansJP-Light.ttf
+        - asset: assets/fonts/NotoSansJP-Light.ttf
           weight: 300
-        - asset: lib/fonts/NotoSansJP-SemiBold.ttf
+        - asset: assets/fonts/NotoSansJP-SemiBold.ttf
           weight: 600
     - family: NotoColorEmoji
       fonts:
-        - asset: lib/fonts/NotoColorEmoji-Regular.ttf
+        - asset: assets/fonts/NotoColorEmoji-Regular.ttf

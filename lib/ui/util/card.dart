@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
-import '../../entity/card.dart' as card;
 import '../../gen/assets.gen.dart';
-import '../../style/color.dart';
+import '../../model/entity/card.dart' as card;
+import '../style/color.dart';
 
 /// [card.Rank] の拡張クラス。
 extension RankExtension on card.Rank {

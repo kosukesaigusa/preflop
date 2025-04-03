@@ -1,4 +1,4 @@
-import '../../entity/preflop.dart';
+import '../../model/entity/preflop.dart';
 
 /// [PreflopHand] の拡張クラス。
 extension PreflopHandExtension on PreflopHand {

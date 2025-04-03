@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../../style/color.dart';
-import '../../style/typography.dart';
-import '../../util/package_info.dart';
+import '../../model/util/package_info.dart';
+import '../style/color.dart';
+import '../style/typography.dart';
 
 /// パッケージ情報を表示するウィジェット。
 class PackageInfoText extends ConsumerWidget {
