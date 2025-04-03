@@ -80,20 +80,20 @@ class _QuizHistoryCard extends StatelessWidget {
               ],
             ),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
+                  spacing: 12,
                   children: [
                     Text('正解', style: context.titleMedium),
-                    const Gap(12),
                     RankDisplay.readOnly(rank: quiz.correctRank),
                   ],
                 ),
-                const Spacer(),
                 if (!quiz.isCorrect)
                   Column(
+                    spacing: 12,
                     children: [
                       Text('あなたの回答', style: context.titleMedium),
-                      const Gap(12),
                       RankDisplay.readOnly(rank: quiz.answeredRank),
                     ],
                   ),
