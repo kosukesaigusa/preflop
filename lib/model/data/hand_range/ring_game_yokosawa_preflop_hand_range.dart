@@ -10,7 +10,7 @@
 const ringGameYokosawaPreflopHandRangeData = <String, dynamic>{
   'name': 'ヨコサワハンドレンジ（リングゲーム）',
   'ranks': [
-    {'rank': 7, 'description': 'UTG（後ろに 8 人）の強ハンド', 'colorCode': '#800080'},
+    {'rank': 7, 'description': 'UTG（後ろに 8 人）のプレミアハンド', 'colorCode': '#800080'},
     {'rank': 6, 'description': 'UTG（後ろに 8 人）のハンド', 'colorCode': '#FF0000'},
     {'rank': 5, 'description': 'EP（後ろに 6〜7 人）のハンド', 'colorCode': '#FFD700'},
     {'rank': 4, 'description': 'LJ, HJ（後ろに 4〜5 人）のハンド', 'colorCode': '#90EE90'},
