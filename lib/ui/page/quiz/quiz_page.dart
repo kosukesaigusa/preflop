@@ -29,15 +29,19 @@ class QuizPage extends ConsumerWidget {
 
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        onPressed:
-            () => Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (context) => const MatrixPage(),
-                fullscreenDialog: true,
-              ),
+        onPressed: () {
+          final currentPreflopHand = quizzes.lastOrNull?.hand.asPreflopHand;
+          Navigator.of(context).push(
+            MaterialPageRoute<void>(
+              builder: (context) => MatrixPage(highlightedHand: currentPreflopHand),
+              fullscreenDialog: true,
             ),
+          );
+        },
+        tooltip: 'マトリックスで確認',
         child: const Icon(Icons.grid_on),
       ),
+      appBar: AppBar(backgroundColor: AppColor.transparent, elevation: 0),
       body: Stack(
         children: [
           Center(

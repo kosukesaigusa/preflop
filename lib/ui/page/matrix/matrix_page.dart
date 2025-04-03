@@ -11,7 +11,10 @@ import '../../widget/preflop_hand_range_matrix_dropdown.dart';
 /// マトリックスを表示するページ。
 class MatrixPage extends ConsumerWidget {
   /// マトリックスを表示するページを作成する。
-  const MatrixPage({super.key});
+  const MatrixPage({super.key, this.highlightedHand});
+
+  /// ハイライトするハンド。
+  final PreflopHand? highlightedHand;
 
   /// セルの最小サイズ。
   static const double _minCellSize = 32;
@@ -100,12 +103,19 @@ class MatrixPage extends ConsumerWidget {
                                                     );
                                                   }
                                                   final rank = selectedRange.getRank(hand);
+                                                  final isHighlighted = hand == highlightedHand;
                                                   return Container(
                                                     width: cellSize,
                                                     height: cellSize,
                                                     decoration: BoxDecoration(
                                                       color: rank.color,
-                                                      border: Border.all(color: AppColor.grey),
+                                                      border: Border.all(
+                                                        color:
+                                                            isHighlighted
+                                                                ? AppColor.gold
+                                                                : AppColor.grey,
+                                                        width: isHighlighted ? 3 : 1,
+                                                      ),
                                                     ),
                                                     child: Center(
                                                       child: Text(

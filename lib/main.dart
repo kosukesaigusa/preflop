@@ -42,6 +42,7 @@ Future<void> main() async {
           ),
           scaffoldBackgroundColor: AppColor.darkNavy,
           cardColor: AppColor.darkBlueGrey,
+          appBarTheme: const AppBarTheme(backgroundColor: AppColor.transparent, elevation: 0),
           useMaterial3: true,
           textTheme: appTextTheme,
         ),
