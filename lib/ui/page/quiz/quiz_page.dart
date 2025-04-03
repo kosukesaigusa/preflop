@@ -3,15 +3,16 @@ import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../model/entity/hand.dart';
-import '../../../model/entity/preflop.dart';
 import '../../../model/entity/preflop_hand_range_quiz.dart';
 import '../../../model/logic/preflop_hand_range_matrix.dart';
 import '../../../model/logic/preflop_hand_range_quiz.dart';
+import '../../review_review_page.dart';
 import '../../style/color.dart';
 import '../../style/typography.dart';
 import '../../util/card.dart';
 import '../../widget/package_info_text.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
+import '../../widget/rank_display.dart';
 import '../matrix/matrix_page.dart';
 
 /// クイズを表示するページ。
@@ -27,25 +28,45 @@ class QuizPage extends ConsumerWidget {
     // クイズ一覧の Notifier を取得する。
     final notifier = ref.read(preflopHandRangeQuizzzesNotifierProvider.notifier);
 
+    // 最後のクイズを取得する。
+    final latestQuiz = quizzes.lastOrNull;
+
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          final currentPreflopHand = quizzes.lastOrNull?.hand.asPreflopHand;
-          Navigator.of(context).push(
-            MaterialPageRoute<void>(
-              builder: (context) => MatrixPage(highlightedHand: currentPreflopHand),
-              fullscreenDialog: true,
-            ),
-          );
-        },
-        tooltip: 'マトリックスで確認',
-        child: const Icon(Icons.grid_on),
+      floatingActionButton: Row(
+        mainAxisSize: MainAxisSize.min,
+        spacing: 8,
+        children: [
+          FloatingActionButton.small(
+            onPressed: () {
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => const ReviewPage(),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
+            tooltip: '復習',
+            child: const Icon(Icons.history),
+          ),
+          FloatingActionButton.small(
+            onPressed: () {
+              final currentPreflopHand = quizzes.lastOrNull?.hand.asPreflopHand;
+              Navigator.of(context).push(
+                MaterialPageRoute<void>(
+                  builder: (context) => MatrixPage(highlightedHand: currentPreflopHand),
+                  fullscreenDialog: true,
+                ),
+              );
+            },
+            tooltip: 'マトリックスで確認',
+            child: const Icon(Icons.grid_on),
+          ),
+        ],
       ),
-      appBar: AppBar(backgroundColor: AppColor.transparent, elevation: 0),
       body: Stack(
         children: [
           Center(
-            child: switch (quizzes.lastOrNull) {
+            child: switch (latestQuiz) {
               UnansweredPreflopHandRangeQuiz(:final hand) => SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 24),
@@ -82,7 +103,7 @@ class QuizPage extends ConsumerWidget {
                                     padding: const EdgeInsets.only(right: 12),
                                     child: SizedBox(
                                       width: 180,
-                                      child: _RankDisplay.answerButton(
+                                      child: RankDisplay.answerButton(
                                         rank: rank,
                                         onPressed: () => notifier.answer(rank),
                                       ),
@@ -98,81 +119,78 @@ class QuizPage extends ConsumerWidget {
                 ),
               ),
               AnsweredPreflopHandRangeQuiz(:final hand, :final correctRank, :final answeredRank) =>
-                () {
-                  final isCorrect = correctRank == answeredRank;
-                  return SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 24),
-                      child: Column(
-                        spacing: 32,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Text.rich(
-                              TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: isCorrect ? '🎉' : '😢',
-                                    style: const TextStyle(fontFamily: 'Apple Color Emoji'),
+                SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    child: Column(
+                      spacing: 32,
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Text.rich(
+                            TextSpan(
+                              children: [
+                                TextSpan(
+                                  text: latestQuiz.isCorrect ? '🎉' : '😢',
+                                  style: const TextStyle(fontFamily: 'Apple Color Emoji'),
+                                ),
+                                TextSpan(
+                                  text: ' ${latestQuiz.isCorrect ? '正解！' : '不正解'}',
+                                  style: context.displaySmall.copyWith(
+                                    color: latestQuiz.isCorrect ? AppColor.green : AppColor.red,
                                   ),
-                                  TextSpan(
-                                    text: ' ${isCorrect ? '正解！' : '不正解'}',
-                                    style: context.displaySmall.copyWith(
-                                      color: isCorrect ? AppColor.green : AppColor.red,
-                                    ),
+                                ),
+                              ],
+                            ),
+                            style: context.displaySmall.copyWith(
+                              color: latestQuiz.isCorrect ? AppColor.green : AppColor.red,
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: _Hand(hand),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: Wrap(
+                            spacing: 24,
+                            runSpacing: 24,
+                            alignment: WrapAlignment.center,
+                            children: [
+                              Column(
+                                spacing: 12,
+                                children: [
+                                  Text('正解', style: context.titleMedium),
+                                  SizedBox(
+                                    width: 180,
+                                    child: RankDisplay.readOnly(rank: correctRank),
                                   ),
                                 ],
                               ),
-                              style: context.displaySmall.copyWith(
-                                color: isCorrect ? AppColor.green : AppColor.red,
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: _Hand(hand),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Wrap(
-                              spacing: 24,
-                              runSpacing: 24,
-                              alignment: WrapAlignment.center,
-                              children: [
+                              if (!latestQuiz.isCorrect)
                                 Column(
                                   spacing: 12,
                                   children: [
-                                    Text('正解', style: context.titleMedium),
+                                    Text('あなたの回答', style: context.titleMedium),
                                     SizedBox(
                                       width: 180,
-                                      child: _RankDisplay.readOnly(rank: correctRank),
+                                      child: RankDisplay.readOnly(rank: answeredRank),
                                     ),
                                   ],
                                 ),
-                                if (!isCorrect)
-                                  Column(
-                                    spacing: 12,
-                                    children: [
-                                      Text('あなたの回答', style: context.titleMedium),
-                                      SizedBox(
-                                        width: 180,
-                                        child: _RankDisplay.readOnly(rank: answeredRank),
-                                      ),
-                                    ],
-                                  ),
-                              ],
-                            ),
+                            ],
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: _NextQuizButton(onPressed: notifier.generate),
-                          ),
-                        ],
-                      ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: _NextQuizButton(onPressed: notifier.generate),
+                        ),
+                      ],
                     ),
-                  );
-                }(),
+                  ),
+                ),
               null => const SizedBox.shrink(),
             },
           ),
@@ -247,109 +265,6 @@ class _Hand extends StatelessWidget {
       ),
     );
   }
-}
-
-/// ランクと補足説明を表示するウィジェット。
-class _RankDisplay extends StatelessWidget {
-  /// 押下して回答するボタンとして、ランクと補足説明を表示するウィジェットを生成する。
-  const _RankDisplay.answerButton({required this.rank, required VoidCallback onPressed})
-    : _onPressed = onPressed;
-
-  /// 表示のみの目的で、ランクと補足説明を表示するウィジェットを生成する。
-  const _RankDisplay.readOnly({required this.rank}) : _onPressed = null;
-
-  /// ランク。
-  final PreflopRank rank;
-
-  /// ボタン押下時のコールバック。
-  final VoidCallback? _onPressed;
-
-  @override
-  Widget build(BuildContext context) {
-    switch (_onPressed) {
-      case null:
-        return Container(
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: AppColor.darkBlueGrey,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: AppColor.grey),
-            boxShadow: [
-              BoxShadow(
-                color: AppColor.black.withValues(alpha: 0.2),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
-              ),
-            ],
-          ),
-          child: _child(context),
-        );
-      default:
-        return Material(
-          color: AppColor.transparent,
-          child: InkWell(
-            onTap: _onPressed,
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColor.darkBlueGrey,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColor.grey),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColor.black.withValues(alpha: 0.2),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
-              ),
-              child: _child(context),
-            ),
-          ),
-        );
-    }
-  }
-
-  /// ランクと補足説明を表示するウィジェットの子要素を返す。
-  Widget _child(BuildContext context) => Column(
-    crossAxisAlignment: CrossAxisAlignment.stretch,
-    mainAxisSize: MainAxisSize.min,
-    children: [
-      Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
-        decoration: BoxDecoration(
-          color: rank.color,
-          borderRadius: BorderRadius.circular(12),
-          boxShadow: [
-            BoxShadow(
-              color: rank.color.withValues(alpha: 0.3),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
-            ),
-          ],
-        ),
-        child: Text(
-          rank.displayText,
-          style: context.displaySmall.copyWith(
-            color: rank.color.computeLuminance() > 0.5 ? AppColor.black : AppColor.white,
-            fontWeight: FontWeight.bold,
-          ),
-          textAlign: TextAlign.center,
-        ),
-      ),
-      const Gap(12),
-      SizedBox(
-        height: context.bodyMediumLineHeight * 2,
-        child: Text(
-          rank.description,
-          style: context.bodyMedium.copyWith(color: AppColor.lightGrey),
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-      ),
-    ],
-  );
 }
 
 /// 次の問題へ進むボタン。

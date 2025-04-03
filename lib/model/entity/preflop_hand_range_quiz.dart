@@ -27,6 +27,15 @@ sealed class PreflopHandRangeQuiz with _$PreflopHandRangeQuiz {
       correctRank == answeredRank ? QuizStatus.correct : QuizStatus.incorrect,
     UnansweredPreflopHandRangeQuiz() => QuizStatus.unanswered,
   };
+
+  /// クイズに正解したかどうかを返す。
+  ///
+  /// 未回答の場合は `false` を返す。
+  bool get isCorrect => switch (this) {
+    AnsweredPreflopHandRangeQuiz(:final correctRank, :final answeredRank) =>
+      correctRank == answeredRank,
+    UnansweredPreflopHandRangeQuiz() => false,
+  };
 }
 
 /// クイズの回答状態。
