@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../model/entity/preflop_hand_range_quiz.dart';
@@ -57,19 +56,20 @@ class _QuizHistoryCard extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          spacing: 16,
           children: [
+            Text(quiz.matrix.name, style: context.titleSmall),
             Row(
               spacing: 4,
               children: [
                 Icon(
                   quiz.isCorrect ? Icons.check_circle : Icons.cancel,
                   color: quiz.isCorrect ? AppColor.green : AppColor.red,
-                  size: context.titleMediumLineHeight,
+                  size: context.titleLargeLineHeight,
                 ),
-                Text(quiz.hand.asPreflopHand.displayText, style: context.titleMedium),
+                Text(quiz.hand.asPreflopHand.displayText, style: context.titleLarge),
               ],
             ),
-            const Gap(16),
             Wrap(
               spacing: 24,
               runSpacing: 24,

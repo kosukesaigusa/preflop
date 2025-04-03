@@ -11,13 +11,16 @@ sealed class PreflopHandRangeQuiz with _$PreflopHandRangeQuiz {
   /// 回答済みのクイズ。
   const factory PreflopHandRangeQuiz.answered({
     required Hand hand,
+    required PreflopHandRangeMatrix matrix,
     required PreflopRank correctRank,
     required PreflopRank answeredRank,
   }) = AnsweredPreflopHandRangeQuiz;
 
   /// 未回答のクイズ。
-  const factory PreflopHandRangeQuiz.unanswered({required Hand hand}) =
-      UnansweredPreflopHandRangeQuiz;
+  const factory PreflopHandRangeQuiz.unanswered({
+    required Hand hand,
+    required PreflopHandRangeMatrix matrix,
+  }) = UnansweredPreflopHandRangeQuiz;
 
   const PreflopHandRangeQuiz._();
 

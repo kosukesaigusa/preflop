@@ -12,12 +12,9 @@ part 'preflop_hand_range_quiz.g.dart';
 class PreflopHandRangeQuizzzesNotifier extends _$PreflopHandRangeQuizzzesNotifier {
   @override
   List<PreflopHandRangeQuiz> build() {
-    // プリフロップハンドレンジ表を監視して、変更されたらハンドレンジクイズをリビルドする。
-    ref.watch(preflopHandRangeMatricesNotifierProvider);
-
     // 最初の未回答のクイズを生成する。
     final hand = Hand.random();
-    return [PreflopHandRangeQuiz.unanswered(hand: hand)];
+    return [PreflopHandRangeQuiz.unanswered(hand: hand, matrix: _getCurrentMatrix())];
   }
 
   /// プリフロップのハンドレンジクイズを生成する。
@@ -25,7 +22,7 @@ class PreflopHandRangeQuizzzesNotifier extends _$PreflopHandRangeQuizzzesNotifie
   /// 未回答のクイズとして追加する。
   void generate() {
     final hand = Hand.random();
-    state = [...state, PreflopHandRangeQuiz.unanswered(hand: hand)];
+    state = [...state, PreflopHandRangeQuiz.unanswered(hand: hand, matrix: _getCurrentMatrix())];
   }
 
   /// 末尾の未回答のクイズに回答する。
@@ -48,10 +45,14 @@ class PreflopHandRangeQuizzzesNotifier extends _$PreflopHandRangeQuizzzesNotifie
           ...state.take(state.length - 1),
           PreflopHandRangeQuiz.answered(
             hand: hand,
+            matrix: _getCurrentMatrix(),
             correctRank: correctRank,
             answeredRank: answeredRank,
           ),
         ];
     }
   }
+
+  /// 現在のプリフロップハンドレンジ表を取得する。
+  PreflopHandRangeMatrix _getCurrentMatrix() => ref.read(preflopHandRangeMatricesNotifierProvider);
 }

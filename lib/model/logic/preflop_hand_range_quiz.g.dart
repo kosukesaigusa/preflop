@@ -7,7 +7,7 @@ part of 'preflop_hand_range_quiz.dart';
 // **************************************************************************
 
 String _$preflopHandRangeQuizzzesNotifierHash() =>
-    r'e34b91b8d9fce97c8433ccbe349d5d8c05c52150';
+    r'980b8e4cd495ba65fbf3adf53d1a4ac830b32f2f';
 
 /// プリフロップのハンドレンジクイズを管理する。
 ///
