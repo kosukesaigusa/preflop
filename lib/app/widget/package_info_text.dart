@@ -14,7 +14,7 @@ class PackageInfoText extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final packageInfo = ref.watch(packageInfoProvider);
     return Text(
-      'v${packageInfo.version}+${packageInfo.buildNumber}',
+      'v${packageInfo.version}',
       style: context.bodySmall.copyWith(color: AppColor.mediumGrey),
     );
   }
