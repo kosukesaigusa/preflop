@@ -9,7 +9,7 @@ void main() {
   runApp(
     ProviderScope(
       child: MaterialApp(
-        title: 'Preflop',
+        title: 'Preflop Trainer',
         theme: ThemeData(
           colorScheme: const ColorScheme.dark(
             primary: AppColor.gold,

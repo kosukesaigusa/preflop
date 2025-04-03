@@ -1,5 +1,5 @@
-name: preflop
-description: "A new Flutter project."
+name: preflop_trainer
+description: "ポーカーのプリフロップハンドレンジを学習するためのアプリケーションです。"
 publish_to: 'none'
 version: 0.1.0
 

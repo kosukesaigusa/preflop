@@ -1,11 +1,11 @@
 {
-    "name": "preflop",
-    "short_name": "preflop",
+    "name": "Preflop Trainer - ポーカーのプリフロップハンドレンジ学習アプリ",
+    "short_name": "Preflop Trainer",
     "start_url": ".",
     "display": "standalone",
-    "background_color": "#0175C2",
-    "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "background_color": "#1A1A2E",
+    "theme_color": "#1A1A2E",
+    "description": "ポーカーのプリフロップハンドレンジを学習するためのアプリケーションです。",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
