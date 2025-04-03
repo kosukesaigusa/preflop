@@ -39,119 +39,89 @@
       margin: 0;
       padding: 0;
       overflow: hidden;
-    }
-    .loading-container {
+      background-color: #1A1A2E;
+      color: #E5B94E;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      width: 100vw;
-      background-color: #1A1A2E;
+      min-height: 100vh;
     }
-    .loading-icon {
-      width: 120px;
-      height: 120px;
-      animation: rotate 4s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
-      filter: drop-shadow(0 0 12px rgba(229, 185, 78, 0.4));
-    }
-    @keyframes rotate {
-      0% {
-        transform: rotate(0deg);
-      }
-      25% {
-        transform: rotate(90deg);
+    @keyframes pulse {
+      0%, 100% {
+        filter: drop-shadow(0 0 12px rgba(229, 185, 78, 0.2));
       }
       50% {
-        transform: rotate(180deg);
+        filter: drop-shadow(0 0 36px rgba(229, 185, 78, 0.5));
       }
-      75% {
-        transform: rotate(270deg);
+    }
+    @keyframes progress {
+      0% {
+        width: 0;
+        opacity: 1;
       }
-      85% {
-        transform: rotate(405deg);
-      }
-      95% {
-        transform: rotate(315deg);
+      90% {
+        width: 90%;
+        opacity: 1;
       }
       100% {
-        transform: rotate(360deg);
+        width: 100%;
+        opacity: 0;
       }
+    }
+    #loading {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+    #loading img {
+      width: 144px;
+      height: 144px;
+      animation: pulse 2s ease-in-out infinite;
+      will-change: filter;
+    }
+    .progress-bar {
+      width: 200px;
+      height: 2px;
+      background-color: rgba(229, 185, 78, 0.2);
+      border-radius: 1px;
+      overflow: hidden;
+    }
+    .progress-bar-fill {
+      height: 100%;
+      background-color: #E5B94E;
+      animation: progress 3s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: left;
     }
   </style>
 </head>
 <body>
-  <div id="loading" class="loading-container">
-    <img src="icons/Icon-512.png" class="loading-icon" alt="Loading..." />
-  </div>
   <script>
-    // Flutter の初期化が完了したかどうか。
-    let isFlutterInitialized = false;
+    const loading = document.createElement('div');
+    loading.id = 'loading';
+    
+    const icon = document.createElement('img');
+    icon.src = 'icons/Icon-192.png';
+    icon.alt = 'Preflop Trainer';
+    loading.appendChild(icon);
 
-    // ローディング画面を非表示にする関数。
-    function hideLoading() {
-      const loading = document.querySelector('#loading');
-      if (loading) {
-        loading.remove();
+    const progressBar = document.createElement('div');
+    progressBar.className = 'progress-bar';
+    const progressBarFill = document.createElement('div');
+    progressBarFill.className = 'progress-bar-fill';
+    progressBar.appendChild(progressBarFill);
+    loading.appendChild(progressBar);
+
+    document.body.appendChild(loading);
+
+    _flutter.loader.load({
+      onEntrypointLoaded: async function(engineInitializer) {
+        const appRunner = await engineInitializer.initializeEngine();
+        await appRunner.runApp();
       }
-    }
-
-    // エラー時の処理。
-    function handleError(error) {
-      console.error('Flutter の初期化中にエラーが発生しました:', error);
-      hideLoading();
-    }
-
-    function initFlutter() {
-      // 既に初期化済みの場合は処理を終了する。
-      if (isFlutterInitialized) {
-        return;
-      }
-
-      // タイムアウト処理を設定する（5秒）。
-      const timeoutId = setTimeout(() => {
-        hideLoading();
-      }, 5000);
-
-      // flutter_bootstrap.js の読み込みが完了していない場合は、
-      // 100ms 後に再度初期化を試みる。
-      // _flutter オブジェクトは flutter_bootstrap.js によって
-      // グローバルスコープに定義される。
-      if (typeof _flutter === 'undefined') {
-        setTimeout(initFlutter, 100);
-        return;
-      }
-
-      // Flutter の初期化が完了したことを記録する。
-      isFlutterInitialized = true;
-
-      // Flutter アプリケーションを初期化する。
-      _flutter.loader.load({
-        onEntrypointLoaded: async function(engineInitializer) {
-          try {
-            // Flutter エンジンを初期化し、アプリケーションを実行する。
-            const appRunner = await engineInitializer.initializeEngine();
-            await appRunner.runApp();
-          } catch (error) {
-            handleError(error);
-          } finally {
-            // タイムアウトをクリアする。
-            clearTimeout(timeoutId);
-            // ローディング画面を非表示にする。
-            hideLoading();
-          }
-        }
-      }).catch(handleError);
-    }
-
-    // ページ読み込み完了から一定時間経過後も Flutter が初期化されない場合にフォールバックする。
-    window.addEventListener('load', () => {
-      setTimeout(() => {
-        if (!isFlutterInitialized) {
-          hideLoading();
-        }
-      }, 8000);
     });
   </script>
-  <script src="flutter_bootstrap.js" onload="initFlutter()"></script>
+  <script src="flutter_bootstrap.js" async></script>
 </body>
 </html>
