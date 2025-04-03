@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../gen/fonts.gen.dart';
 import 'color.dart';
 
 /// アプリで使用するテキストスタイルから定義された [TextTheme].
 const appTextTheme = TextTheme(
   displayLarge: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 57,
     height: 64 / 57,
     fontWeight: FontWeight.w300,
@@ -14,8 +15,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   displayMedium: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 45,
     height: 52 / 45,
     fontWeight: FontWeight.w300,
@@ -23,8 +24,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   displaySmall: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 36,
     height: 44 / 36,
     fontWeight: FontWeight.w300,
@@ -32,8 +33,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   headlineLarge: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 32,
     height: 40 / 32,
     fontWeight: FontWeight.w300,
@@ -41,8 +42,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   headlineMedium: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 28,
     height: 36 / 28,
     fontWeight: FontWeight.w300,
@@ -50,8 +51,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   headlineSmall: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 24,
     height: 32 / 24,
     fontWeight: FontWeight.w300,
@@ -59,8 +60,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   titleLarge: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 22,
     height: 28 / 22,
     fontWeight: FontWeight.w600,
@@ -68,8 +69,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   titleMedium: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 16,
     height: 24 / 16,
     fontWeight: FontWeight.w600,
@@ -77,8 +78,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   titleSmall: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 14,
     height: 20 / 14,
     fontWeight: FontWeight.w600,
@@ -86,8 +87,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   labelLarge: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 14,
     height: 20 / 14,
     fontWeight: FontWeight.w600,
@@ -95,8 +96,8 @@ const appTextTheme = TextTheme(
     color: AppColor.mediumGrey,
   ),
   labelMedium: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 12,
     height: 16 / 12,
     fontWeight: FontWeight.w600,
@@ -104,8 +105,8 @@ const appTextTheme = TextTheme(
     color: AppColor.mediumGrey,
   ),
   labelSmall: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 11,
     height: 16 / 11,
     fontWeight: FontWeight.w600,
@@ -113,8 +114,8 @@ const appTextTheme = TextTheme(
     color: AppColor.mediumGrey,
   ),
   bodyLarge: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 16,
     height: 24 / 16,
     fontWeight: FontWeight.w300,
@@ -122,8 +123,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   bodyMedium: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 14,
     height: 20 / 14,
     fontWeight: FontWeight.w300,
@@ -131,8 +132,8 @@ const appTextTheme = TextTheme(
     color: AppColor.lightGrey,
   ),
   bodySmall: TextStyle(
-    fontFamily: 'NotoSansJP',
-    fontFamilyFallback: ['NotoColorEmoji'],
+    fontFamily: FontFamily.notoSansJP,
+    fontFamilyFallback: [FontFamily.notoColorEmoji],
     fontSize: 12,
     height: 16 / 12,
     fontWeight: FontWeight.w300,

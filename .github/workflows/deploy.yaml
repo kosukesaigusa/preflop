@@ -38,13 +38,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      # バージョン番号とビルド番号を pubspec.yaml と GitHub Actions の通し番号から取得する。
-      - name: Extract version and build number
+      # バージョン番号とビルド番号を pubspec.yaml から取得し、GitHub Actions の通し番号を付加してオーバーライドする。
+      - name: Set up version with build number
         id: extract_version
         run: |
           VERSION=$(grep 'version: ' ./pubspec.yaml | cut -d ' ' -f 2)
           FULL_VERSION="${VERSION}+${GITHUB_RUN_NUMBER}"
           echo "fullVersion=${FULL_VERSION}" >> $GITHUB_OUTPUT
+          sed -i "s/^version: .*/version: $FULL_VERSION/" pubspec.yaml
 
       # Flutter のバージョンを取得する。
       - name: Read Flutter SDK version

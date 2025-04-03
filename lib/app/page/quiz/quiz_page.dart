@@ -10,6 +10,7 @@ import '../../../logic/preflop_hand_range_quiz.dart';
 import '../../../style/color.dart';
 import '../../../style/typography.dart';
 import '../../util/card.dart';
+import '../../widget/package_info_text.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
 import '../matrix/matrix_page.dart';
 
@@ -37,115 +38,142 @@ class QuizPage extends ConsumerWidget {
             ),
         child: const Icon(Icons.grid_on),
       ),
-      body: Center(
-        child: switch (quizzes.lastOrNull) {
-          UnansweredPreflopHandRangeQuiz(:final hand) => SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 24),
-              child: Column(
-                spacing: 32,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
-                    child: PreflopHandRangeMatrixDropdown(),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: Text('このハンドのランクは？', style: context.headlineSmall),
-                  ),
-                  Padding(padding: const EdgeInsets.symmetric(horizontal: 16), child: _Hand(hand)),
-                  SizedBox(
-                    height: 180,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: IntrinsicHeight(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            for (final rank
-                                in ref.watch(preflopHandRangeMatricesNotifierProvider).preflopRanks)
-                              Padding(
-                                padding: const EdgeInsets.only(right: 12),
-                                child: SizedBox(
-                                  width: 180,
-                                  child: _RankDisplay.answerButton(
-                                    rank: rank,
-                                    onPressed: () => notifier.answer(rank),
-                                  ),
-                                ),
-                              ),
-                          ],
-                        ),
+      body: Stack(
+        children: [
+          Center(
+            child: switch (quizzes.lastOrNull) {
+              UnansweredPreflopHandRangeQuiz(:final hand) => SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  child: Column(
+                    spacing: 32,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: PreflopHandRangeMatrixDropdown(),
                       ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          AnsweredPreflopHandRangeQuiz(:final hand, :final correctRank, :final answeredRank) => () {
-            final isCorrect = correctRank == answeredRank;
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 24),
-                child: Column(
-                  spacing: 32,
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Text(
-                        isCorrect ? '🎉 正解！' : '😢 不正解',
-                        style: context.displaySmall.copyWith(
-                          color: isCorrect ? AppColor.green : AppColor.red,
-                        ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: Text('このハンドのランクは？', style: context.headlineSmall),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: _Hand(hand),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: Wrap(
-                        spacing: 24,
-                        runSpacing: 24,
-                        alignment: WrapAlignment.center,
-                        children: [
-                          Column(
-                            spacing: 12,
-                            children: [
-                              Text('正解', style: context.titleMedium),
-                              SizedBox(width: 180, child: _RankDisplay.readOnly(rank: correctRank)),
-                            ],
-                          ),
-                          if (!isCorrect)
-                            Column(
-                              spacing: 12,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: _Hand(hand),
+                      ),
+                      SizedBox(
+                        height: 180,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                          child: IntrinsicHeight(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('あなたの回答', style: context.titleMedium),
-                                SizedBox(
-                                  width: 180,
-                                  child: _RankDisplay.readOnly(rank: answeredRank),
-                                ),
+                                for (final rank
+                                    in ref
+                                        .watch(preflopHandRangeMatricesNotifierProvider)
+                                        .preflopRanks)
+                                  Padding(
+                                    padding: const EdgeInsets.only(right: 12),
+                                    child: SizedBox(
+                                      width: 180,
+                                      child: _RankDisplay.answerButton(
+                                        rank: rank,
+                                        onPressed: () => notifier.answer(rank),
+                                      ),
+                                    ),
+                                  ),
                               ],
                             ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              AnsweredPreflopHandRangeQuiz(:final hand, :final correctRank, :final answeredRank) =>
+                () {
+                  final isCorrect = correctRank == answeredRank;
+                  return SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      child: Column(
+                        spacing: 32,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: isCorrect ? '🎉' : '😢',
+                                    style: const TextStyle(fontFamily: 'Apple Color Emoji'),
+                                  ),
+                                  TextSpan(
+                                    text: ' ${isCorrect ? '正解！' : '不正解'}',
+                                    style: context.displaySmall.copyWith(
+                                      color: isCorrect ? AppColor.green : AppColor.red,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              style: context.displaySmall.copyWith(
+                                color: isCorrect ? AppColor.green : AppColor.red,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: _Hand(hand),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Wrap(
+                              spacing: 24,
+                              runSpacing: 24,
+                              alignment: WrapAlignment.center,
+                              children: [
+                                Column(
+                                  spacing: 12,
+                                  children: [
+                                    Text('正解', style: context.titleMedium),
+                                    SizedBox(
+                                      width: 180,
+                                      child: _RankDisplay.readOnly(rank: correctRank),
+                                    ),
+                                  ],
+                                ),
+                                if (!isCorrect)
+                                  Column(
+                                    spacing: 12,
+                                    children: [
+                                      Text('あなたの回答', style: context.titleMedium),
+                                      SizedBox(
+                                        width: 180,
+                                        child: _RankDisplay.readOnly(rank: answeredRank),
+                                      ),
+                                    ],
+                                  ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: _NextQuizButton(onPressed: notifier.generate),
+                          ),
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: _NextQuizButton(onPressed: notifier.generate),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          }(),
-          null => const SizedBox.shrink(),
-        },
+                  );
+                }(),
+              null => const SizedBox.shrink(),
+            },
+          ),
+          const Positioned(left: 16, bottom: 16, child: PackageInfoText()),
+        ],
       ),
     );
   }

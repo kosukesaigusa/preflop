@@ -1,7 +1,7 @@
 name: preflop_trainer
 description: "ポーカーのプリフロップハンドレンジを学習するためのアプリケーションです。"
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.0
 
 environment:
   sdk: ^3.7.2
@@ -17,6 +17,8 @@ dependencies:
   hooks_riverpod: ^2.6.1
   intl: any
   json_annotation: ^4.9.0
+  logger: ^2.5.0
+  package_info_plus: ^8.3.0
   riverpod_annotation: ^2.6.1
   url_strategy: ^0.3.0
 
