@@ -10,6 +10,7 @@ import '../../../logic/preflop_hand_range_quiz.dart';
 import '../../../style/typography.dart';
 import '../../util/card.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
+import '../matrix/matrix_page.dart';
 
 /// クイズを表示するページ。
 class QuizPage extends ConsumerWidget {
@@ -25,6 +26,16 @@ class QuizPage extends ConsumerWidget {
     final notifier = ref.read(preflopHandRangeQuizzzesNotifierProvider.notifier);
 
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed:
+            () => Navigator.of(context).push(
+              MaterialPageRoute<void>(
+                builder: (context) => const MatrixPage(),
+                fullscreenDialog: true,
+              ),
+            ),
+        child: const Icon(Icons.grid_on),
+      ),
       body: Center(
         child: switch (quizzes.lastOrNull) {
           UnansweredPreflopHandRangeQuiz(:final hand) => SingleChildScrollView(
