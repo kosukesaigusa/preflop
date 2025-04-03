@@ -18,7 +18,7 @@ const tournamentYokosawaPreflopHandRangeData = <String, dynamic>{
     {'rank': 3, 'description': 'CO（後ろに 3 人）のハンド', 'colorCode': '#FFFFFF'},
     {'rank': 2, 'description': 'BTN（後ろに 0〜2 人）のハンド', 'colorCode': '#FFB6C1'},
     {'rank': 1, 'description': 'BB のみ BTN のレイズにコール OK', 'colorCode': '#FFE4E1'},
-    {'rank': 0, 'description': 'fold', 'colorCode': '#808080'},
+    {'rank': 0, 'description': 'フォールドするべきハンド', 'colorCode': '#808080'},
   ],
   'handRanks': {
     // ポケットペア一覧 (13)。

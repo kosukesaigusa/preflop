@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import 'app/page/quiz/quiz_page.dart';
@@ -10,6 +11,12 @@ void main() {
     ProviderScope(
       child: MaterialApp(
         title: 'Preflop Trainer',
+        localizationsDelegates: const [
+          GlobalWidgetsLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate,
+        ],
+        supportedLocales: const [Locale('ja', 'JP')],
         theme: ThemeData(
           colorScheme: const ColorScheme.dark(
             primary: AppColor.gold,

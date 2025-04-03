@@ -97,7 +97,7 @@ class QuizPage extends ConsumerWidget {
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       child: Text(
-                        isCorrect ? '正解！' : '不正解...',
+                        isCorrect ? '🎉 正解！' : '😢 不正解',
                         style: context.displaySmall.copyWith(
                           color: isCorrect ? AppColor.green : AppColor.red,
                         ),
@@ -307,11 +307,14 @@ class _RankDisplay extends StatelessWidget {
         ),
       ),
       const Gap(12),
-      Text(
-        rank.description,
-        style: context.bodyMedium.copyWith(color: AppColor.lightGrey, height: 1.4),
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
+      SizedBox(
+        height: context.bodyMediumLineHeight * 2,
+        child: Text(
+          rank.description,
+          style: context.bodyMedium.copyWith(color: AppColor.lightGrey),
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     ],
   );
@@ -327,18 +330,29 @@ class _NextQuizButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-        backgroundColor: AppColor.gold,
-        foregroundColor: AppColor.white,
-        elevation: 4,
-        shadowColor: AppColor.gold.withValues(alpha: 0.5),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        textStyle: context.titleMedium.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+    return SizedBox(
+      width: 160,
+      height: 160,
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          backgroundColor: AppColor.gold,
+          foregroundColor: AppColor.white,
+          elevation: 8,
+          shadowColor: AppColor.gold.withValues(alpha: 0.5),
+          shape: const CircleBorder(),
+          padding: EdgeInsets.zero,
+          textStyle: context.titleLarge,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          spacing: 16,
+          children: [
+            const Text('次の問題へ'),
+            Transform.rotate(angle: -0.2, child: const Icon(Icons.rocket_launch_rounded, size: 32)),
+          ],
+        ),
       ),
-      child: const Text('次の問題へ'),
     );
   }
 }

@@ -10,6 +10,8 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_hooks: ^0.21.2
+  flutter_localizations:
+    sdk: flutter
   freezed_annotation: ^2.4.4
   gap: ^3.0.1
   hooks_riverpod: ^2.6.1
@@ -51,3 +53,6 @@ flutter:
           weight: 300
         - asset: lib/fonts/NotoSansJP-SemiBold.ttf
           weight: 600
+    - family: NotoColorEmoji
+      fonts:
+        - asset: lib/fonts/NotoColorEmoji-Regular.ttf

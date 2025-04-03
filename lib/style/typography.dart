@@ -6,6 +6,7 @@ import 'color.dart';
 const appTextTheme = TextTheme(
   displayLarge: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 57,
     height: 64 / 57,
     fontWeight: FontWeight.w300,
@@ -14,6 +15,7 @@ const appTextTheme = TextTheme(
   ),
   displayMedium: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 45,
     height: 52 / 45,
     fontWeight: FontWeight.w300,
@@ -22,6 +24,7 @@ const appTextTheme = TextTheme(
   ),
   displaySmall: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 36,
     height: 44 / 36,
     fontWeight: FontWeight.w300,
@@ -30,6 +33,7 @@ const appTextTheme = TextTheme(
   ),
   headlineLarge: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 32,
     height: 40 / 32,
     fontWeight: FontWeight.w300,
@@ -38,6 +42,7 @@ const appTextTheme = TextTheme(
   ),
   headlineMedium: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 28,
     height: 36 / 28,
     fontWeight: FontWeight.w300,
@@ -46,6 +51,7 @@ const appTextTheme = TextTheme(
   ),
   headlineSmall: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 24,
     height: 32 / 24,
     fontWeight: FontWeight.w300,
@@ -54,6 +60,7 @@ const appTextTheme = TextTheme(
   ),
   titleLarge: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 22,
     height: 28 / 22,
     fontWeight: FontWeight.w600,
@@ -62,6 +69,7 @@ const appTextTheme = TextTheme(
   ),
   titleMedium: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 16,
     height: 24 / 16,
     fontWeight: FontWeight.w600,
@@ -70,6 +78,7 @@ const appTextTheme = TextTheme(
   ),
   titleSmall: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 14,
     height: 20 / 14,
     fontWeight: FontWeight.w600,
@@ -78,6 +87,7 @@ const appTextTheme = TextTheme(
   ),
   labelLarge: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 14,
     height: 20 / 14,
     fontWeight: FontWeight.w600,
@@ -86,6 +96,7 @@ const appTextTheme = TextTheme(
   ),
   labelMedium: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 12,
     height: 16 / 12,
     fontWeight: FontWeight.w600,
@@ -94,6 +105,7 @@ const appTextTheme = TextTheme(
   ),
   labelSmall: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 11,
     height: 16 / 11,
     fontWeight: FontWeight.w600,
@@ -102,6 +114,7 @@ const appTextTheme = TextTheme(
   ),
   bodyLarge: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 16,
     height: 24 / 16,
     fontWeight: FontWeight.w300,
@@ -110,6 +123,7 @@ const appTextTheme = TextTheme(
   ),
   bodyMedium: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 14,
     height: 20 / 14,
     fontWeight: FontWeight.w300,
@@ -118,6 +132,7 @@ const appTextTheme = TextTheme(
   ),
   bodySmall: TextStyle(
     fontFamily: 'NotoSansJP',
+    fontFamilyFallback: ['NotoColorEmoji'],
     fontSize: 12,
     height: 16 / 12,
     fontWeight: FontWeight.w300,
@@ -172,4 +187,49 @@ extension BuildContextExtension on BuildContext {
 
   /// 16 / 12 / Light の [TextStyle].
   TextStyle get bodySmall => appTextTheme.bodySmall!;
+
+  /// displayLarge の 1 行の高さ。
+  double get displayLargeLineHeight => 64;
+
+  /// displayMedium の 1 行の高さ。
+  double get displayMediumLineHeight => 52;
+
+  /// displaySmall の 1 行の高さ。
+  double get displaySmallLineHeight => 44;
+
+  /// headlineLarge の 1 行の高さ。
+  double get headlineLargeLineHeight => 40;
+
+  /// headlineMedium の 1 行の高さ。
+  double get headlineMediumLineHeight => 36;
+
+  /// headlineSmall の 1 行の高さ。
+  double get headlineSmallLineHeight => 32;
+
+  /// titleLarge の 1 行の高さ。
+  double get titleLargeLineHeight => 28;
+
+  /// titleMedium の 1 行の高さ。
+  double get titleMediumLineHeight => 24;
+
+  /// titleSmall の 1 行の高さ。
+  double get titleSmallLineHeight => 20;
+
+  /// labelLarge の 1 行の高さ。
+  double get labelLargeLineHeight => 20;
+
+  /// labelMedium の 1 行の高さ。
+  double get labelMediumLineHeight => 16;
+
+  /// labelSmall の 1 行の高さ。
+  double get labelSmallLineHeight => 16;
+
+  /// bodyLarge の 1 行の高さ。
+  double get bodyLargeLineHeight => 24;
+
+  /// bodyMedium の 1 行の高さ。
+  double get bodyMediumLineHeight => 20;
+
+  /// bodySmall の 1 行の高さ。
+  double get bodySmallLineHeight => 16;
 }
