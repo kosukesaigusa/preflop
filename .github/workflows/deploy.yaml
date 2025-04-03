@@ -15,6 +15,7 @@ jobs:
       (github.event_name == 'issue_comment' && github.event.comment.body == 'preview' && github.event.issue.pull_request)
 
     steps:
+      # PR に CI 開始の旨をコメントする。
       - name: Comment on PR
         if: github.event_name == 'issue_comment'
         uses: actions/github-script@v6
@@ -27,19 +28,31 @@ jobs:
               body: `Preview CI が開始されました。`
             })
 
+      # リポジトリをチェックアウトする。
       - uses: actions/checkout@v4
 
+      # PR をチェックアウトする。
       - name: Checkout PR
         if: github.event_name == 'issue_comment'
         run: gh pr checkout ${{ github.event.issue.number }}
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+      # バージョン番号とビルド番号を pubspec.yaml と GitHub Actions の通し番号から取得する。
+      - name: Extract version and build number
+        id: extract_version
+        run: |
+          VERSION=$(grep 'version: ' ./pubspec.yaml | cut -d ' ' -f 2)
+          FULL_VERSION="${VERSION}+${GITHUB_RUN_NUMBER}"
+          echo "fullVersion=${FULL_VERSION}" >> $GITHUB_OUTPUT
+
+      # Flutter のバージョンを取得する。
       - name: Read Flutter SDK version
         id: flutter_sdk_version
         run: echo "version=$(jq -r '.flutter' .fvmrc)" >> $GITHUB_OUTPUT
         shell: bash
 
+      # Flutter のセットアップをする。
       - name: Setup Flutter
         id: flutter-action
         uses: subosito/flutter-action@v2.8.0
@@ -48,9 +61,19 @@ jobs:
           channel: stable
           cache: true
 
+      # Flutter Web アプリをビルドする。
       - name: Build Web app
-        run: flutter build web
+        run: |
+          flutter build web
+          jq --arg fullVersion "${{ steps.extract_version.outputs.fullVersion }}" '.version = $fullVersion' ./build/web/version.json > ./build/web/version_temp.json
+          yes | mv ./build/web/version_temp.json ./build/web/version.json
 
+      # いわゆるキャッシュバスティングの目的で、main.dart.js の URL の末尾にバージョン番号を追加する。
+      - name: Add version to main.dart.js
+        run: |
+          sed -i 's/main\.dart\.js/main.dart.js?v=${{ steps.extract_version.outputs.fullVersion }}/g' build/web/index.html
+
+      # Cloudflare Pages にデプロイする。
       - name: Publish to Cloudflare Pages
         id: deploy
         uses: cloudflare/wrangler-action@v3
@@ -59,6 +82,7 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy build/web --project-name=preflop-web-app
 
+      # デプロイ済み URL をコミットステータスに記録する。
       # - name: Add publish URL as commit status
       #   if: github.event_name == 'push'
       #   uses: actions/github-script@v6
@@ -75,6 +99,7 @@ jobs:
       #         target_url: "${{ steps.deploy.outputs.deployment-url }}",
       #       });
 
+      # PR に CI 完了の旨をコメントする。
       - name: Comment PR with preview URL
         if: github.event_name == 'issue_comment'
         uses: actions/github-script@v6
