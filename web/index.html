@@ -5,7 +5,6 @@
 
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="noindex, nofollow">
   <meta name="description" content="ポーカーのプリフロップハンドレンジを学習するためのアプリケーションです。">
   <meta name="keywords" content="ポーカー,プリフロップ,ハンドレンジ,学習,トレーニング">
@@ -35,8 +34,96 @@
 
   <title>Preflop Trainer - ポーカーのプリフロップハンドレンジ学習アプリ</title>
   <link rel="manifest" href="manifest.json">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+    .loading-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      width: 100vw;
+      background-color: #1A1A2E;
+    }
+    .loading-icon {
+      width: 120px;
+      height: 120px;
+      animation: rotate 4s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+      filter: drop-shadow(0 0 12px rgba(229, 185, 78, 0.4));
+    }
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      25% {
+        transform: rotate(90deg);
+      }
+      50% {
+        transform: rotate(180deg);
+      }
+      75% {
+        transform: rotate(270deg);
+      }
+      85% {
+        transform: rotate(405deg);
+      }
+      95% {
+        transform: rotate(315deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
 </head>
 <body>
-  <script src="flutter_bootstrap.js" async></script>
+  <div id="loading" class="loading-container">
+    <img src="icons/Icon-512.png" class="loading-icon" alt="Loading..." />
+  </div>
+  <script>
+    // Flutter の初期化が完了したかどうか。
+    let isFlutterInitialized = false;
+
+    function initFlutter() {
+      // 既に初期化済みの場合は処理を終了する。
+      if (isFlutterInitialized) {
+        return;
+      }
+
+      // flutter_bootstrap.js の読み込みが完了していない場合は、
+      // 100ms 後に再度初期化を試みる。
+      // _flutter オブジェクトは flutter_bootstrap.js によって
+      // グローバルスコープに定義される。
+      if (typeof _flutter === 'undefined') {
+        setTimeout(initFlutter, 100);
+        return;
+      }
+
+      // Flutter の初期化が完了したことを記録する。
+      isFlutterInitialized = true;
+
+      // Flutter アプリケーションを初期化する。
+      _flutter.loader.load({
+        onEntrypointLoaded: async function(engineInitializer) {
+          const loading = document.querySelector('#loading');
+          try {
+            // Flutter エンジンを初期化し、アプリケーションを実行する。
+            const appRunner = await engineInitializer.initializeEngine();
+            await appRunner.runApp();
+          } finally {
+            // エラーの有無に関わらず、ローディング画面を削除する。
+            // loading 要素の存在チェックは、要素が既に削除されている可能性があるため行う。
+            if (loading) {
+              loading.remove();
+            }
+          }
+        }
+      });
+    }
+  </script>
+  <script src="flutter_bootstrap.js" onload="initFlutter()"></script>
 </body>
 </html>
