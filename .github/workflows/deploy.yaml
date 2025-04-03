@@ -1,0 +1,88 @@
+name: Deploy to Cloudflare Pages
+
+on:
+  push:
+    branches:
+      - main
+  issue_comment:
+    types: [created]
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    if: >
+      github.event_name == 'push' ||
+      (github.event_name == 'issue_comment' && github.event.comment.body == 'preview' && github.event.issue.pull_request)
+
+    steps:
+      - name: Comment on PR
+        if: github.event_name == 'issue_comment'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `Preview CI が開始されました。`
+            })
+
+      - uses: actions/checkout@v4
+
+      - name: Checkout PR
+        if: github.event_name == 'issue_comment'
+        run: gh pr checkout ${{ github.event.issue.number }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Read Flutter SDK version
+        id: flutter_sdk_version
+        run: echo "version=$(jq -r '.flutter' .fvmrc)" >> $GITHUB_OUTPUT
+        shell: bash
+
+      - name: Setup Flutter
+        id: flutter-action
+        uses: subosito/flutter-action@v2.8.0
+        with:
+          flutter-version: ${{ steps.flutter_sdk_version.outputs.version }}
+          channel: stable
+          cache: true
+
+      - name: Build Web app
+        run: flutter build web
+
+      - name: Publish to Cloudflare Pages
+        id: deploy
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy build/web --project-name=preflop-web-app
+
+      - name: Add publish URL as commit status
+        if: github.event_name == 'push'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const sha = context.payload.pull_request?.head.sha ?? context.sha;
+            await github.rest.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              context: 'Preview URL',
+              description: 'Cloudflare Pages deployment',
+              state: 'success',
+              sha,
+              target_url: "${{ steps.deploy.outputs.deployment-url }}",
+            });
+
+      - name: Comment PR with preview URL
+        if: github.event_name == 'issue_comment'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "Preview URL: ${{ steps.deploy.outputs.deployment-url }}",
+            });
