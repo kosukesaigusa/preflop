@@ -1,4 +1,5 @@
 import 'package:device_preview/device_preview.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -28,6 +29,8 @@ Future<void> main() async {
       observers: [_ProviderErrorLoggerObserver()],
       overrides: [packageInfoProvider.overrideWith((_) => packageInfo)],
       child: DevicePreview(
+        // ignore: avoid_redundant_argument_values
+        enabled: kDebugMode,
         builder:
             (_) => MaterialApp(
               // NOTE: Flutter SDK では deprecated になっているが、DevicePreview の
