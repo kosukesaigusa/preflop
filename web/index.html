@@ -87,11 +87,30 @@
     // Flutter の初期化が完了したかどうか。
     let isFlutterInitialized = false;
 
+    // ローディング画面を非表示にする関数。
+    function hideLoading() {
+      const loading = document.querySelector('#loading');
+      if (loading) {
+        loading.remove();
+      }
+    }
+
+    // エラー時の処理。
+    function handleError(error) {
+      console.error('Flutter の初期化中にエラーが発生しました:', error);
+      hideLoading();
+    }
+
     function initFlutter() {
       // 既に初期化済みの場合は処理を終了する。
       if (isFlutterInitialized) {
         return;
       }
+
+      // タイムアウト処理を設定する（5秒）。
+      const timeoutId = setTimeout(() => {
+        hideLoading();
+      }, 5000);
 
       // flutter_bootstrap.js の読み込みが完了していない場合は、
       // 100ms 後に再度初期化を試みる。
@@ -108,21 +127,30 @@
       // Flutter アプリケーションを初期化する。
       _flutter.loader.load({
         onEntrypointLoaded: async function(engineInitializer) {
-          const loading = document.querySelector('#loading');
           try {
             // Flutter エンジンを初期化し、アプリケーションを実行する。
             const appRunner = await engineInitializer.initializeEngine();
             await appRunner.runApp();
+          } catch (error) {
+            handleError(error);
           } finally {
-            // エラーの有無に関わらず、ローディング画面を削除する。
-            // loading 要素の存在チェックは、要素が既に削除されている可能性があるため行う。
-            if (loading) {
-              loading.remove();
-            }
+            // タイムアウトをクリアする。
+            clearTimeout(timeoutId);
+            // ローディング画面を非表示にする。
+            hideLoading();
           }
         }
-      });
+      }).catch(handleError);
     }
+
+    // ページ読み込み完了から一定時間経過後も Flutter が初期化されない場合にフォールバックする。
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        if (!isFlutterInitialized) {
+          hideLoading();
+        }
+      }, 8000);
+    });
   </script>
   <script src="flutter_bootstrap.js" onload="initFlutter()"></script>
 </body>

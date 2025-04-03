@@ -25,42 +25,46 @@ class RankDisplay extends StatelessWidget {
     switch (_onPressed) {
       case null:
         return Container(
-          padding: const EdgeInsets.all(16),
+          width: 136,
+          padding: const EdgeInsets.all(12),
           decoration: BoxDecoration(
             color: AppColor.darkBlueGrey,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(12),
             border: Border.all(color: AppColor.grey),
             boxShadow: [
               BoxShadow(
                 color: AppColor.black.withValues(alpha: 0.2),
-                blurRadius: 8,
-                offset: const Offset(0, 4),
+                blurRadius: 6,
+                offset: const Offset(0, 3),
               ),
             ],
           ),
           child: _child(context),
         );
       default:
-        return Material(
-          color: AppColor.transparent,
-          child: InkWell(
-            onTap: _onPressed,
-            borderRadius: BorderRadius.circular(16),
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: AppColor.darkBlueGrey,
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: AppColor.grey),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColor.black.withValues(alpha: 0.2),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
-                  ),
-                ],
+        return SizedBox(
+          width: 136,
+          child: Material(
+            color: AppColor.transparent,
+            child: InkWell(
+              onTap: _onPressed,
+              borderRadius: BorderRadius.circular(12),
+              child: Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: AppColor.darkBlueGrey,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: AppColor.grey),
+                  boxShadow: [
+                    BoxShadow(
+                      color: AppColor.black.withValues(alpha: 0.2),
+                      blurRadius: 6,
+                      offset: const Offset(0, 3),
+                    ),
+                  ],
+                ),
+                child: _child(context),
               ),
-              child: _child(context),
             ),
           ),
         );
@@ -73,33 +77,33 @@ class RankDisplay extends StatelessWidget {
     mainAxisSize: MainAxisSize.min,
     children: [
       Container(
-        padding: const EdgeInsets.symmetric(vertical: 16),
+        padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
           color: rank.color,
-          borderRadius: BorderRadius.circular(12),
+          borderRadius: BorderRadius.circular(8),
           boxShadow: [
             BoxShadow(
               color: rank.color.withValues(alpha: 0.3),
-              blurRadius: 8,
+              blurRadius: 6,
               offset: const Offset(0, 2),
             ),
           ],
         ),
         child: Text(
           rank.displayText,
-          style: context.displaySmall.copyWith(
+          style: context.titleLarge.copyWith(
             color: rank.color.computeLuminance() > 0.5 ? AppColor.black : AppColor.white,
             fontWeight: FontWeight.bold,
           ),
           textAlign: TextAlign.center,
         ),
       ),
-      const Gap(12),
+      const Gap(8),
       SizedBox(
-        height: context.bodyMediumLineHeight * 2,
+        height: context.bodySmallLineHeight * 2,
         child: Text(
           rank.description,
-          style: context.bodyMedium.copyWith(color: AppColor.lightGrey),
+          style: context.bodySmall.copyWith(color: AppColor.lightGrey),
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
         ),

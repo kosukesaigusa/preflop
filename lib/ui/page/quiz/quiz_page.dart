@@ -6,7 +6,7 @@ import '../../../model/entity/hand.dart';
 import '../../../model/entity/preflop_hand_range_quiz.dart';
 import '../../../model/logic/preflop_hand_range_matrix.dart';
 import '../../../model/logic/preflop_hand_range_quiz.dart';
-import '../../review_review_page.dart';
+import '../../review_page.dart';
 import '../../style/color.dart';
 import '../../style/typography.dart';
 import '../../util/card.dart';
@@ -113,26 +113,21 @@ class QuizPage extends ConsumerWidget {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: IntrinsicHeight(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                for (final rank
-                                    in ref
-                                        .watch(preflopHandRangeMatricesNotifierProvider)
-                                        .preflopRanks)
-                                  Padding(
-                                    padding: const EdgeInsets.only(right: 12),
-                                    child: SizedBox(
-                                      width: 180,
-                                      child: RankDisplay.answerButton(
-                                        rank: rank,
-                                        onPressed: () => notifier.answer(rank),
-                                      ),
-                                    ),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              for (final rank
+                                  in ref
+                                      .watch(preflopHandRangeMatricesNotifierProvider)
+                                      .preflopRanks)
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 12),
+                                  child: RankDisplay.answerButton(
+                                    rank: rank,
+                                    onPressed: () => notifier.answer(rank),
                                   ),
-                              ],
-                            ),
+                                ),
+                            ],
                           ),
                         ),
                       ),
@@ -185,10 +180,7 @@ class QuizPage extends ConsumerWidget {
                                 spacing: 12,
                                 children: [
                                   Text('正解', style: context.titleMedium),
-                                  SizedBox(
-                                    width: 180,
-                                    child: RankDisplay.readOnly(rank: correctRank),
-                                  ),
+                                  RankDisplay.readOnly(rank: correctRank),
                                 ],
                               ),
                               if (!latestQuiz.isCorrect)
@@ -196,10 +188,7 @@ class QuizPage extends ConsumerWidget {
                                   spacing: 12,
                                   children: [
                                     Text('あなたの回答', style: context.titleMedium),
-                                    SizedBox(
-                                      width: 180,
-                                      child: RankDisplay.readOnly(rank: answeredRank),
-                                    ),
+                                    RankDisplay.readOnly(rank: answeredRank),
                                   ],
                                 ),
                             ],
@@ -216,7 +205,7 @@ class QuizPage extends ConsumerWidget {
               null => const SizedBox.shrink(),
             },
           ),
-          const Positioned(left: 16, bottom: 16, child: PackageInfoText()),
+          const Positioned(left: 24, bottom: 24, child: PackageInfoText()),
         ],
       ),
     );

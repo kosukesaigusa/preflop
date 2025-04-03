@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../model/entity/preflop_hand_range_quiz.dart';
@@ -26,17 +27,25 @@ class ReviewPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      body: CustomScrollView(
-        slivers: [
-          SliverPadding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 16),
-            sliver: SliverToBoxAdapter(child: Text('学習履歴', style: context.titleLarge)),
-          ),
-          SliverList.builder(
-            itemCount: answeredQuizzes.length,
-            itemBuilder: (context, index) => _QuizHistoryCard(answeredQuizzes[index]),
-          ),
-        ],
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: CustomScrollView(
+          slivers: [
+            SliverPadding(
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              sliver: SliverToBoxAdapter(child: Text('学習履歴', style: context.titleLarge)),
+            ),
+            SliverList.builder(
+              itemCount: answeredQuizzes.length,
+              itemBuilder:
+                  (context, index) => Padding(
+                    padding: const EdgeInsets.only(bottom: 16),
+                    child: _QuizHistoryCard(answeredQuizzes[index]),
+                  ),
+            ),
+            const SliverToBoxAdapter(child: Gap(60)),
+          ],
+        ),
       ),
     );
   }
@@ -51,7 +60,7 @@ class _QuizHistoryCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: EdgeInsets.zero,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
@@ -70,23 +79,22 @@ class _QuizHistoryCard extends StatelessWidget {
                 Text(quiz.hand.asPreflopHand.displayText, style: context.titleLarge),
               ],
             ),
-            Wrap(
-              spacing: 24,
-              runSpacing: 24,
+            Row(
               children: [
                 Column(
-                  spacing: 12,
                   children: [
                     Text('正解', style: context.titleMedium),
-                    SizedBox(width: 180, child: RankDisplay.readOnly(rank: quiz.correctRank)),
+                    const Gap(12),
+                    RankDisplay.readOnly(rank: quiz.correctRank),
                   ],
                 ),
+                const Spacer(),
                 if (!quiz.isCorrect)
                   Column(
-                    spacing: 12,
                     children: [
                       Text('あなたの回答', style: context.titleMedium),
-                      SizedBox(width: 180, child: RankDisplay.readOnly(rank: quiz.answeredRank)),
+                      const Gap(12),
+                      RankDisplay.readOnly(rank: quiz.answeredRank),
                     ],
                   ),
               ],
