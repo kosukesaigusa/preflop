@@ -7,10 +7,9 @@ import '../../../entity/preflop.dart';
 import '../../../entity/preflop_hand_range_quiz.dart';
 import '../../../logic/preflop_hand_range_matrix.dart';
 import '../../../logic/preflop_hand_range_quiz.dart';
+import '../../../style/typography.dart';
 import '../../util/card.dart';
-import '../../util/typography.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
-import '../matrix/matrix_page.dart';
 
 /// クイズを表示するページ。
 class QuizPage extends ConsumerWidget {
@@ -19,9 +18,6 @@ class QuizPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 選択中のハンドレンジを取得する。
-    final selectedRange = ref.watch(preflopHandRangeMatricesNotifierProvider);
-
     // クイズ一覧を取得する。
     final quizzes = ref.watch(preflopHandRangeQuizzzesNotifierProvider);
 
@@ -29,16 +25,6 @@ class QuizPage extends ConsumerWidget {
     final notifier = ref.read(preflopHandRangeQuizzzesNotifierProvider.notifier);
 
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed:
-            () => Navigator.of(context).push(
-              MaterialPageRoute<void>(
-                builder: (context) => const MatrixPage(),
-                fullscreenDialog: true,
-              ),
-            ),
-        child: const Icon(Icons.grid_on),
-      ),
       body: Center(
         child: switch (quizzes.lastOrNull) {
           UnansweredPreflopHandRangeQuiz(:final hand) => SingleChildScrollView(
@@ -66,7 +52,8 @@ class QuizPage extends ConsumerWidget {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            for (final rank in selectedRange.preflopRanks)
+                            for (final rank
+                                in ref.watch(preflopHandRangeMatricesNotifierProvider).preflopRanks)
                               Padding(
                                 padding: const EdgeInsets.only(right: 12),
                                 child: SizedBox(
@@ -138,18 +125,7 @@ class QuizPage extends ConsumerWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: ElevatedButton(
-                        onPressed: notifier.generate,
-                        style: ElevatedButton.styleFrom(
-                          padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                          backgroundColor: Colors.white,
-                          foregroundColor: Colors.black,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-                          side: BorderSide(color: Colors.grey.shade200),
-                        ),
-                        child: Text('次の問題へ', style: context.titleMedium),
-                      ),
+                      child: _NextQuizButton(onPressed: notifier.generate),
                     ),
                   ],
                 ),
@@ -175,14 +151,14 @@ class _Hand extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: const Color(0xFF2C2C44), // ダークブルーグレー
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade200),
+        border: Border.all(color: Colors.grey.shade800),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 2),
+            color: Colors.black.withValues(alpha: 0.3),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -195,13 +171,13 @@ class _Hand extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               decoration: BoxDecoration(
                 color: Colors.white,
-                border: Border.all(color: Colors.grey.shade200),
+                border: Border.all(color: Colors.grey.shade800),
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
-                    blurRadius: 4,
-                    offset: const Offset(0, 2),
+                    color: Colors.black.withValues(alpha: 0.2),
+                    blurRadius: 8,
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
@@ -215,7 +191,10 @@ class _Hand extends StatelessWidget {
                   const Gap(8),
                   Text(
                     card.rank.displayText,
-                    style: context.headlineMedium.copyWith(color: card.mark.color),
+                    style: context.headlineMedium.copyWith(
+                      color: card.mark.color,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -248,14 +227,14 @@ class _RankDisplay extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: const Color(0xFF2C2C44), // ダークブルーグレー
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.grey.shade200),
+            border: Border.all(color: Colors.grey.shade800),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.05),
+                color: Colors.black.withValues(alpha: 0.2),
                 blurRadius: 8,
-                offset: const Offset(0, 2),
+                offset: const Offset(0, 4),
               ),
             ],
           ),
@@ -270,14 +249,14 @@ class _RankDisplay extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: const Color(0xFF2C2C44), // ダークブルーグレー
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.grey.shade200),
+                border: Border.all(color: Colors.grey.shade800),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.05),
+                    color: Colors.black.withValues(alpha: 0.2),
                     blurRadius: 8,
-                    offset: const Offset(0, 2),
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
@@ -295,7 +274,17 @@ class _RankDisplay extends StatelessWidget {
     children: [
       Container(
         padding: const EdgeInsets.symmetric(vertical: 16),
-        decoration: BoxDecoration(color: rank.color, borderRadius: BorderRadius.circular(12)),
+        decoration: BoxDecoration(
+          color: rank.color,
+          borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: rank.color.withValues(alpha: 0.3),
+              blurRadius: 8,
+              offset: const Offset(0, 2),
+            ),
+          ],
+        ),
         child: Text(
           rank.displayText,
           style: context.displaySmall.copyWith(
@@ -308,10 +297,36 @@ class _RankDisplay extends StatelessWidget {
       const Gap(12),
       Text(
         rank.description,
-        style: context.bodyMedium.copyWith(color: Colors.grey.shade700, height: 1.4),
+        style: context.bodyMedium.copyWith(color: const Color(0xFFE4E4E7), height: 1.4),
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
       ),
     ],
   );
+}
+
+/// 次の問題へ進むボタン。
+class _NextQuizButton extends StatelessWidget {
+  /// 次の問題へ進むボタンを作成する。
+  const _NextQuizButton({required this.onPressed});
+
+  /// ボタン押下時のコールバック。
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return ElevatedButton(
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
+        backgroundColor: const Color(0xFFE5B94E), // ゴールド
+        foregroundColor: Colors.white,
+        elevation: 4,
+        shadowColor: const Color(0xFFE5B94E).withValues(alpha: 0.5),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        textStyle: context.titleMedium.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
+      ),
+      child: const Text('次の問題へ'),
+    );
+  }
 }

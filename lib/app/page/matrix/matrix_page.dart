@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../entity/preflop.dart';
 import '../../../logic/preflop_hand_range_matrix.dart';
-import '../../util/typography.dart';
+import '../../../style/typography.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
 
 /// マトリックスを表示するページ。

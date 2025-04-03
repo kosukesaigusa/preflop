@@ -59,30 +59,30 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy build/web --project-name=preflop-web-app
 
-      - name: Add publish URL as commit status
-        if: github.event_name == 'push'
-        uses: actions/github-script@v6
-        with:
-          script: |
-            const sha = context.payload.pull_request?.head.sha ?? context.sha;
-            await github.rest.repos.createCommitStatus({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              context: 'Preview URL',
-              description: 'Cloudflare Pages deployment',
-              state: 'success',
-              sha,
-              target_url: "${{ steps.deploy.outputs.deployment-url }}",
-            });
-
-      # - name: Comment PR with preview URL
-      #   if: github.event_name == 'issue_comment'
+      # - name: Add publish URL as commit status
+      #   if: github.event_name == 'push'
       #   uses: actions/github-script@v6
       #   with:
       #     script: |
-      #       github.rest.issues.createComment({
-      #         issue_number: context.issue.number,
+      #       const sha = context.payload.pull_request?.head.sha ?? context.sha;
+      #       await github.rest.repos.createCommitStatus({
       #         owner: context.repo.owner,
       #         repo: context.repo.repo,
-      #         body: "Preview URL: ${{ steps.deploy.outputs.deployment-url }}",
+      #         context: 'Preview URL',
+      #         description: 'Cloudflare Pages deployment',
+      #         state: 'success',
+      #         sha,
+      #         target_url: "${{ steps.deploy.outputs.deployment-url }}",
       #       });
+
+      - name: Comment PR with preview URL
+        if: github.event_name == 'issue_comment'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: "Preview URL: ${{ steps.deploy.outputs.deployment-url }}",
+            });

@@ -8,7 +8,7 @@ const appTextTheme = TextTheme(
     height: 64 / 57,
     fontWeight: FontWeight.w300,
     letterSpacing: -0.25,
-    color: Color(0xFF111111),
+    color: Color(0xFFF5F5F7), // 明るいグレー
   ),
   displayMedium: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -16,7 +16,7 @@ const appTextTheme = TextTheme(
     height: 52 / 45,
     fontWeight: FontWeight.w300,
     letterSpacing: 0,
-    color: Color(0xFF111111),
+    color: Color(0xFFF5F5F7),
   ),
   displaySmall: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -24,7 +24,7 @@ const appTextTheme = TextTheme(
     height: 44 / 36,
     fontWeight: FontWeight.w300,
     letterSpacing: 0,
-    color: Color(0xFF111111),
+    color: Color(0xFFF5F5F7),
   ),
   headlineLarge: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -32,7 +32,7 @@ const appTextTheme = TextTheme(
     height: 40 / 32,
     fontWeight: FontWeight.w300,
     letterSpacing: 0,
-    color: Color(0xFF111111),
+    color: Color(0xFFF5F5F7),
   ),
   headlineMedium: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -40,7 +40,7 @@ const appTextTheme = TextTheme(
     height: 36 / 28,
     fontWeight: FontWeight.w300,
     letterSpacing: 0,
-    color: Color(0xFF111111),
+    color: Color(0xFFF5F5F7),
   ),
   headlineSmall: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -48,7 +48,7 @@ const appTextTheme = TextTheme(
     height: 32 / 24,
     fontWeight: FontWeight.w300,
     letterSpacing: 0,
-    color: Color(0xFF111111),
+    color: Color(0xFFF5F5F7),
   ),
   titleLarge: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -56,7 +56,7 @@ const appTextTheme = TextTheme(
     height: 28 / 22,
     fontWeight: FontWeight.w600,
     letterSpacing: 0,
-    color: Color(0xFF111111),
+    color: Color(0xFFF5F5F7), // 明るいグレー（通常のタイトル）
   ),
   titleMedium: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -64,7 +64,7 @@ const appTextTheme = TextTheme(
     height: 24 / 16,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.15,
-    color: Color(0xFF111111),
+    color: Color(0xFFF5F5F7),
   ),
   titleSmall: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -72,7 +72,7 @@ const appTextTheme = TextTheme(
     height: 20 / 14,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.1,
-    color: Color(0xFF111111),
+    color: Color(0xFFF5F5F7),
   ),
   labelLarge: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -80,7 +80,7 @@ const appTextTheme = TextTheme(
     height: 20 / 14,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.1,
-    color: Color(0xFF111111),
+    color: Color(0xFFD4D4D8), // やや暗めのグレー
   ),
   labelMedium: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -88,7 +88,7 @@ const appTextTheme = TextTheme(
     height: 16 / 12,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
-    color: Color(0xFF111111),
+    color: Color(0xFFD4D4D8),
   ),
   labelSmall: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -96,7 +96,7 @@ const appTextTheme = TextTheme(
     height: 16 / 11,
     fontWeight: FontWeight.w600,
     letterSpacing: 0.5,
-    color: Color(0xFF111111),
+    color: Color(0xFFD4D4D8),
   ),
   bodyLarge: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -104,7 +104,7 @@ const appTextTheme = TextTheme(
     height: 24 / 16,
     fontWeight: FontWeight.w300,
     letterSpacing: 0.5,
-    color: Color(0xFF111111),
+    color: Color(0xFFE4E4E7), // 標準的な明るいグレー
   ),
   bodyMedium: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -112,7 +112,7 @@ const appTextTheme = TextTheme(
     height: 20 / 14,
     fontWeight: FontWeight.w300,
     letterSpacing: 0.25,
-    color: Color(0xFF111111),
+    color: Color(0xFFE4E4E7),
   ),
   bodySmall: TextStyle(
     fontFamily: 'NotoSansJP',
@@ -120,7 +120,7 @@ const appTextTheme = TextTheme(
     height: 16 / 12,
     fontWeight: FontWeight.w300,
     letterSpacing: 0.4,
-    color: Color(0xFF111111),
+    color: Color(0xFFE4E4E7),
   ),
 );
 
