@@ -7,6 +7,7 @@ import '../../../entity/preflop.dart';
 import '../../../entity/preflop_hand_range_quiz.dart';
 import '../../../logic/preflop_hand_range_matrix.dart';
 import '../../../logic/preflop_hand_range_quiz.dart';
+import '../../../style/color.dart';
 import '../../../style/typography.dart';
 import '../../util/card.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
@@ -98,7 +99,7 @@ class QuizPage extends ConsumerWidget {
                       child: Text(
                         isCorrect ? '正解！' : '不正解...',
                         style: context.displaySmall.copyWith(
-                          color: isCorrect ? Colors.green : Colors.red,
+                          color: isCorrect ? AppColor.green : AppColor.red,
                         ),
                       ),
                     ),
@@ -162,12 +163,12 @@ class _Hand extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(24),
       decoration: BoxDecoration(
-        color: const Color(0xFF2C2C44), // ダークブルーグレー
+        color: AppColor.darkBlueGrey,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: Colors.grey.shade800),
+        border: Border.all(color: AppColor.grey),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.3),
+            color: AppColor.black.withValues(alpha: 0.3),
             blurRadius: 12,
             offset: const Offset(0, 6),
           ),
@@ -181,12 +182,12 @@ class _Hand extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
               decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(color: Colors.grey.shade800),
+                color: AppColor.white,
+                border: Border.all(color: AppColor.grey),
                 borderRadius: BorderRadius.circular(12),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.2),
+                    color: AppColor.black.withValues(alpha: 0.2),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
@@ -238,12 +239,12 @@ class _RankDisplay extends StatelessWidget {
         return Container(
           padding: const EdgeInsets.all(16),
           decoration: BoxDecoration(
-            color: const Color(0xFF2C2C44), // ダークブルーグレー
+            color: AppColor.darkBlueGrey,
             borderRadius: BorderRadius.circular(16),
-            border: Border.all(color: Colors.grey.shade800),
+            border: Border.all(color: AppColor.grey),
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.2),
+                color: AppColor.black.withValues(alpha: 0.2),
                 blurRadius: 8,
                 offset: const Offset(0, 4),
               ),
@@ -253,19 +254,19 @@ class _RankDisplay extends StatelessWidget {
         );
       default:
         return Material(
-          color: Colors.transparent,
+          color: AppColor.transparent,
           child: InkWell(
             onTap: _onPressed,
             borderRadius: BorderRadius.circular(16),
             child: Container(
               padding: const EdgeInsets.all(16),
               decoration: BoxDecoration(
-                color: const Color(0xFF2C2C44), // ダークブルーグレー
+                color: AppColor.darkBlueGrey,
                 borderRadius: BorderRadius.circular(16),
-                border: Border.all(color: Colors.grey.shade800),
+                border: Border.all(color: AppColor.grey),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black.withValues(alpha: 0.2),
+                    color: AppColor.black.withValues(alpha: 0.2),
                     blurRadius: 8,
                     offset: const Offset(0, 4),
                   ),
@@ -299,7 +300,7 @@ class _RankDisplay extends StatelessWidget {
         child: Text(
           rank.displayText,
           style: context.displaySmall.copyWith(
-            color: rank.color.computeLuminance() > 0.5 ? Colors.black : Colors.white,
+            color: rank.color.computeLuminance() > 0.5 ? AppColor.black : AppColor.white,
             fontWeight: FontWeight.bold,
           ),
           textAlign: TextAlign.center,
@@ -308,7 +309,7 @@ class _RankDisplay extends StatelessWidget {
       const Gap(12),
       Text(
         rank.description,
-        style: context.bodyMedium.copyWith(color: const Color(0xFFE4E4E7), height: 1.4),
+        style: context.bodyMedium.copyWith(color: AppColor.lightGrey, height: 1.4),
         maxLines: 3,
         overflow: TextOverflow.ellipsis,
       ),
@@ -330,10 +331,10 @@ class _NextQuizButton extends StatelessWidget {
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 20),
-        backgroundColor: const Color(0xFFE5B94E), // ゴールド
-        foregroundColor: Colors.white,
+        backgroundColor: AppColor.gold,
+        foregroundColor: AppColor.white,
         elevation: 4,
-        shadowColor: const Color(0xFFE5B94E).withValues(alpha: 0.5),
+        shadowColor: AppColor.gold.withValues(alpha: 0.5),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         textStyle: context.titleMedium.copyWith(fontSize: 18, fontWeight: FontWeight.bold),
       ),

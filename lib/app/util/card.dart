@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../entity/card.dart' as card;
 import '../../gen/assets.gen.dart';
+import '../../style/color.dart';
 
 /// [card.Rank] の拡張クラス。
 extension RankExtension on card.Rank {
@@ -27,10 +28,10 @@ extension RankExtension on card.Rank {
 extension MarkExtension on card.Mark {
   /// [card.Mark] の色を取得する。
   Color get color => switch (this) {
-    card.Mark.spade => Colors.black,
-    card.Mark.heart => Colors.red,
-    card.Mark.diamond => Colors.red,
-    card.Mark.club => Colors.black,
+    card.Mark.spade => AppColor.black,
+    card.Mark.heart => AppColor.red,
+    card.Mark.diamond => AppColor.red,
+    card.Mark.club => AppColor.black,
   };
 }
 

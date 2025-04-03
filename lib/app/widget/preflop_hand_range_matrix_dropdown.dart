@@ -3,6 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../entity/preflop.dart';
 import '../../logic/preflop_hand_range_matrix.dart';
+import '../../style/color.dart';
 import '../../style/typography.dart';
 
 /// プリフロップハンドレンジ表を選択するドロップダウン。
@@ -24,12 +25,12 @@ class PreflopHandRangeMatrixDropdown extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
-        color: const Color(0xFF2C2C44), // ダークブルーグレー
+        color: AppColor.darkBlueGrey,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey.shade800),
+        border: Border.all(color: AppColor.grey),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.2),
+            color: AppColor.black.withValues(alpha: 0.2),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -38,15 +39,12 @@ class PreflopHandRangeMatrixDropdown extends ConsumerWidget {
       child: Theme(
         data: Theme.of(context).copyWith(
           // ドロップダウンメニューの背景色
-          canvasColor: const Color(0xFF2C2C44),
+          canvasColor: AppColor.darkBlueGrey,
         ),
         child: DropdownButton<PreflopHandRangeMatrix>(
           value: selectedRange,
           isExpanded: true,
-          icon: const Icon(
-            Icons.arrow_drop_down,
-            color: Color(0xFFE5B94E), // ゴールド
-          ),
+          icon: const Icon(Icons.arrow_drop_down, color: AppColor.gold),
           underline: const SizedBox(),
           items: [
             for (final matrix in availableRanges)
@@ -54,9 +52,7 @@ class PreflopHandRangeMatrixDropdown extends ConsumerWidget {
                 value: matrix,
                 child: Text(
                   matrix.name,
-                  style: context.titleMedium.copyWith(
-                    color: const Color(0xFFF5F5F7), // 明るいグレー
-                  ),
+                  style: context.titleMedium.copyWith(color: AppColor.lightGrey),
                 ),
               ),
           ],

@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../entity/preflop.dart';
 import '../../../logic/preflop_hand_range_matrix.dart';
+import '../../../style/color.dart';
 import '../../../style/typography.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
 
@@ -94,9 +95,7 @@ class MatrixPage extends ConsumerWidget {
                                                       width: cellSize,
                                                       height: cellSize,
                                                       decoration: BoxDecoration(
-                                                        border: Border.all(
-                                                          color: Colors.grey.shade200,
-                                                        ),
+                                                        border: Border.all(color: AppColor.grey),
                                                       ),
                                                     );
                                                   }
@@ -106,9 +105,7 @@ class MatrixPage extends ConsumerWidget {
                                                     height: cellSize,
                                                     decoration: BoxDecoration(
                                                       color: rank.color,
-                                                      border: Border.all(
-                                                        color: Colors.grey.shade200,
-                                                      ),
+                                                      border: Border.all(color: AppColor.grey),
                                                     ),
                                                     child: Center(
                                                       child: Text(
@@ -118,8 +115,8 @@ class MatrixPage extends ConsumerWidget {
                                                           fontWeight: FontWeight.bold,
                                                           color:
                                                               rank.color.computeLuminance() > 0.5
-                                                                  ? Colors.black
-                                                                  : Colors.white,
+                                                                  ? AppColor.black
+                                                                  : AppColor.white,
                                                         ),
                                                       ),
                                                     ),
@@ -133,10 +130,8 @@ class MatrixPage extends ConsumerWidget {
                                     SizedBox(
                                       width: cellSize * 13,
                                       child: DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            top: BorderSide(color: Colors.grey.shade200),
-                                          ),
+                                        decoration: const BoxDecoration(
+                                          border: Border(top: BorderSide(color: AppColor.grey)),
                                         ),
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -154,9 +149,7 @@ class MatrixPage extends ConsumerWidget {
                                                       decoration: BoxDecoration(
                                                         color: rank.color,
                                                         borderRadius: BorderRadius.circular(4),
-                                                        border: Border.all(
-                                                          color: Colors.grey.shade200,
-                                                        ),
+                                                        border: Border.all(color: AppColor.grey),
                                                       ),
                                                     ),
                                                     const Gap(8),
