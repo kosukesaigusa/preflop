@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../gen/fonts.gen.dart';
 import 'color.dart';
+import 'gen/fonts.gen.dart';
 
 /// アプリで使用するテキストスタイルから定義された [TextTheme].
 const appTextTheme = TextTheme(

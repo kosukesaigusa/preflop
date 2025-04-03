@@ -12,6 +12,26 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart' as _svg;
 import 'package:vector_graphics/vector_graphics.dart' as _vg;
 
+class $AssetsFontsGen {
+  const $AssetsFontsGen();
+
+  /// File path: assets/fonts/NotoColorEmoji-Regular.ttf
+  String get notoColorEmojiRegular => 'assets/fonts/NotoColorEmoji-Regular.ttf';
+
+  /// File path: assets/fonts/NotoSansJP-Light.ttf
+  String get notoSansJPLight => 'assets/fonts/NotoSansJP-Light.ttf';
+
+  /// File path: assets/fonts/NotoSansJP-SemiBold.ttf
+  String get notoSansJPSemiBold => 'assets/fonts/NotoSansJP-SemiBold.ttf';
+
+  /// List of all assets
+  List<String> get values => [
+    notoColorEmojiRegular,
+    notoSansJPLight,
+    notoSansJPSemiBold,
+  ];
+}
+
 class $AssetsSvgGen {
   const $AssetsSvgGen();
 
@@ -34,6 +54,7 @@ class $AssetsSvgGen {
 class Assets {
   const Assets._();
 
+  static const $AssetsFontsGen fonts = $AssetsFontsGen();
   static const $AssetsSvgGen svg = $AssetsSvgGen();
 }
 

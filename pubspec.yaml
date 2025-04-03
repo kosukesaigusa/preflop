@@ -37,7 +37,7 @@ dev_dependencies:
   riverpod_lint:
     
 flutter_gen:
-  output: lib/gen/
+  output: lib/ui/style/gen/
   integrations:
     flutter_svg: true
   assets:
