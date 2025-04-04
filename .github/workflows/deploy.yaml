@@ -64,7 +64,7 @@ jobs:
       # dart_define.json の LAST_UPDATED を現在時刻で更新する。
       - name: Update LAST_UPDATED
         run: |
-          jq --arg date "$(date -u '+%Y-%m-%d %H:%M')" '.LAST_UPDATED = $date' dart_define.json > dart_define_temp.json
+          jq --arg date "$(date -u '+%Y-%m-%d %H:%M')Z" '.LAST_UPDATED = $date' dart_define.json > dart_define_temp.json
           mv dart_define_temp.json dart_define.json
 
       # Flutter Web アプリをビルドする。
