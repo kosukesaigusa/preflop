@@ -1,30 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../model/entity/preflop_hand_range_quiz.dart';
+import '../../../model/entity/quize_review_filter.dart';
 import '../../../model/logic/preflop_hand_range_quiz.dart';
 import '../../style/color.dart';
 import '../../style/typography.dart';
+import '../../util/quiz_review_filter.dart';
 import '../../widget/rank_display.dart';
 import '../matrix/matrix_page.dart';
 
 /// 過去の問題・回答を閲覧するページ。
-class ReviewPage extends ConsumerWidget {
-  const ReviewPage({super.key});
+class ReviewPage extends HookConsumerWidget {
+  const ReviewPage({super.key, QuizeReviewFilter? initialFilter})
+    : _initialFilter = initialFilter ?? QuizeReviewFilter.all;
+
+  /// フィルタの初期値。
+  final QuizeReviewFilter _initialFilter;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // クイズ一覧を取得する。
-    final quizzes = ref.watch(preflopHandRangeQuizzzesNotifierProvider);
+    // フィルタの状態をローカルで管理する。
+    final filterState = useState(_initialFilter);
 
-    // 回答済みのクイズのみを抽出し、新しい順に並べる。
-    final answeredQuizzes =
-        quizzes.whereType<AnsweredPreflopHandRangeQuiz>().toList().reversed.toList();
-
-    if (answeredQuizzes.isEmpty) {
-      return Scaffold(appBar: AppBar(), body: const Center(child: Text('学習履歴がありません。')));
-    }
+    // フィルタされたクイズ一覧を取得する。
+    final filteredQuizzes = ref.watch(filteredAnsweredQuizzesProvider(filter: filterState.value));
 
     return Scaffold(
       appBar: AppBar(),
@@ -36,14 +38,38 @@ class ReviewPage extends ConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 16),
               sliver: SliverToBoxAdapter(child: Text('学習履歴', style: context.titleLarge)),
             ),
-            SliverList.builder(
-              itemCount: answeredQuizzes.length,
-              itemBuilder:
-                  (context, index) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: _QuizHistoryCard(answeredQuizzes[index]),
+            SliverPadding(
+              padding: const EdgeInsets.only(bottom: 16),
+              sliver: SliverToBoxAdapter(
+                child: SegmentedButton<QuizeReviewFilter>(
+                  segments: [
+                    for (final filter in QuizeReviewFilter.values)
+                      ButtonSegment(value: filter, label: Text(filter.displayText)),
+                  ],
+                  selected: {filterState.value},
+                  onSelectionChanged: (newSelection) => filterState.value = newSelection.first,
+                  style: SegmentedButton.styleFrom(
+                    // 選択されたセグメントの文字色を設定する。
+                    selectedForegroundColor: AppColor.gold,
+                    // 境界線の色を少し薄くする。
+                    side: BorderSide(
+                      color: Theme.of(context).colorScheme.outline.withValues(alpha: 0.5),
+                    ),
                   ),
+                ),
+              ),
             ),
+            if (filteredQuizzes.isEmpty)
+              const SliverFillRemaining(child: Center(child: Text('表示する学習履歴がありません。')))
+            else
+              SliverList.builder(
+                itemCount: filteredQuizzes.length,
+                itemBuilder:
+                    (context, index) => Padding(
+                      padding: const EdgeInsets.only(bottom: 16),
+                      child: _QuizHistoryCard(filteredQuizzes[index]),
+                    ),
+              ),
             const SliverToBoxAdapter(child: Gap(60)),
           ],
         ),

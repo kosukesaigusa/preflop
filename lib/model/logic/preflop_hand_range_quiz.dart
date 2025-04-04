@@ -1,8 +1,10 @@
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../entity/hand.dart';
 import '../entity/preflop.dart';
 import '../entity/preflop_hand_range_quiz.dart';
+import '../entity/quize_review_filter.dart';
 
 part 'preflop_hand_range_quiz.g.dart';
 
@@ -43,4 +45,25 @@ class PreflopHandRangeQuizzzesNotifier extends _$PreflopHandRangeQuizzzesNotifie
         ];
     }
   }
+}
+
+/// [filter] で絞り込まれた回答済みクイズ一覧を取得する。
+@riverpod
+List<AnsweredPreflopHandRangeQuiz> filteredAnsweredQuizzes(
+  Ref ref, {
+  required QuizeReviewFilter filter,
+}) {
+  // 元のクイズリスト全体を監視する。
+  final quizzes = ref.watch(preflopHandRangeQuizzzesNotifierProvider);
+
+  // 回答済みのクイズのみを抽出・逆順にする。
+  final answeredQuizzes =
+      quizzes.whereType<AnsweredPreflopHandRangeQuiz>().toList().reversed.toList();
+
+  // 絞り込まれた回答済みクイズ一覧を返す。
+  return switch (filter) {
+    QuizeReviewFilter.all => answeredQuizzes,
+    QuizeReviewFilter.correct => answeredQuizzes.where((q) => q.isCorrect).toList(),
+    QuizeReviewFilter.incorrect => answeredQuizzes.where((q) => !q.isCorrect).toList(),
+  };
 }

@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../model/entity/hand.dart';
 import '../../../model/entity/preflop.dart';
 import '../../../model/entity/preflop_hand_range_quiz.dart';
+import '../../../model/entity/quize_review_filter.dart';
 import '../../../model/logic/preflop_hand_range_matrix.dart';
 import '../../../model/logic/preflop_hand_range_quiz.dart';
 import '../../style/color.dart';
@@ -71,29 +72,27 @@ class QuizPage extends HookConsumerWidget {
           mainAxisSize: MainAxisSize.min,
           spacing: 16,
           children: [
-            _StatusCard(label: '正解', child: _QuizStatusCounter.correct(quizzes: quizzes)),
-            _StatusCard(label: '不正解', child: _QuizStatusCounter.incorrect(quizzes: quizzes)),
-            _StatusCard(
+            _QuizStatusCard.correct(
+              quizzes: quizzes,
               onTap:
                   () => Navigator.of(context).push(
                     MaterialPageRoute<void>(
-                      builder: (context) => const ReviewPage(),
+                      builder:
+                          (context) => const ReviewPage(initialFilter: QuizeReviewFilter.correct),
                       fullscreenDialog: true,
                     ),
                   ),
-              label: '復習',
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: AppColor.lightGrey.withValues(alpha: 0.2),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                child: Icon(
-                  Icons.history,
-                  color: AppColor.lightGrey,
-                  size: context.titleSmallLineHeight,
-                ),
-              ),
+            ),
+            _QuizStatusCard.incorrect(
+              quizzes: quizzes,
+              onTap:
+                  () => Navigator.of(context).push(
+                    MaterialPageRoute<void>(
+                      builder:
+                          (context) => const ReviewPage(initialFilter: QuizeReviewFilter.incorrect),
+                      fullscreenDialog: true,
+                    ),
+                  ),
             ),
           ],
         ),
@@ -342,35 +341,73 @@ class _NextQuizButton extends StatelessWidget {
 
 /// クイズの回答状況の種類。
 enum _QuizStatusType {
+  /// 正解。
   correct,
-  incorrect;
 
-  Color get _color => switch (this) {
-    correct => AppColor.green,
-    incorrect => AppColor.red,
-  };
+  /// 不正解。
+  incorrect,
 }
 
-/// クイズの回答状況を表示するカウンターウィジェット。
-class _QuizStatusCounter extends StatelessWidget {
-  const _QuizStatusCounter.correct({required this.quizzes}) : _type = _QuizStatusType.correct;
+/// ステータスを表示するカード。
+class _QuizStatusCard extends StatelessWidget {
+  /// ステータスを表示するカードを作成する。
+  const _QuizStatusCard.correct({required this.quizzes, required this.onTap})
+    : _type = _QuizStatusType.correct;
 
-  const _QuizStatusCounter.incorrect({required this.quizzes}) : _type = _QuizStatusType.incorrect;
+  /// ステータスを表示するカードを作成する。
+  const _QuizStatusCard.incorrect({required this.quizzes, required this.onTap})
+    : _type = _QuizStatusType.incorrect;
 
+  /// クイズ一覧。
   final List<PreflopHandRangeQuiz> quizzes;
+
+  /// タップした際のコールバック。
+  final VoidCallback onTap;
+
+  /// ステータスの種類。
   final _QuizStatusType _type;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-      decoration: BoxDecoration(
-        color: _type._color.withValues(alpha: 0.2),
-        borderRadius: BorderRadius.circular(4),
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(8),
+      child: Material(
+        color: AppColor.transparent,
+        child: InkWell(
+          onTap: onTap,
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            decoration: BoxDecoration(
+              color: AppColor.darkBlueGrey,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(color: AppColor.grey),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              spacing: 8,
+              children: [
+                Text(_type == _QuizStatusType.correct ? '正解' : '不正解', style: context.titleSmall),
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: _color.withValues(alpha: 0.2),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  child: Text('$_count', style: context.titleSmall.copyWith(color: _color)),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
-      child: Text('$_count', style: context.titleSmall.copyWith(color: _type._color)),
     );
   }
+
+  /// 色を取得する。
+  Color get _color => switch (_type) {
+    _QuizStatusType.correct => AppColor.green,
+    _QuizStatusType.incorrect => AppColor.red,
+  };
 
   /// 回答の正解または不正解の数を取得する。
   int get _count =>
@@ -378,39 +415,4 @@ class _QuizStatusCounter extends StatelessWidget {
           .whereType<AnsweredPreflopHandRangeQuiz>()
           .where((q) => _type == _QuizStatusType.correct ? q.isCorrect : !q.isCorrect)
           .length;
-}
-
-/// ステータスを表示するカード。
-class _StatusCard extends StatelessWidget {
-  /// ステータスを表示するカードを作成する。
-  const _StatusCard({required this.label, required this.child, this.onTap});
-
-  /// ラベル。
-  final String label;
-
-  /// 右側に表示する UI.
-  final Widget child;
-
-  /// タップした際のコールバック。
-  final VoidCallback? onTap;
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-        decoration: BoxDecoration(
-          color: AppColor.darkBlueGrey,
-          borderRadius: BorderRadius.circular(8),
-          border: Border.all(color: AppColor.grey),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          spacing: 8,
-          children: [Text(label, style: context.titleSmall), child],
-        ),
-      ),
-    );
-  }
 }
