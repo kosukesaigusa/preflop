@@ -8,7 +8,8 @@
       "type": "dart",
       "deviceId": "${input:device}",
       "args": [
-        "--debug"
+        "--debug",
+        "--dart-define-from-file=dart_define.json"
         // "--web-experimental-hot-reload"
       ]
     }

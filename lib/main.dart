@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'model/util/app_last_updated_at.dart';
 import 'model/util/logger.dart';
 import 'model/util/package_info.dart';
 import 'ui/page/quiz/quiz_page.dart';
@@ -14,20 +15,30 @@ import 'ui/style/typography.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // アプリのパッケージ情報を取得する。
-  final packageInfo = await getPackageInfo();
-  logger.d('appVersion: ${packageInfo.version}');
-
   // 画面の向きを縦向きに固定する。
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
+  // アプリのパッケージ情報を取得する。
+  final packageInfo = await getPackageInfo();
+  logger.d('appVersion: ${packageInfo.version}');
+
+  // 最終更新日時（デプロイ日時）の情報を Dart-Define から取得する。
+  const lastUpdated = String.fromEnvironment('LAST_UPDATED');
+  final lastUpdatedDateTime = DateTime.tryParse(lastUpdated);
+  if (lastUpdatedDateTime != null) {
+    logger.d('lastUpdated: $lastUpdatedDateTime');
+  }
+
   runApp(
     ProviderScope(
       observers: [_ProviderErrorLoggerObserver()],
-      overrides: [packageInfoProvider.overrideWith((_) => packageInfo)],
+      overrides: [
+        packageInfoProvider.overrideWith((_) => packageInfo),
+        appLastUpdatedAtProvider.overrideWith((_) => lastUpdatedDateTime),
+      ],
       child: DevicePreview(
         // ignore: avoid_redundant_argument_values
         enabled: kDebugMode,

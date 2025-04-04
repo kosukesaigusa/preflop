@@ -12,7 +12,7 @@ import '../../../model/logic/preflop_hand_range_quiz.dart';
 import '../../style/color.dart';
 import '../../style/typography.dart';
 import '../../util/card.dart';
-import '../../widget/package_info_text.dart';
+import '../../widget/application_info_text.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
 import '../../widget/rank_display.dart';
 import '../matrix/matrix_page.dart';
@@ -229,7 +229,7 @@ class QuizPage extends HookConsumerWidget {
               null => const SizedBox.shrink(),
             },
           ),
-          const Positioned(left: 24, bottom: 24, child: PackageInfoText()),
+          const Positioned(left: 24, bottom: 24, child: ApplicationInfoText()),
         ],
       ),
     );

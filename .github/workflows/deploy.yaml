@@ -61,10 +61,16 @@ jobs:
           channel: stable
           cache: true
 
+      # dart_define.json の LAST_UPDATED を現在時刻で更新する。
+      - name: Update LAST_UPDATED
+        run: |
+          jq --arg date "$(date -u '+%Y-%m-%d %H:%M')" '.LAST_UPDATED = $date' dart_define.json > dart_define_temp.json
+          mv dart_define_temp.json dart_define.json
+
       # Flutter Web アプリをビルドする。
       - name: Build Web app
         run: |
-          flutter build web
+          flutter build web --dart-define-from-file=dart_define.json
           jq --arg fullVersion "${{ steps.extract_version.outputs.fullVersion }}" '.version = $fullVersion' ./build/web/version.json > ./build/web/version_temp.json
           yes | mv ./build/web/version_temp.json ./build/web/version.json
 
