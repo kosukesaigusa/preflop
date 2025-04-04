@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
@@ -9,12 +10,15 @@ import '../../style/typography.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
 
 /// マトリックスを表示するページ。
-class MatrixPage extends ConsumerWidget {
+class MatrixPage extends HookConsumerWidget {
   /// マトリックスを表示するページを作成する。
-  const MatrixPage({super.key, this.highlightedHand});
+  const MatrixPage({super.key, this.highlightedHand, required this.initialSelectedMatrix});
 
   /// ハイライトするハンド。
   final PreflopHand? highlightedHand;
+
+  /// 初期選択されるハンドレンジ。
+  final PreflopHandRangeMatrix initialSelectedMatrix;
 
   /// セルの最小サイズ。
   static const double _minCellSize = 32;
@@ -50,8 +54,11 @@ class MatrixPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // 選択中のハンドレンジを取得する。
-    final selectedRange = ref.watch(preflopHandRangeMatricesNotifierProvider);
+    // 利用可能なハンドレンジ一覧を取得する。
+    final availableRanges = ref.watch(availablePreflopHandRangeMatricesProvider);
+    // 選択中のハンドレンジをローカル状態で管理する。初期値は必須引数から取得。
+    final selectedRange = useState<PreflopHandRangeMatrix>(initialSelectedMatrix);
+
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
@@ -62,7 +69,15 @@ class MatrixPage extends ConsumerWidget {
               // ドロップダウンでハンドレンジを選択する。
               Container(
                 margin: const EdgeInsets.only(bottom: 16),
-                child: const PreflopHandRangeMatrixDropdown(),
+                child: PreflopHandRangeMatrixDropdown(
+                  availableRanges: availableRanges,
+                  selectedValue: selectedRange.value,
+                  onChanged: (newValue) {
+                    if (newValue != null) {
+                      selectedRange.value = newValue;
+                    }
+                  },
+                ),
               ),
               // マトリックスを表示する。
               Expanded(
@@ -102,7 +117,7 @@ class MatrixPage extends ConsumerWidget {
                                                       ),
                                                     );
                                                   }
-                                                  final rank = selectedRange.getRank(hand);
+                                                  final rank = selectedRange.value.getRank(hand);
                                                   final isHighlighted = hand == highlightedHand;
                                                   return Container(
                                                     width: cellSize,
@@ -147,7 +162,7 @@ class MatrixPage extends ConsumerWidget {
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             const Gap(12),
-                                            for (final rank in selectedRange.preflopRanks)
+                                            for (final rank in selectedRange.value.preflopRanks)
                                               Padding(
                                                 padding: const EdgeInsets.only(bottom: 8),
                                                 child: Row(

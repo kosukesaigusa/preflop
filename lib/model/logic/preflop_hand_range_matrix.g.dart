@@ -29,28 +29,5 @@ final availablePreflopHandRangeMatricesProvider =
 // ignore: unused_element
 typedef AvailablePreflopHandRangeMatricesRef =
     AutoDisposeProviderRef<List<PreflopHandRangeMatrix>>;
-String _$preflopHandRangeMatricesNotifierHash() =>
-    r'7f7c274fabf72ba54b712e110e1edc5f216edbdb';
-
-/// 現在選択されているプリフロップハンドレンジ表を管理する。
-///
-/// Copied from [PreflopHandRangeMatricesNotifier].
-@ProviderFor(PreflopHandRangeMatricesNotifier)
-final preflopHandRangeMatricesNotifierProvider = AutoDisposeNotifierProvider<
-  PreflopHandRangeMatricesNotifier,
-  PreflopHandRangeMatrix
->.internal(
-  PreflopHandRangeMatricesNotifier.new,
-  name: r'preflopHandRangeMatricesNotifierProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product')
-          ? null
-          : _$preflopHandRangeMatricesNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$PreflopHandRangeMatricesNotifier =
-    AutoDisposeNotifier<PreflopHandRangeMatrix>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

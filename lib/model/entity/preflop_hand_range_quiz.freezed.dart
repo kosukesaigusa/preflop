@@ -18,40 +18,35 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$PreflopHandRangeQuiz {
   Hand get hand => throw _privateConstructorUsedError;
-  PreflopHandRangeMatrix get matrix => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function(
       Hand hand,
       PreflopHandRangeMatrix matrix,
-      PreflopRank correctRank,
       PreflopRank answeredRank,
     )
     answered,
-    required TResult Function(Hand hand, PreflopHandRangeMatrix matrix)
-    unanswered,
+    required TResult Function(Hand hand) unanswered,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function(
       Hand hand,
       PreflopHandRangeMatrix matrix,
-      PreflopRank correctRank,
       PreflopRank answeredRank,
     )?
     answered,
-    TResult? Function(Hand hand, PreflopHandRangeMatrix matrix)? unanswered,
+    TResult? Function(Hand hand)? unanswered,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function(
       Hand hand,
       PreflopHandRangeMatrix matrix,
-      PreflopRank correctRank,
       PreflopRank answeredRank,
     )?
     answered,
-    TResult Function(Hand hand, PreflopHandRangeMatrix matrix)? unanswered,
+    TResult Function(Hand hand)? unanswered,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -85,10 +80,9 @@ abstract class $PreflopHandRangeQuizCopyWith<$Res> {
     $Res Function(PreflopHandRangeQuiz) then,
   ) = _$PreflopHandRangeQuizCopyWithImpl<$Res, PreflopHandRangeQuiz>;
   @useResult
-  $Res call({Hand hand, PreflopHandRangeMatrix matrix});
+  $Res call({Hand hand});
 
   $HandCopyWith<$Res> get hand;
-  $PreflopHandRangeMatrixCopyWith<$Res> get matrix;
 }
 
 /// @nodoc
@@ -108,7 +102,7 @@ class _$PreflopHandRangeQuizCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? hand = null, Object? matrix = null}) {
+  $Res call({Object? hand = null}) {
     return _then(
       _value.copyWith(
             hand:
@@ -116,11 +110,6 @@ class _$PreflopHandRangeQuizCopyWithImpl<
                     ? _value.hand
                     : hand // ignore: cast_nullable_to_non_nullable
                         as Hand,
-            matrix:
-                null == matrix
-                    ? _value.matrix
-                    : matrix // ignore: cast_nullable_to_non_nullable
-                        as PreflopHandRangeMatrix,
           )
           as $Val,
     );
@@ -133,16 +122,6 @@ class _$PreflopHandRangeQuizCopyWithImpl<
   $HandCopyWith<$Res> get hand {
     return $HandCopyWith<$Res>(_value.hand, (value) {
       return _then(_value.copyWith(hand: value) as $Val);
-    });
-  }
-
-  /// Create a copy of PreflopHandRangeQuiz
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $PreflopHandRangeMatrixCopyWith<$Res> get matrix {
-    return $PreflopHandRangeMatrixCopyWith<$Res>(_value.matrix, (value) {
-      return _then(_value.copyWith(matrix: value) as $Val);
     });
   }
 }
@@ -159,15 +138,12 @@ abstract class _$$AnsweredPreflopHandRangeQuizImplCopyWith<$Res>
   $Res call({
     Hand hand,
     PreflopHandRangeMatrix matrix,
-    PreflopRank correctRank,
     PreflopRank answeredRank,
   });
 
   @override
   $HandCopyWith<$Res> get hand;
-  @override
   $PreflopHandRangeMatrixCopyWith<$Res> get matrix;
-  $PreflopRankCopyWith<$Res> get correctRank;
   $PreflopRankCopyWith<$Res> get answeredRank;
 }
 
@@ -191,7 +167,6 @@ class __$$AnsweredPreflopHandRangeQuizImplCopyWithImpl<$Res>
   $Res call({
     Object? hand = null,
     Object? matrix = null,
-    Object? correctRank = null,
     Object? answeredRank = null,
   }) {
     return _then(
@@ -206,11 +181,6 @@ class __$$AnsweredPreflopHandRangeQuizImplCopyWithImpl<$Res>
                 ? _value.matrix
                 : matrix // ignore: cast_nullable_to_non_nullable
                     as PreflopHandRangeMatrix,
-        correctRank:
-            null == correctRank
-                ? _value.correctRank
-                : correctRank // ignore: cast_nullable_to_non_nullable
-                    as PreflopRank,
         answeredRank:
             null == answeredRank
                 ? _value.answeredRank
@@ -224,9 +194,9 @@ class __$$AnsweredPreflopHandRangeQuizImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $PreflopRankCopyWith<$Res> get correctRank {
-    return $PreflopRankCopyWith<$Res>(_value.correctRank, (value) {
-      return _then(_value.copyWith(correctRank: value));
+  $PreflopHandRangeMatrixCopyWith<$Res> get matrix {
+    return $PreflopHandRangeMatrixCopyWith<$Res>(_value.matrix, (value) {
+      return _then(_value.copyWith(matrix: value));
     });
   }
 
@@ -247,7 +217,6 @@ class _$AnsweredPreflopHandRangeQuizImpl extends AnsweredPreflopHandRangeQuiz {
   const _$AnsweredPreflopHandRangeQuizImpl({
     required this.hand,
     required this.matrix,
-    required this.correctRank,
     required this.answeredRank,
   }) : super._();
 
@@ -256,13 +225,11 @@ class _$AnsweredPreflopHandRangeQuizImpl extends AnsweredPreflopHandRangeQuiz {
   @override
   final PreflopHandRangeMatrix matrix;
   @override
-  final PreflopRank correctRank;
-  @override
   final PreflopRank answeredRank;
 
   @override
   String toString() {
-    return 'PreflopHandRangeQuiz.answered(hand: $hand, matrix: $matrix, correctRank: $correctRank, answeredRank: $answeredRank)';
+    return 'PreflopHandRangeQuiz.answered(hand: $hand, matrix: $matrix, answeredRank: $answeredRank)';
   }
 
   @override
@@ -272,15 +239,12 @@ class _$AnsweredPreflopHandRangeQuizImpl extends AnsweredPreflopHandRangeQuiz {
             other is _$AnsweredPreflopHandRangeQuizImpl &&
             (identical(other.hand, hand) || other.hand == hand) &&
             (identical(other.matrix, matrix) || other.matrix == matrix) &&
-            (identical(other.correctRank, correctRank) ||
-                other.correctRank == correctRank) &&
             (identical(other.answeredRank, answeredRank) ||
                 other.answeredRank == answeredRank));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, hand, matrix, correctRank, answeredRank);
+  int get hashCode => Object.hash(runtimeType, hand, matrix, answeredRank);
 
   /// Create a copy of PreflopHandRangeQuiz
   /// with the given fields replaced by the non-null parameter values.
@@ -300,14 +264,12 @@ class _$AnsweredPreflopHandRangeQuizImpl extends AnsweredPreflopHandRangeQuiz {
     required TResult Function(
       Hand hand,
       PreflopHandRangeMatrix matrix,
-      PreflopRank correctRank,
       PreflopRank answeredRank,
     )
     answered,
-    required TResult Function(Hand hand, PreflopHandRangeMatrix matrix)
-    unanswered,
+    required TResult Function(Hand hand) unanswered,
   }) {
-    return answered(hand, matrix, correctRank, answeredRank);
+    return answered(hand, matrix, answeredRank);
   }
 
   @override
@@ -316,13 +278,12 @@ class _$AnsweredPreflopHandRangeQuizImpl extends AnsweredPreflopHandRangeQuiz {
     TResult? Function(
       Hand hand,
       PreflopHandRangeMatrix matrix,
-      PreflopRank correctRank,
       PreflopRank answeredRank,
     )?
     answered,
-    TResult? Function(Hand hand, PreflopHandRangeMatrix matrix)? unanswered,
+    TResult? Function(Hand hand)? unanswered,
   }) {
-    return answered?.call(hand, matrix, correctRank, answeredRank);
+    return answered?.call(hand, matrix, answeredRank);
   }
 
   @override
@@ -331,15 +292,14 @@ class _$AnsweredPreflopHandRangeQuizImpl extends AnsweredPreflopHandRangeQuiz {
     TResult Function(
       Hand hand,
       PreflopHandRangeMatrix matrix,
-      PreflopRank correctRank,
       PreflopRank answeredRank,
     )?
     answered,
-    TResult Function(Hand hand, PreflopHandRangeMatrix matrix)? unanswered,
+    TResult Function(Hand hand)? unanswered,
     required TResult orElse(),
   }) {
     if (answered != null) {
-      return answered(hand, matrix, correctRank, answeredRank);
+      return answered(hand, matrix, answeredRank);
     }
     return orElse();
   }
@@ -380,16 +340,13 @@ abstract class AnsweredPreflopHandRangeQuiz extends PreflopHandRangeQuiz {
   const factory AnsweredPreflopHandRangeQuiz({
     required final Hand hand,
     required final PreflopHandRangeMatrix matrix,
-    required final PreflopRank correctRank,
     required final PreflopRank answeredRank,
   }) = _$AnsweredPreflopHandRangeQuizImpl;
   const AnsweredPreflopHandRangeQuiz._() : super._();
 
   @override
   Hand get hand;
-  @override
   PreflopHandRangeMatrix get matrix;
-  PreflopRank get correctRank;
   PreflopRank get answeredRank;
 
   /// Create a copy of PreflopHandRangeQuiz
@@ -411,12 +368,10 @@ abstract class _$$UnansweredPreflopHandRangeQuizImplCopyWith<$Res>
   ) = __$$UnansweredPreflopHandRangeQuizImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Hand hand, PreflopHandRangeMatrix matrix});
+  $Res call({Hand hand});
 
   @override
   $HandCopyWith<$Res> get hand;
-  @override
-  $PreflopHandRangeMatrixCopyWith<$Res> get matrix;
 }
 
 /// @nodoc
@@ -436,7 +391,7 @@ class __$$UnansweredPreflopHandRangeQuizImplCopyWithImpl<$Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? hand = null, Object? matrix = null}) {
+  $Res call({Object? hand = null}) {
     return _then(
       _$UnansweredPreflopHandRangeQuizImpl(
         hand:
@@ -444,11 +399,6 @@ class __$$UnansweredPreflopHandRangeQuizImplCopyWithImpl<$Res>
                 ? _value.hand
                 : hand // ignore: cast_nullable_to_non_nullable
                     as Hand,
-        matrix:
-            null == matrix
-                ? _value.matrix
-                : matrix // ignore: cast_nullable_to_non_nullable
-                    as PreflopHandRangeMatrix,
       ),
     );
   }
@@ -458,19 +408,14 @@ class __$$UnansweredPreflopHandRangeQuizImplCopyWithImpl<$Res>
 
 class _$UnansweredPreflopHandRangeQuizImpl
     extends UnansweredPreflopHandRangeQuiz {
-  const _$UnansweredPreflopHandRangeQuizImpl({
-    required this.hand,
-    required this.matrix,
-  }) : super._();
+  const _$UnansweredPreflopHandRangeQuizImpl({required this.hand}) : super._();
 
   @override
   final Hand hand;
-  @override
-  final PreflopHandRangeMatrix matrix;
 
   @override
   String toString() {
-    return 'PreflopHandRangeQuiz.unanswered(hand: $hand, matrix: $matrix)';
+    return 'PreflopHandRangeQuiz.unanswered(hand: $hand)';
   }
 
   @override
@@ -478,12 +423,11 @@ class _$UnansweredPreflopHandRangeQuizImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$UnansweredPreflopHandRangeQuizImpl &&
-            (identical(other.hand, hand) || other.hand == hand) &&
-            (identical(other.matrix, matrix) || other.matrix == matrix));
+            (identical(other.hand, hand) || other.hand == hand));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, hand, matrix);
+  int get hashCode => Object.hash(runtimeType, hand);
 
   /// Create a copy of PreflopHandRangeQuiz
   /// with the given fields replaced by the non-null parameter values.
@@ -503,14 +447,12 @@ class _$UnansweredPreflopHandRangeQuizImpl
     required TResult Function(
       Hand hand,
       PreflopHandRangeMatrix matrix,
-      PreflopRank correctRank,
       PreflopRank answeredRank,
     )
     answered,
-    required TResult Function(Hand hand, PreflopHandRangeMatrix matrix)
-    unanswered,
+    required TResult Function(Hand hand) unanswered,
   }) {
-    return unanswered(hand, matrix);
+    return unanswered(hand);
   }
 
   @override
@@ -519,13 +461,12 @@ class _$UnansweredPreflopHandRangeQuizImpl
     TResult? Function(
       Hand hand,
       PreflopHandRangeMatrix matrix,
-      PreflopRank correctRank,
       PreflopRank answeredRank,
     )?
     answered,
-    TResult? Function(Hand hand, PreflopHandRangeMatrix matrix)? unanswered,
+    TResult? Function(Hand hand)? unanswered,
   }) {
-    return unanswered?.call(hand, matrix);
+    return unanswered?.call(hand);
   }
 
   @override
@@ -534,15 +475,14 @@ class _$UnansweredPreflopHandRangeQuizImpl
     TResult Function(
       Hand hand,
       PreflopHandRangeMatrix matrix,
-      PreflopRank correctRank,
       PreflopRank answeredRank,
     )?
     answered,
-    TResult Function(Hand hand, PreflopHandRangeMatrix matrix)? unanswered,
+    TResult Function(Hand hand)? unanswered,
     required TResult orElse(),
   }) {
     if (unanswered != null) {
-      return unanswered(hand, matrix);
+      return unanswered(hand);
     }
     return orElse();
   }
@@ -580,16 +520,12 @@ class _$UnansweredPreflopHandRangeQuizImpl
 }
 
 abstract class UnansweredPreflopHandRangeQuiz extends PreflopHandRangeQuiz {
-  const factory UnansweredPreflopHandRangeQuiz({
-    required final Hand hand,
-    required final PreflopHandRangeMatrix matrix,
-  }) = _$UnansweredPreflopHandRangeQuizImpl;
+  const factory UnansweredPreflopHandRangeQuiz({required final Hand hand}) =
+      _$UnansweredPreflopHandRangeQuizImpl;
   const UnansweredPreflopHandRangeQuiz._() : super._();
 
   @override
   Hand get hand;
-  @override
-  PreflopHandRangeMatrix get matrix;
 
   /// Create a copy of PreflopHandRangeQuiz
   /// with the given fields replaced by the non-null parameter values.

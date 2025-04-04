@@ -4,10 +4,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../model/entity/preflop_hand_range_quiz.dart';
 import '../../../model/logic/preflop_hand_range_quiz.dart';
-import '../../../ui/style/color.dart';
-import 'page/matrix/matrix_page.dart';
-import 'style/typography.dart';
-import 'widget/rank_display.dart';
+import '../../style/color.dart';
+import '../../style/typography.dart';
+import '../../widget/rank_display.dart';
+import '../matrix/matrix_page.dart';
 
 /// 過去の問題・回答を閲覧するページ。
 class ReviewPage extends ConsumerWidget {
@@ -28,24 +28,6 @@ class ReviewPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(),
-      floatingActionButton: Row(
-        mainAxisSize: MainAxisSize.min,
-        spacing: 8,
-        children: [
-          FloatingActionButton.small(
-            onPressed: () {
-              Navigator.of(context).push(
-                MaterialPageRoute<void>(
-                  builder: (context) => const MatrixPage(),
-                  fullscreenDialog: true,
-                ),
-              );
-            },
-            tooltip: 'ハンドレンジを確認する',
-            child: const Icon(Icons.grid_on),
-          ),
-        ],
-      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: CustomScrollView(
@@ -86,7 +68,28 @@ class _QuizHistoryCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           spacing: 16,
           children: [
-            Text(quiz.matrix.name, style: context.titleSmall),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(quiz.matrix.name, style: context.titleSmall),
+                IconButton(
+                  icon: const Icon(Icons.grid_on),
+                  tooltip: 'ハンドレンジを確認する',
+                  // ハンドレンジを指定して、ハンドレンジ表ページに遷移する。
+                  onPressed:
+                      () => Navigator.of(context).push(
+                        MaterialPageRoute<void>(
+                          builder:
+                              (context) => MatrixPage(
+                                highlightedHand: quiz.hand.asPreflopHand,
+                                initialSelectedMatrix: quiz.matrix,
+                              ),
+                          fullscreenDialog: true,
+                        ),
+                      ),
+                ),
+              ],
+            ),
             Row(
               spacing: 4,
               children: [
@@ -105,7 +108,8 @@ class _QuizHistoryCard extends StatelessWidget {
                   spacing: 12,
                   children: [
                     Text('正解', style: context.titleMedium),
-                    RankDisplay.readOnly(rank: quiz.correctRank),
+                    // 正解ランクを matrix と hand から導出して表示する。
+                    RankDisplay.readOnly(rank: quiz.matrix.getRank(quiz.hand.asPreflopHand)),
                   ],
                 ),
                 if (!quiz.isCorrect)

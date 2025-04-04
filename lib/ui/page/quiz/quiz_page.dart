@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../model/entity/hand.dart';
+import '../../../model/entity/preflop.dart';
 import '../../../model/entity/preflop_hand_range_quiz.dart';
 import '../../../model/logic/preflop_hand_range_matrix.dart';
 import '../../../model/logic/preflop_hand_range_quiz.dart';
-import '../../review_page.dart';
 import '../../style/color.dart';
 import '../../style/typography.dart';
 import '../../util/card.dart';
@@ -14,9 +15,10 @@ import '../../widget/package_info_text.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
 import '../../widget/rank_display.dart';
 import '../matrix/matrix_page.dart';
+import '../review/review_page.dart';
 
 /// クイズを表示するページ。
-class QuizPage extends ConsumerWidget {
+class QuizPage extends HookConsumerWidget {
   /// クイズを表示するページを作成する。
   const QuizPage({super.key});
 
@@ -31,6 +33,12 @@ class QuizPage extends ConsumerWidget {
     // 最後のクイズを取得する。
     final latestQuiz = quizzes.lastOrNull;
 
+    // 利用可能なハンドレンジ一覧を取得する。
+    final availableRanges = ref.watch(availablePreflopHandRangeMatricesProvider);
+
+    // 選択中のハンドレンジをローカル状態で管理する。
+    final selectedRange = useState<PreflopHandRangeMatrix>(availableRanges.first);
+
     return Scaffold(
       floatingActionButton: Row(
         mainAxisSize: MainAxisSize.min,
@@ -39,9 +47,14 @@ class QuizPage extends ConsumerWidget {
           FloatingActionButton.small(
             onPressed: () {
               final currentPreflopHand = quizzes.lastOrNull?.hand.asPreflopHand;
+              // 現在のハンドレンジを指定して、ハンドレンジ表ページに遷移する。
               Navigator.of(context).push(
                 MaterialPageRoute<void>(
-                  builder: (context) => MatrixPage(highlightedHand: currentPreflopHand),
+                  builder:
+                      (context) => MatrixPage(
+                        highlightedHand: currentPreflopHand,
+                        initialSelectedMatrix: selectedRange.value,
+                      ),
                   fullscreenDialog: true,
                 ),
               );
@@ -96,9 +109,17 @@ class QuizPage extends ConsumerWidget {
                     spacing: 32,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: PreflopHandRangeMatrixDropdown(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: PreflopHandRangeMatrixDropdown(
+                          availableRanges: availableRanges,
+                          selectedValue: selectedRange.value,
+                          onChanged: (newValue) {
+                            if (newValue != null) {
+                              selectedRange.value = newValue;
+                            }
+                          },
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -116,15 +137,16 @@ class QuizPage extends ConsumerWidget {
                           child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              for (final rank
-                                  in ref
-                                      .watch(preflopHandRangeMatricesNotifierProvider)
-                                      .preflopRanks)
+                              for (final rank in selectedRange.value.preflopRanks)
                                 Padding(
                                   padding: const EdgeInsets.only(right: 12),
                                   child: RankDisplay.answerButton(
                                     rank: rank,
-                                    onPressed: () => notifier.answer(rank),
+                                    onPressed:
+                                        () => notifier.answer(
+                                          matrix: selectedRange.value,
+                                          answeredRank: rank,
+                                        ),
                                   ),
                                 ),
                             ],
@@ -135,7 +157,7 @@ class QuizPage extends ConsumerWidget {
                   ),
                 ),
               ),
-              AnsweredPreflopHandRangeQuiz(:final hand, :final correctRank, :final answeredRank) =>
+              AnsweredPreflopHandRangeQuiz(:final hand, :final answeredRank) =>
                 SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 24),
@@ -180,7 +202,10 @@ class QuizPage extends ConsumerWidget {
                                 spacing: 12,
                                 children: [
                                   Text('正解', style: context.titleMedium),
-                                  RankDisplay.readOnly(rank: correctRank),
+                                  // 正解ランクを matrix と hand から導出して表示する。
+                                  RankDisplay.readOnly(
+                                    rank: latestQuiz.matrix.getRank(latestQuiz.hand.asPreflopHand),
+                                  ),
                                 ],
                               ),
                               if (!latestQuiz.isCorrect)

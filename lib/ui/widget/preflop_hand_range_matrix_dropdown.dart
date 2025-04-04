@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../model/entity/preflop.dart';
-import '../../model/logic/preflop_hand_range_matrix.dart';
 import '../style/color.dart';
 import '../style/typography.dart';
 
 /// プリフロップハンドレンジ表を選択するドロップダウン。
-class PreflopHandRangeMatrixDropdown extends ConsumerWidget {
+class PreflopHandRangeMatrixDropdown extends StatelessWidget {
   /// プリフロップハンドレンジ表を選択するドロップダウンを作成する。
-  const PreflopHandRangeMatrixDropdown({super.key});
+  const PreflopHandRangeMatrixDropdown({
+    super.key,
+    required this.availableRanges,
+    required this.selectedValue,
+    required this.onChanged,
+  });
+
+  /// 利用可能なハンドレンジ一覧。
+  final List<PreflopHandRangeMatrix> availableRanges;
+
+  /// 現在選択されている値。
+  final PreflopHandRangeMatrix selectedValue;
+
+  /// 値が変更されたときに呼び出されるコールバック。
+  final ValueChanged<PreflopHandRangeMatrix?> onChanged;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // 選択中のハンドレンジを取得する。
-    final selectedRange = ref.watch(preflopHandRangeMatricesNotifierProvider);
-    // 利用可能なハンドレンジ一覧を取得する。
-    final availableRanges = ref.watch(availablePreflopHandRangeMatricesProvider);
-
+  Widget build(BuildContext context) {
+    // 利用可能なハンドレンジがない場合は、何も表示しない。
     if (availableRanges.isEmpty) {
       return const SizedBox.shrink();
     }
@@ -37,12 +45,9 @@ class PreflopHandRangeMatrixDropdown extends ConsumerWidget {
         ],
       ),
       child: Theme(
-        data: Theme.of(context).copyWith(
-          // ドロップダウンメニューの背景色
-          canvasColor: AppColor.darkBlueGrey,
-        ),
+        data: Theme.of(context).copyWith(canvasColor: AppColor.darkBlueGrey),
         child: DropdownButton<PreflopHandRangeMatrix>(
-          value: selectedRange,
+          value: selectedValue,
           isExpanded: true,
           icon: const Icon(Icons.arrow_drop_down, color: AppColor.gold),
           underline: const SizedBox(),
@@ -56,12 +61,7 @@ class PreflopHandRangeMatrixDropdown extends ConsumerWidget {
                 ),
               ),
           ],
-          onChanged: (newValue) {
-            if (newValue == null) {
-              return;
-            }
-            ref.read(preflopHandRangeMatricesNotifierProvider.notifier).update(newValue);
-          },
+          onChanged: onChanged,
         ),
       ),
     );
