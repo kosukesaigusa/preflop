@@ -1,8 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import '../data/power_number/power_number.dart';
 import 'preflop.dart';
 
 part 'power_number.freezed.dart';
+
+/// パワーナンバーのハンドマトリックス。
+final powerNumberMatrix = PowerNumberHandMatrix.fromJson(powerNumberData);
 
 /// パワーナンバーのハンド表。
 @freezed
@@ -37,10 +41,8 @@ abstract class PowerNumberHandMatrix with _$PowerNumberHandMatrix {
       id: id,
       name: name,
       powerNumbers: handPowerNumbers.map(
-        (key, value) => MapEntry(
-          PreflopHand.fromString(key),
-          HandPowerNumber.fromJson(value as Map<String, dynamic>),
-        ),
+        (key, value) =>
+            MapEntry(PreflopHand.fromString(key), HandPowerNumber.fromJson({key: value})),
       ),
     );
   }
