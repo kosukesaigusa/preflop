@@ -8,6 +8,7 @@
 ///
 /// の合計 169 種類 (= 13 * 13) の組み合わせが存在する。
 const ringGameYokosawaPreflopHandRangeData = <String, dynamic>{
+  'id': 'ring-game-yokosawa',
   'name': 'ヨコサワハンドレンジ（リングゲーム）',
   'ranks': [
     {'rank': 0, 'description': 'フォールドするべきハンド', 'colorCode': '#808080'},

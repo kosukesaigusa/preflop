@@ -10,6 +10,7 @@
 ///
 /// の合計 169 種類 (= 13 * 13) の組み合わせが存在する。
 const ringGameAmuPreflopHandRangeData = <String, dynamic>{
+  'id': 'ring-game-amu',
   'name': 'amu 初心者用ハンドレンジ（リングゲーム）',
   'ranks': [
     {'rank': 0, 'description': 'フォールドするべきハンド', 'colorCode': '#808080'},
