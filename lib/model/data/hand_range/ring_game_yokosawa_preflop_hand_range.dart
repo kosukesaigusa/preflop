@@ -1,4 +1,4 @@
-/// リングゲームにおけるプリフロップにのヨコサワハンドレンジ。
+/// リングゲームにおけるプリフロップのヨコサワハンドレンジ。
 ///
 /// 1 から 7 および、fold の値が存在する。
 ///
@@ -10,14 +10,14 @@
 const ringGameYokosawaPreflopHandRangeData = <String, dynamic>{
   'name': 'ヨコサワハンドレンジ（リングゲーム）',
   'ranks': [
-    {'rank': 7, 'description': 'UTG（後ろに 8 人）のプレミアハンド', 'colorCode': '#800080'},
-    {'rank': 6, 'description': 'UTG（後ろに 8 人）のハンド', 'colorCode': '#FF0000'},
-    {'rank': 5, 'description': 'EP（後ろに 6〜7 人）のハンド', 'colorCode': '#FFD700'},
-    {'rank': 4, 'description': 'LJ, HJ（後ろに 4〜5 人）のハンド', 'colorCode': '#90EE90'},
-    {'rank': 3, 'description': 'CO（後ろに 3 人）のハンド', 'colorCode': '#87CEEB'},
-    {'rank': 2, 'description': 'BTN（後ろに 0〜2 人）のハンド', 'colorCode': '#FFFFFF'},
-    {'rank': 1, 'description': 'BB のみ BTN のレイズにコール OK', 'colorCode': '#FFB6C1'},
     {'rank': 0, 'description': 'フォールドするべきハンド', 'colorCode': '#808080'},
+    {'rank': 1, 'description': 'BB のみ BTN のレイズにコール OK', 'colorCode': '#FFB6C1'},
+    {'rank': 2, 'description': 'BTN（後ろに 0〜2 人）のハンド', 'colorCode': '#FFFFFF'},
+    {'rank': 3, 'description': 'CO（後ろに 3 人）のハンド', 'colorCode': '#87CEEB'},
+    {'rank': 4, 'description': 'LJ, HJ（後ろに 4〜5 人）のハンド', 'colorCode': '#90EE90'},
+    {'rank': 5, 'description': 'EP（後ろに 6〜7 人）のハンド', 'colorCode': '#FFD700'},
+    {'rank': 6, 'description': 'UTG（後ろに 8 人）のハンド', 'colorCode': '#FF0000'},
+    {'rank': 7, 'description': 'UTG（後ろに 8 人）のプレミアハンド', 'colorCode': '#800080'},
   ],
   'handRanks': {
     // ポケットペア一覧 (13)。
