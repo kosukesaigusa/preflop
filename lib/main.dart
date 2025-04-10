@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -49,6 +51,7 @@ Future<void> main() async {
               // 利用のために必要である。
               // ignore: deprecated_member_use
               useInheritedMediaQuery: true,
+              scrollBehavior: _CustomScrollBehavior(),
               title: 'Preflop Trainer',
               localizationsDelegates: const [
                 GlobalWidgetsLocalizations.delegate,
@@ -103,4 +106,15 @@ class _ProviderErrorLoggerObserver extends ProviderObserver {
   ) {
     logger.e('Provider $provider threw $error at $stackTrace');
   }
+}
+
+/// Web でドラッグスクロールを有効にするためのカスタム [ScrollBehavior].
+class _CustomScrollBehavior extends MaterialScrollBehavior {
+  @override
+  Set<PointerDeviceKind> get dragDevices => {
+    PointerDeviceKind.touch,
+    PointerDeviceKind.mouse,
+    PointerDeviceKind.stylus,
+    PointerDeviceKind.unknown,
+  };
 }
