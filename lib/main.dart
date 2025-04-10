@@ -10,6 +10,7 @@ import 'model/util/logger.dart';
 import 'model/util/package_info.dart';
 import 'ui/page/quiz/quiz_page.dart';
 import 'ui/style/color.dart';
+import 'ui/style/screen.dart';
 import 'ui/style/typography.dart';
 
 Future<void> main() async {
@@ -74,14 +75,13 @@ Future<void> main() async {
                 textTheme: appTextTheme,
               ),
               home: const QuizPage(),
-              builder: (context, child) {
-                return Center(
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(maxWidth: 480),
-                    child: child,
+              builder:
+                  (context, child) => Center(
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: maxScreenWidth),
+                      child: child,
+                    ),
                   ),
-                );
-              },
             ),
       ),
     ),

@@ -1,7 +1,10 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 
 import 'color.dart';
 import 'gen/fonts.gen.dart';
+import 'screen.dart';
 
 /// アプリで使用するテキストスタイルから定義された [TextTheme].
 const appTextTheme = TextTheme(
@@ -145,49 +148,79 @@ const appTextTheme = TextTheme(
 /// [BuildContext] 型の拡張クラス。
 extension BuildContextExtension on BuildContext {
   /// 64 / 57 / Light の [TextStyle].
-  TextStyle get displayLarge => appTextTheme.displayLarge!;
+  TextStyle get displayLarge => appTextTheme.displayLarge!.copyWith(
+    fontSize: appTextTheme.displayLarge!.fontSize! * _screenWidthScale,
+  );
 
   /// 52 / 45 / Light の [TextStyle].
-  TextStyle get displayMedium => appTextTheme.displayMedium!;
+  TextStyle get displayMedium => appTextTheme.displayMedium!.copyWith(
+    fontSize: appTextTheme.displayMedium!.fontSize! * _screenWidthScale,
+  );
 
   /// 44 / 36 / Light の [TextStyle].
-  TextStyle get displaySmall => appTextTheme.displaySmall!;
+  TextStyle get displaySmall => appTextTheme.displaySmall!.copyWith(
+    fontSize: appTextTheme.displaySmall!.fontSize! * _screenWidthScale,
+  );
 
   /// 40 / 32 / Light の [TextStyle].
-  TextStyle get headlineLarge => appTextTheme.headlineLarge!;
+  TextStyle get headlineLarge => appTextTheme.headlineLarge!.copyWith(
+    fontSize: appTextTheme.headlineLarge!.fontSize! * _screenWidthScale,
+  );
 
   /// 36 / 28 / Light の [TextStyle].
-  TextStyle get headlineMedium => appTextTheme.headlineMedium!;
+  TextStyle get headlineMedium => appTextTheme.headlineMedium!.copyWith(
+    fontSize: appTextTheme.headlineMedium!.fontSize! * _screenWidthScale,
+  );
 
   /// 32 / 24 / Light の [TextStyle].
-  TextStyle get headlineSmall => appTextTheme.headlineSmall!;
+  TextStyle get headlineSmall => appTextTheme.headlineSmall!.copyWith(
+    fontSize: appTextTheme.headlineSmall!.fontSize! * _screenWidthScale,
+  );
 
   /// 28 / 22 / SemiBold の [TextStyle].
-  TextStyle get titleLarge => appTextTheme.titleLarge!;
+  TextStyle get titleLarge => appTextTheme.titleLarge!.copyWith(
+    fontSize: appTextTheme.titleLarge!.fontSize! * _screenWidthScale,
+  );
 
   /// 24 / 16 / SemiBold の [TextStyle].
-  TextStyle get titleMedium => appTextTheme.titleMedium!;
+  TextStyle get titleMedium => appTextTheme.titleMedium!.copyWith(
+    fontSize: appTextTheme.titleMedium!.fontSize! * _screenWidthScale,
+  );
 
   /// 20 / 14 / SemiBold の [TextStyle].
-  TextStyle get titleSmall => appTextTheme.titleSmall!;
+  TextStyle get titleSmall => appTextTheme.titleSmall!.copyWith(
+    fontSize: appTextTheme.titleSmall!.fontSize! * _screenWidthScale,
+  );
 
   /// 20 / 14 / SemiBold の [TextStyle].
-  TextStyle get labelLarge => appTextTheme.labelLarge!;
+  TextStyle get labelLarge => appTextTheme.labelLarge!.copyWith(
+    fontSize: appTextTheme.labelLarge!.fontSize! * _screenWidthScale,
+  );
 
   /// 16 / 12 / SemiBold の [TextStyle].
-  TextStyle get labelMedium => appTextTheme.labelMedium!;
+  TextStyle get labelMedium => appTextTheme.labelMedium!.copyWith(
+    fontSize: appTextTheme.labelMedium!.fontSize! * _screenWidthScale,
+  );
 
   /// 16 / 11 / SemiBold の [TextStyle].
-  TextStyle get labelSmall => appTextTheme.labelSmall!;
+  TextStyle get labelSmall => appTextTheme.labelSmall!.copyWith(
+    fontSize: appTextTheme.labelSmall!.fontSize! * _screenWidthScale,
+  );
 
   /// 24 / 16 / Light の [TextStyle].
-  TextStyle get bodyLarge => appTextTheme.bodyLarge!;
+  TextStyle get bodyLarge => appTextTheme.bodyLarge!.copyWith(
+    fontSize: appTextTheme.bodyLarge!.fontSize! * _screenWidthScale,
+  );
 
   /// 20 / 14 / Light の [TextStyle].
-  TextStyle get bodyMedium => appTextTheme.bodyMedium!;
+  TextStyle get bodyMedium => appTextTheme.bodyMedium!.copyWith(
+    fontSize: appTextTheme.bodyMedium!.fontSize! * _screenWidthScale,
+  );
 
   /// 16 / 12 / Light の [TextStyle].
-  TextStyle get bodySmall => appTextTheme.bodySmall!;
+  TextStyle get bodySmall => appTextTheme.bodySmall!.copyWith(
+    fontSize: appTextTheme.bodySmall!.fontSize! * _screenWidthScale,
+  );
 
   /// displayLarge の 1 行の高さ。
   double get displayLargeLineHeight => 64;
@@ -233,4 +266,9 @@ extension BuildContextExtension on BuildContext {
 
   /// bodySmall の 1 行の高さ。
   double get bodySmallLineHeight => 16;
+
+  /// 画面横幅のスケール係数。
+  ///
+  /// [maxScreenWidth] を 1.0 として、現在の画面横幅との比率を計算する。
+  double get _screenWidthScale => math.min(MediaQuery.sizeOf(this).width / maxScreenWidth, 1);
 }
