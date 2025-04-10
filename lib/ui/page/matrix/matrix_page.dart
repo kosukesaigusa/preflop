@@ -116,42 +116,44 @@ class MatrixPage extends HookConsumerWidget {
                               ],
                             ),
                             // 凡例。
-                            SizedBox(
-                              width: cellSize * 13,
-                              child: DecoratedBox(
-                                decoration: const BoxDecoration(
-                                  border: Border(top: BorderSide(color: AppColor.grey)),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Gap(12),
-                                    for (final rank in selectedRange.value.preflopRanks)
-                                      Padding(
-                                        padding: const EdgeInsets.only(bottom: 8),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            Container(
-                                              width: 24,
-                                              height: 24,
-                                              decoration: BoxDecoration(
-                                                color: rank.color,
-                                                borderRadius: BorderRadius.circular(4),
-                                                border: Border.all(color: AppColor.grey),
-                                              ),
+                            DecoratedBox(
+                              decoration: const BoxDecoration(
+                                border: Border(top: BorderSide(color: AppColor.grey)),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  const Gap(12),
+                                  for (final rank in selectedRange.value.preflopRanks)
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 8),
+                                      child: Row(
+                                        spacing: 8,
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Container(
+                                            width: context.bodyMediumLineHeight,
+                                            height: context.bodyMediumLineHeight,
+                                            decoration: BoxDecoration(
+                                              color: rank.color,
+                                              borderRadius: BorderRadius.circular(4),
+                                              border: Border.all(color: AppColor.grey),
                                             ),
-                                            const Gap(8),
-                                            Text(
+                                          ),
+                                          Expanded(
+                                            child: Text(
                                               '${rank.displayText}: ${rank.description}',
                                               style: context.bodyMedium,
+                                              maxLines: 2,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    const Gap(4),
-                                  ],
-                                ),
+                                    ),
+                                  const Gap(4),
+                                ],
                               ),
                             ),
                           ],
