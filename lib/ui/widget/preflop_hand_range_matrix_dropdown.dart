@@ -58,6 +58,8 @@ class PreflopHandRangeMatrixDropdown extends StatelessWidget {
                 child: Text(
                   matrix.name,
                   style: context.titleMedium.copyWith(color: AppColor.lightGrey),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
           ],
