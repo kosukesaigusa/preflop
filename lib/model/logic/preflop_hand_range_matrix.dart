@@ -12,8 +12,8 @@ part 'preflop_hand_range_matrix.g.dart';
 /// 利用可能なプリフロップハンドレンジ表一覧を取得する。
 @riverpod
 List<PreflopHandRangeMatrix> availablePreflopHandRangeMatrices(Ref ref) => [
-  PreflopHandRangeMatrix.fromMap(tournamentYokosawaPreflopHandRangeData),
-  PreflopHandRangeMatrix.fromMap(ringGameYokosawaPreflopHandRangeData),
-  PreflopHandRangeMatrix.fromMap(ringGameAmuPreflopHandRangeData),
-  PreflopHandRangeMatrix.fromMap(ringGameAmuPreflop3BetHandRangeData),
+  PreflopHandRangeMatrix.fromJson(tournamentYokosawaPreflopHandRangeData),
+  PreflopHandRangeMatrix.fromJson(ringGameYokosawaPreflopHandRangeData),
+  PreflopHandRangeMatrix.fromJson(ringGameAmuPreflopHandRangeData),
+  PreflopHandRangeMatrix.fromJson(ringGameAmuPreflop3BetHandRangeData),
 ];

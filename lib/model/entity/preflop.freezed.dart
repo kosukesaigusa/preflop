@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$PreflopHandRangeMatrix {
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<PreflopRank> get preflopRanks => throw _privateConstructorUsedError;
   Map<PreflopHand, PreflopRank> get rangeData =>
@@ -37,6 +38,7 @@ abstract class $PreflopHandRangeMatrixCopyWith<$Res> {
   ) = _$PreflopHandRangeMatrixCopyWithImpl<$Res, PreflopHandRangeMatrix>;
   @useResult
   $Res call({
+    String id,
     String name,
     List<PreflopRank> preflopRanks,
     Map<PreflopHand, PreflopRank> rangeData,
@@ -61,12 +63,18 @@ class _$PreflopHandRangeMatrixCopyWithImpl<
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? preflopRanks = null,
     Object? rangeData = null,
   }) {
     return _then(
       _value.copyWith(
+            id:
+                null == id
+                    ? _value.id
+                    : id // ignore: cast_nullable_to_non_nullable
+                        as String,
             name:
                 null == name
                     ? _value.name
@@ -98,6 +106,7 @@ abstract class _$$PreflopHandRangeImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
+    String id,
     String name,
     List<PreflopRank> preflopRanks,
     Map<PreflopHand, PreflopRank> rangeData,
@@ -118,12 +127,18 @@ class __$$PreflopHandRangeImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
     Object? preflopRanks = null,
     Object? rangeData = null,
   }) {
     return _then(
       _$PreflopHandRangeImpl(
+        id:
+            null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                    as String,
         name:
             null == name
                 ? _value.name
@@ -148,6 +163,7 @@ class __$$PreflopHandRangeImplCopyWithImpl<$Res>
 
 class _$PreflopHandRangeImpl extends _PreflopHandRange {
   const _$PreflopHandRangeImpl({
+    required this.id,
     required this.name,
     required final List<PreflopRank> preflopRanks,
     required final Map<PreflopHand, PreflopRank> rangeData,
@@ -155,6 +171,8 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
        _rangeData = rangeData,
        super._();
 
+  @override
+  final String id;
   @override
   final String name;
   final List<PreflopRank> _preflopRanks;
@@ -175,7 +193,7 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
 
   @override
   String toString() {
-    return 'PreflopHandRangeMatrix(name: $name, preflopRanks: $preflopRanks, rangeData: $rangeData)';
+    return 'PreflopHandRangeMatrix(id: $id, name: $name, preflopRanks: $preflopRanks, rangeData: $rangeData)';
   }
 
   @override
@@ -183,6 +201,7 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PreflopHandRangeImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(
               other._preflopRanks,
@@ -197,6 +216,7 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
   @override
   int get hashCode => Object.hash(
     runtimeType,
+    id,
     name,
     const DeepCollectionEquality().hash(_preflopRanks),
     const DeepCollectionEquality().hash(_rangeData),
@@ -216,12 +236,15 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
 
 abstract class _PreflopHandRange extends PreflopHandRangeMatrix {
   const factory _PreflopHandRange({
+    required final String id,
     required final String name,
     required final List<PreflopRank> preflopRanks,
     required final Map<PreflopHand, PreflopRank> rangeData,
   }) = _$PreflopHandRangeImpl;
   const _PreflopHandRange._() : super._();
 
+  @override
+  String get id;
   @override
   String get name;
   @override

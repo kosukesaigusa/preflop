@@ -7,20 +7,53 @@ part 'preflop.freezed.dart';
 @freezed
 abstract class PreflopHandRangeMatrix with _$PreflopHandRangeMatrix {
   const factory PreflopHandRangeMatrix({
+    required String id,
     required String name,
     required List<PreflopRank> preflopRanks,
     required Map<PreflopHand, PreflopRank> rangeData,
   }) = _PreflopHandRange;
 
-  /// 指定されたマップからプリフロップハンドレンジ表を生成する。
-  factory PreflopHandRangeMatrix.fromMap(Map<String, dynamic> map) {
+  /// 指定された JSON からプリフロップハンドレンジ表を生成する。
+  ///
+  /// [json] は下記のような JSON 形式を期待する。
+  ///
+  /// ```json
+  /// {
+  ///   "id": "ハンドレンジ表の ID",
+  ///   "name": "ハンドレンジ表の名前",
+  ///   "ranks": [
+  ///     {
+  ///       "rank": 1,
+  ///       "description": "当該ハンドレンジにおける rank1 の説明",
+  ///       "colorCode": "#000000"
+  ///     },
+  ///     {
+  ///       "rank": 2,
+  ///       "description": "当該ハンドレンジにおける rank2 の説明",
+  ///       "colorCode": "#000000"
+  ///     },
+  ///     ...
+  ///   ],
+  ///   "handRanks": {
+  ///     "aces": 2,
+  ///     "kings": 2,
+  ///     "queens": 2,
+  ///     "jacks": 1,
+  ///     "tens": 1,
+  ///     ...
+  ///   }
+  /// }
+  factory PreflopHandRangeMatrix.fromJson(Map<String, dynamic> json) {
+    final id = json['id'] as String;
+    final name = json['name'] as String? ?? 'ハンドレンジ表';
     final preflopRanks =
-        (map['ranks'] as List<dynamic>)
+        (json['ranks'] as List<dynamic>)
             .map((e) => PreflopRank.fromJson(e as Map<String, dynamic>))
             .toList();
-    final handRanksMap = map['handRanks'] as Map<String, dynamic>;
+    final handRanksMap = json['handRanks'] as Map<String, dynamic>;
     return PreflopHandRangeMatrix(
-      name: map['name'] as String? ?? 'ハンドレンジ',
+      id: id,
+      name: name,
       preflopRanks: preflopRanks,
       rangeData: handRanksMap.map(
         (key, value) =>
@@ -58,7 +91,7 @@ sealed class PreflopRank with _$PreflopRank {
   const factory PreflopRank.fold({required String description, required String colorCode}) =
       FoldPreflopRank;
 
-  /// JSON からプリフロップランクを生成する。
+  /// 指定された JSON からプリフロップランクを生成する。
   factory PreflopRank.fromJson(Map<String, dynamic> map) {
     final rank = map['rank'] as int;
     final description = map['description'] as String;
