@@ -17,6 +17,7 @@ import '../../widget/preflop_hand_range_matrix_dropdown.dart';
 import '../../widget/rank_display.dart';
 import '../matrix/matrix_page.dart';
 import '../review/review_page.dart';
+import '../study/study_menu_page.dart';
 
 /// クイズを表示するページ。
 class QuizPage extends HookConsumerWidget {
@@ -68,6 +69,7 @@ class QuizPage extends HookConsumerWidget {
       appBar: AppBar(
         backgroundColor: AppColor.transparent,
         elevation: 0,
+        centerTitle: true,
         title: Row(
           mainAxisSize: MainAxisSize.min,
           spacing: 16,
@@ -96,6 +98,17 @@ class QuizPage extends HookConsumerWidget {
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.menu_book),
+            tooltip: '学習メニュー',
+            onPressed:
+                () => Navigator.of(
+                  context,
+                ).push<void>(MaterialPageRoute(builder: (context) => const StudyMenuPage())),
+          ),
+          const Gap(8),
+        ],
       ),
       body: Stack(
         children: [
