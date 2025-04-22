@@ -10,6 +10,7 @@ import '../../../model/entity/quize_review_filter.dart';
 import '../../../model/logic/preflop_hand_range_matrix.dart';
 import '../../../model/logic/preflop_hand_range_quiz.dart';
 import '../../style/color.dart';
+import '../../style/screen.dart';
 import '../../style/typography.dart';
 import '../../util/card.dart';
 import '../../widget/application_info_text.dart';
@@ -23,6 +24,9 @@ import '../study/study_menu_page.dart';
 class QuizPage extends HookConsumerWidget {
   /// クイズを表示するページを作成する。
   const QuizPage({super.key});
+
+  /// 垂直方向の余白。
+  static const double _verticalPadding = 24;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -116,54 +120,40 @@ class QuizPage extends HookConsumerWidget {
             child: switch (latestQuiz) {
               UnansweredPreflopHandRangeQuiz(:final hand) => SingleChildScrollView(
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 24),
+                  padding: const EdgeInsets.symmetric(
+                    vertical: _verticalPadding,
+                    horizontal: screenHorizontalPadding,
+                  ),
                   child: Column(
-                    spacing: 32,
+                    spacing: 20,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: PreflopHandRangeMatrixDropdown(
-                          availableRanges: availableRanges,
-                          selectedValue: selectedRange.value,
-                          onChanged: (newValue) {
-                            if (newValue != null) {
-                              selectedRange.value = newValue;
-                            }
-                          },
-                        ),
+                      PreflopHandRangeMatrixDropdown(
+                        availableRanges: availableRanges,
+                        selectedValue: selectedRange.value,
+                        onChanged: (newValue) {
+                          if (newValue != null) {
+                            selectedRange.value = newValue;
+                          }
+                        },
                       ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: Text('このハンドのランクは？', style: context.headlineSmall),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
-                        child: _Hand(hand),
-                      ),
-                      SizedBox(
-                        height: 180,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              for (final rank in selectedRange.value.preflopRanks)
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 12),
-                                  child: RankDisplay.answerButton(
-                                    rank: rank,
-                                    onPressed:
-                                        () => notifier.answer(
-                                          matrix: selectedRange.value,
-                                          answeredRank: rank,
-                                        ),
+                      Text('このハンドのランクは？', style: context.headlineSmall),
+                      _Hand.small(hand),
+                      Wrap(
+                        spacing: 12,
+                        runSpacing: 12,
+                        alignment: WrapAlignment.center,
+                        children: [
+                          for (final rank in selectedRange.value.preflopRanks)
+                            RankDisplay.answerButton(
+                              rank: rank,
+                              onPressed:
+                                  () => notifier.answer(
+                                    matrix: selectedRange.value,
+                                    answeredRank: rank,
                                   ),
-                                ),
-                            ],
-                          ),
-                        ),
+                            ),
+                        ],
                       ),
                     ],
                   ),
@@ -172,69 +162,60 @@ class QuizPage extends HookConsumerWidget {
               AnsweredPreflopHandRangeQuiz(:final hand, :final answeredRank) =>
                 SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 24),
+                    padding: const EdgeInsets.symmetric(
+                      vertical: _verticalPadding,
+                      horizontal: screenHorizontalPadding,
+                    ),
                     child: Column(
                       spacing: 32,
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                  text: latestQuiz.isCorrect ? '🎉' : '😢',
-                                  style: const TextStyle(fontFamily: 'Apple Color Emoji'),
+                        Text.rich(
+                          TextSpan(
+                            children: [
+                              TextSpan(
+                                text: latestQuiz.isCorrect ? '🎉' : '😢',
+                                style: const TextStyle(fontFamily: 'Apple Color Emoji'),
+                              ),
+                              TextSpan(
+                                text: ' ${latestQuiz.isCorrect ? '正解！' : '不正解'}',
+                                style: context.displaySmall.copyWith(
+                                  color: latestQuiz.isCorrect ? AppColor.green : AppColor.red,
                                 ),
-                                TextSpan(
-                                  text: ' ${latestQuiz.isCorrect ? '正解！' : '不正解'}',
-                                  style: context.displaySmall.copyWith(
-                                    color: latestQuiz.isCorrect ? AppColor.green : AppColor.red,
-                                  ),
+                              ),
+                            ],
+                          ),
+                          style: context.displaySmall.copyWith(
+                            color: latestQuiz.isCorrect ? AppColor.green : AppColor.red,
+                          ),
+                        ),
+                        _Hand.normal(hand),
+                        Wrap(
+                          spacing: 24,
+                          runSpacing: 24,
+                          alignment: WrapAlignment.center,
+                          children: [
+                            Column(
+                              spacing: 12,
+                              children: [
+                                Text('正解', style: context.titleMedium),
+                                // 正解ランクを matrix と hand から導出して表示する。
+                                RankDisplay.readOnly(
+                                  rank: latestQuiz.matrix.getRank(latestQuiz.hand.asPreflopHand),
                                 ),
                               ],
                             ),
-                            style: context.displaySmall.copyWith(
-                              color: latestQuiz.isCorrect ? AppColor.green : AppColor.red,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: _Hand(hand),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: Wrap(
-                            spacing: 24,
-                            runSpacing: 24,
-                            alignment: WrapAlignment.center,
-                            children: [
+                            if (!latestQuiz.isCorrect)
                               Column(
                                 spacing: 12,
                                 children: [
-                                  Text('正解', style: context.titleMedium),
-                                  // 正解ランクを matrix と hand から導出して表示する。
-                                  RankDisplay.readOnly(
-                                    rank: latestQuiz.matrix.getRank(latestQuiz.hand.asPreflopHand),
-                                  ),
+                                  Text('あなたの回答', style: context.titleMedium),
+                                  RankDisplay.readOnly(rank: answeredRank),
                                 ],
                               ),
-                              if (!latestQuiz.isCorrect)
-                                Column(
-                                  spacing: 12,
-                                  children: [
-                                    Text('あなたの回答', style: context.titleMedium),
-                                    RankDisplay.readOnly(rank: answeredRank),
-                                  ],
-                                ),
-                            ],
-                          ),
+                          ],
                         ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16),
-                          child: _NextQuizButton(onPressed: notifier.generate),
-                        ),
+                        _NextQuizButton(onPressed: notifier.generate),
                       ],
                     ),
                   ),
@@ -252,59 +233,66 @@ class QuizPage extends HookConsumerWidget {
 /// ハンドの 2 枚のカードをトランプのカードの見た目として表示するウィジェット。
 class _Hand extends StatelessWidget {
   /// ハンドの 2 枚のカードをトランプのカードの見た目として表示するウィジェットを生成する。
-  const _Hand(this.hand);
+  const _Hand.normal(this.hand) : _size = _HandDisplaySize.normal;
 
+  /// ハンドの 2 枚のカードをトランプのカードの見た目として表示するウィジェットを生成する（小さい版）。
+  const _Hand.small(this.hand) : _size = _HandDisplaySize.small;
+
+  /// ハンド。
   final Hand hand;
+
+  /// 表示サイズ。
+  final _HandDisplaySize _size;
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(24),
+      padding: EdgeInsets.all(_size._containerPadding),
       decoration: BoxDecoration(
         color: AppColor.darkBlueGrey,
-        borderRadius: BorderRadius.circular(16),
+        borderRadius: BorderRadius.circular(_size._borderRadius),
         border: Border.all(color: AppColor.grey),
         boxShadow: [
           BoxShadow(
             color: AppColor.black.withValues(alpha: 0.3),
-            blurRadius: 12,
-            offset: const Offset(0, 6),
+            blurRadius: _size._shadowBlurRadius,
+            offset: Offset(0, _size._shadowOffsetY),
           ),
         ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        spacing: 16,
+        spacing: _size._cardSpacing,
         children: [
           for (final card in hand.cards)
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+              padding: EdgeInsets.symmetric(
+                horizontal: _size._cardPaddingHorizontal,
+                vertical: _size._cardPaddingVertical,
+              ),
               decoration: BoxDecoration(
                 color: AppColor.white,
                 border: Border.all(color: AppColor.grey),
-                borderRadius: BorderRadius.circular(12),
+                borderRadius: BorderRadius.circular(_size._cardBorderRadius),
                 boxShadow: [
                   BoxShadow(
                     color: AppColor.black.withValues(alpha: 0.2),
-                    blurRadius: 8,
-                    offset: const Offset(0, 4),
+                    blurRadius: _size._cardShadowBlurRadius,
+                    offset: Offset(0, _size._cardShadowOffsetY),
                   ),
                 ],
               ),
               child: Column(
                 children: [
                   card.svg.svg(
-                    width: 40,
-                    height: 40,
+                    width: _size._iconSize,
+                    height: _size._iconSize,
                     colorFilter: ColorFilter.mode(card.mark.color, BlendMode.srcIn),
                   ),
-                  const Gap(8),
+                  Gap(_size._gapSize),
                   Text(
                     card.rank.displayText,
-                    style: context.headlineMedium.copyWith(
-                      color: card.mark.color,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: _size._getTextStyle(context).copyWith(color: card.mark.color),
                   ),
                 ],
               ),
@@ -313,6 +301,90 @@ class _Hand extends StatelessWidget {
       ),
     );
   }
+}
+
+/// ハンドの表示サイズ種別。
+enum _HandDisplaySize {
+  normal,
+  small;
+
+  /// 外側のコンテナの Padding.
+  double get _containerPadding => switch (this) {
+    normal => 24.0,
+    small => 12.0,
+  };
+
+  /// 外側のコンテナの角丸の半径。
+  double get _borderRadius => switch (this) {
+    normal => 16.0,
+    small => 8.0,
+  };
+
+  /// ハンド内のカード間の間隔。
+  double get _cardSpacing => switch (this) {
+    normal => 16.0,
+    small => 8.0,
+  };
+
+  /// カード内の水平方向の Padding.
+  double get _cardPaddingHorizontal => switch (this) {
+    normal => 20.0,
+    small => 12.0,
+  };
+
+  /// カード内の垂直方向の Padding.
+  double get _cardPaddingVertical => switch (this) {
+    normal => 12.0,
+    small => 6.0,
+  };
+
+  /// スートアイコンのサイズ。
+  double get _iconSize => switch (this) {
+    normal => 40.0,
+    small => 24.0,
+  };
+
+  /// アイコンとランクテキスト間の Gap サイズ。
+  double get _gapSize => switch (this) {
+    normal => 8.0,
+    small => 4.0,
+  };
+
+  /// 外側のコンテナの影のぼかし半径。
+  double get _shadowBlurRadius => switch (this) {
+    normal => 12.0,
+    small => 8.0,
+  };
+
+  /// 外側のコンテナの影の Y 軸オフセット。
+  double get _shadowOffsetY => switch (this) {
+    normal => 6.0,
+    small => 4.0,
+  };
+
+  /// カードの影のぼかし半径。
+  double get _cardShadowBlurRadius => switch (this) {
+    normal => 8.0,
+    small => 4.0,
+  };
+
+  /// カードの影の Y 軸オフセット。
+  double get _cardShadowOffsetY => switch (this) {
+    normal => 4.0,
+    small => 2.0,
+  };
+
+  /// カードの角丸の半径。
+  double get _cardBorderRadius => switch (this) {
+    normal => 12.0,
+    small => 8.0,
+  };
+
+  /// 対応するテキストスタイルを取得する。
+  TextStyle _getTextStyle(BuildContext context) => switch (this) {
+    normal => context.headlineMedium.copyWith(fontWeight: FontWeight.bold),
+    small => context.titleLarge.copyWith(fontWeight: FontWeight.bold),
+  };
 }
 
 /// 次の問題へ進むボタン。

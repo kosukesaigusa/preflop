@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../style/color.dart';
+import '../../style/screen.dart';
 import '../../style/typography.dart';
 import '../power_number_matrix/power_number_matrix_page.dart';
 
@@ -16,7 +17,7 @@ class StudyMenuPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: const Text('学習メニュー')),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: screenHorizontalPadding),
         child: SingleChildScrollView(
           child: Column(
             children: [

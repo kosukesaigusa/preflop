@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../model/entity/preflop.dart';
 import '../style/color.dart';
+import '../style/screen.dart';
 import '../style/typography.dart';
 
 /// プリフロップハンドレンジ表を選択するドロップダウン。
@@ -31,7 +32,7 @@ class PreflopHandRangeMatrixDropdown extends StatelessWidget {
     }
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: screenHorizontalPadding),
       decoration: BoxDecoration(
         color: AppColor.darkBlueGrey,
         borderRadius: BorderRadius.circular(12),

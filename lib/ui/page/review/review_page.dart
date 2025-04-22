@@ -7,6 +7,7 @@ import '../../../model/entity/preflop_hand_range_quiz.dart';
 import '../../../model/entity/quize_review_filter.dart';
 import '../../../model/logic/preflop_hand_range_quiz.dart';
 import '../../style/color.dart';
+import '../../style/screen.dart';
 import '../../style/typography.dart';
 import '../../util/quiz_review_filter.dart';
 import '../../widget/rank_display.dart';
@@ -31,7 +32,7 @@ class ReviewPage extends HookConsumerWidget {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: screenHorizontalPadding),
         child: CustomScrollView(
           slivers: [
             SliverPadding(

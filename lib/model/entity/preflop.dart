@@ -113,7 +113,7 @@ sealed class PreflopRank with _$PreflopRank {
   /// 表示テキストを取得する。
   String get displayText => switch (this) {
     RankedPreflopRank(:final rank) => rank.toString(),
-    FoldPreflopRank() => 'fold',
+    FoldPreflopRank() => 'F',
   };
 
   /// 説明文を取得する。

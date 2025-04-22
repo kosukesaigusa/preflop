@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import '../../../model/entity/power_number.dart';
 import '../../../model/entity/preflop.dart';
 import '../../style/color.dart';
+import '../../style/screen.dart';
 import '../../style/typography.dart';
 import '../../widget/markdown_list.dart';
 
@@ -31,7 +32,7 @@ class PowerNumberMatrixPage extends StatelessWidget {
       appBar: AppBar(title: const Text('パワーナンバー表')),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: screenHorizontalPadding),
           child: LayoutBuilder(
             builder: (context, constraints) {
               final cellSize = _calculateCellSize(constraints.maxWidth);

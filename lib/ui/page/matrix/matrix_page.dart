@@ -6,6 +6,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../../../model/entity/preflop.dart';
 import '../../../model/logic/preflop_hand_range_matrix.dart';
 import '../../style/color.dart';
+import '../../style/screen.dart';
 import '../../style/typography.dart';
 import '../../widget/preflop_hand_range_matrix_dropdown.dart';
 
@@ -38,7 +39,7 @@ class MatrixPage extends HookConsumerWidget {
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: screenHorizontalPadding),
           child: Column(
             spacing: 16,
             children: [
