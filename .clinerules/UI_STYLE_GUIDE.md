@@ -2,8 +2,6 @@
 
 このルールを参照したら「✅ UI スタイルガイドを確認しました」と返答します。
 
-このドキュメントは、`lib/ui/style/` ディレクトリ内のファイルの使用方法について説明します。
-
 ## 1. 色 (`lib/ui/style/color.dart`)
 
 * **目的:** アプリケーション全体で使用する色を定義します。
@@ -41,3 +39,7 @@ final double lineHeight = context.titleLargeLineHeight;
 * このディレクトリ内のファイル (`assets.gen.dart`, `fonts.gen.dart`) は `flutter_gen` によって自動生成されます。
 * `assets/` ディレクトリ内の画像やフォントへのタイプセーフなアクセスを提供します。
 * 手動で編集しないでください。アセットを追加・変更した場合は、`flutter pub run build_runner build` コマンドを実行して再生成してください。
+
+### 4. 余白
+
+* 余白のために `SizedBox` を利用する際は、代わりに gap パッケージの `Gap` を使用してください。
