@@ -86,91 +86,105 @@ class PreflopHandRangeMatrixSelector extends StatelessWidget {
   }
 
   /// ハンドレンジを選択するボトムシートを表示する。
-  Future<void> _showRangeSelectionSheet(BuildContext context) async {
-    await showModalBottomSheet<PreflopHandRangeMatrix>(
-      context: context,
-      backgroundColor: AppColor.darkBlueGrey,
-      shape: const RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
-      ),
-      builder: (context) {
-        return SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
+  Future<void> _showRangeSelectionSheet(BuildContext context) =>
+      showModalBottomSheet<PreflopHandRangeMatrix>(
+        context: context,
+        backgroundColor: AppColor.darkBlueGrey,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+        ),
+        builder:
+            (context) => Column(
               children: [
+                const Gap(16),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: screenHorizontalPadding,
-                    vertical: 8,
+                  padding: const EdgeInsets.only(
+                    left: screenHorizontalPadding,
+                    right: screenHorizontalPadding,
+                    top: 16,
                   ),
                   child: Text(
                     'ハンドレンジを選択',
                     style: context.titleLarge.copyWith(color: AppColor.lightGrey),
                   ),
                 ),
-                const Divider(color: AppColor.grey, height: 1),
-                Flexible(
-                  child: ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: availableRanges.length,
-                    separatorBuilder:
-                        (_, _) => const Divider(
-                          color: AppColor.grey,
-                          height: 1,
-                          indent: screenHorizontalPadding,
-                          endIndent: screenHorizontalPadding,
-                        ),
-                    itemBuilder: (context, index) {
-                      final matrix = availableRanges[index];
-                      final isSelected = matrix == selectedValue;
-                      return ListTile(
-                        contentPadding: const EdgeInsets.symmetric(
-                          horizontal: screenHorizontalPadding,
-                        ),
-                        title: Text(
-                          matrix.name,
-                          style: context.titleMedium.copyWith(
-                            color: isSelected ? AppColor.gold : AppColor.lightGrey,
-                            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                const Gap(16),
+                const Divider(height: 1),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Gap(16),
+                        for (final (index, matrix) in availableRanges.indexed) ...[
+                          _Item(
+                            matrix: matrix,
+                            isSelected: matrix == selectedValue,
+                            // タップされた選択肢を選択状態にして、ボトムシートを閉じる。
+                            onTap: () {
+                              onChanged(matrix);
+                              Navigator.pop(context);
+                            },
                           ),
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            for (final condition in matrix.conditions)
-                              MarkdownUnorderedList(
-                                children: [
-                                  MarkdownListItem(
-                                    child: Text(
-                                      condition,
-                                      style: context.bodyMedium.copyWith(color: AppColor.lightGrey),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                          ],
-                        ),
-                        // タップされた選択肢を選択状態にして、ボトムシートを閉じる。
-                        onTap: () {
-                          onChanged(matrix);
-                          Navigator.pop(context);
-                        },
-                        trailing: isSelected ? const Icon(Icons.check, color: AppColor.gold) : null,
-                      );
-                    },
+                          if (index < availableRanges.length - 1) const Divider(height: 1),
+                        ],
+                        const Gap(64),
+                      ],
+                    ),
                   ),
                 ),
               ],
             ),
-          ),
-        );
-      },
+      );
+}
+
+/// ハンドレンジを選択するボトムシートのアイテム。
+class _Item extends StatelessWidget {
+  /// ハンドレンジを選択するボトムシートのアイテムを作成する。
+  const _Item({required this.matrix, required this.isSelected, required this.onTap});
+
+  /// ハンドレンジ。
+  final PreflopHandRangeMatrix matrix;
+
+  /// 選択状態。
+  final bool isSelected;
+
+  /// タップされたときに呼び出されるコールバック。
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      contentPadding: const EdgeInsets.symmetric(horizontal: screenHorizontalPadding),
+      title: Text(
+        matrix.name,
+        style: context.titleMedium.copyWith(
+          color: isSelected ? AppColor.gold : AppColor.lightGrey,
+          fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+        ),
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+      ),
+      subtitle: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          for (final condition in matrix.conditions)
+            MarkdownUnorderedList(
+              children: [
+                MarkdownListItem(
+                  child: Text(
+                    condition,
+                    style: context.bodyMedium.copyWith(color: AppColor.lightGrey),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                ),
+              ],
+            ),
+        ],
+      ),
+      onTap: onTap,
+      trailing: isSelected ? const Icon(Icons.check, color: AppColor.gold) : null,
     );
   }
 }

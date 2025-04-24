@@ -99,6 +99,7 @@ Future<void> main() async {
                 ),
                 useMaterial3: true,
                 textTheme: appTextTheme,
+                dividerTheme: const DividerThemeData(color: AppColor.grey, thickness: 0),
               ),
               home: const QuizPage(),
               builder:
