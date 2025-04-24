@@ -1,4 +1,4 @@
-/// MTT（9 人）における Button オープンに対する BB のハンドレンジ。
+/// MTT（9 人）における BTN オープンに対する BB のハンドレンジ。
 const mttBbVsBtnOpen100bbPreflopHandRangeData = <String, dynamic>{
   'id': 'mtt-bb-vs-btn-open-100bb',
   'name': 'MTT: BB vs. BTN オープン（100BB）',
