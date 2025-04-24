@@ -10,6 +10,8 @@ alwaysApply: true
 
 ## コメント規約
 
+ソースコードを記述する返答をする際は必ず確認してください。
+
 [COMMENT_GUIDE.md](mdc:.clinerules/COMMENT_GUIDE.md)
 
 ## プロジェクト概要
@@ -17,5 +19,7 @@ alwaysApply: true
 [PROJECT_OVERVIEW.md](mdc:.clinerules/PROJECT_OVERVIEW.md)
 
 ## UI スタイルガイド
+
+UI の実装をする返答をする際は必ず確認してください。
 
 [UI_STYLE_GUIDE.md](mdc:.clinerules/UI_STYLE_GUIDE.md)
