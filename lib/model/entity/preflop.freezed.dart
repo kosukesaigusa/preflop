@@ -19,6 +19,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$PreflopHandRangeMatrix {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  List<String> get conditions => throw _privateConstructorUsedError;
   List<PreflopRank> get preflopRanks => throw _privateConstructorUsedError;
   Map<PreflopHand, PreflopRank> get rangeData =>
       throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $PreflopHandRangeMatrixCopyWith<$Res> {
   $Res call({
     String id,
     String name,
+    List<String> conditions,
     List<PreflopRank> preflopRanks,
     Map<PreflopHand, PreflopRank> rangeData,
   });
@@ -65,6 +67,7 @@ class _$PreflopHandRangeMatrixCopyWithImpl<
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? conditions = null,
     Object? preflopRanks = null,
     Object? rangeData = null,
   }) {
@@ -80,6 +83,11 @@ class _$PreflopHandRangeMatrixCopyWithImpl<
                     ? _value.name
                     : name // ignore: cast_nullable_to_non_nullable
                         as String,
+            conditions:
+                null == conditions
+                    ? _value.conditions
+                    : conditions // ignore: cast_nullable_to_non_nullable
+                        as List<String>,
             preflopRanks:
                 null == preflopRanks
                     ? _value.preflopRanks
@@ -108,6 +116,7 @@ abstract class _$$PreflopHandRangeImplCopyWith<$Res>
   $Res call({
     String id,
     String name,
+    List<String> conditions,
     List<PreflopRank> preflopRanks,
     Map<PreflopHand, PreflopRank> rangeData,
   });
@@ -129,6 +138,7 @@ class __$$PreflopHandRangeImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? conditions = null,
     Object? preflopRanks = null,
     Object? rangeData = null,
   }) {
@@ -144,6 +154,11 @@ class __$$PreflopHandRangeImplCopyWithImpl<$Res>
                 ? _value.name
                 : name // ignore: cast_nullable_to_non_nullable
                     as String,
+        conditions:
+            null == conditions
+                ? _value._conditions
+                : conditions // ignore: cast_nullable_to_non_nullable
+                    as List<String>,
         preflopRanks:
             null == preflopRanks
                 ? _value._preflopRanks
@@ -165,9 +180,11 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
   const _$PreflopHandRangeImpl({
     required this.id,
     required this.name,
+    required final List<String> conditions,
     required final List<PreflopRank> preflopRanks,
     required final Map<PreflopHand, PreflopRank> rangeData,
-  }) : _preflopRanks = preflopRanks,
+  }) : _conditions = conditions,
+       _preflopRanks = preflopRanks,
        _rangeData = rangeData,
        super._();
 
@@ -175,6 +192,14 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
   final String id;
   @override
   final String name;
+  final List<String> _conditions;
+  @override
+  List<String> get conditions {
+    if (_conditions is EqualUnmodifiableListView) return _conditions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_conditions);
+  }
+
   final List<PreflopRank> _preflopRanks;
   @override
   List<PreflopRank> get preflopRanks {
@@ -193,7 +218,7 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
 
   @override
   String toString() {
-    return 'PreflopHandRangeMatrix(id: $id, name: $name, preflopRanks: $preflopRanks, rangeData: $rangeData)';
+    return 'PreflopHandRangeMatrix(id: $id, name: $name, conditions: $conditions, preflopRanks: $preflopRanks, rangeData: $rangeData)';
   }
 
   @override
@@ -203,6 +228,10 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
             other is _$PreflopHandRangeImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            const DeepCollectionEquality().equals(
+              other._conditions,
+              _conditions,
+            ) &&
             const DeepCollectionEquality().equals(
               other._preflopRanks,
               _preflopRanks,
@@ -218,6 +247,7 @@ class _$PreflopHandRangeImpl extends _PreflopHandRange {
     runtimeType,
     id,
     name,
+    const DeepCollectionEquality().hash(_conditions),
     const DeepCollectionEquality().hash(_preflopRanks),
     const DeepCollectionEquality().hash(_rangeData),
   );
@@ -238,6 +268,7 @@ abstract class _PreflopHandRange extends PreflopHandRangeMatrix {
   const factory _PreflopHandRange({
     required final String id,
     required final String name,
+    required final List<String> conditions,
     required final List<PreflopRank> preflopRanks,
     required final Map<PreflopHand, PreflopRank> rangeData,
   }) = _$PreflopHandRangeImpl;
@@ -247,6 +278,8 @@ abstract class _PreflopHandRange extends PreflopHandRangeMatrix {
   String get id;
   @override
   String get name;
+  @override
+  List<String> get conditions;
   @override
   List<PreflopRank> get preflopRanks;
   @override

@@ -8,7 +8,7 @@ import '../../../model/logic/preflop_hand_range_matrix.dart';
 import '../../style/color.dart';
 import '../../style/screen.dart';
 import '../../style/typography.dart';
-import '../../widget/preflop_hand_range_matrix_dropdown.dart';
+import '../../widget/preflop_hand_range_matrix_selector.dart';
 
 /// マトリックスを表示するページ。
 class MatrixPage extends HookConsumerWidget {
@@ -43,8 +43,8 @@ class MatrixPage extends HookConsumerWidget {
           child: Column(
             spacing: 16,
             children: [
-              // ドロップダウンでハンドレンジを選択する。
-              PreflopHandRangeMatrixDropdown(
+              // ハンドレンジを選択する UI を表示する。
+              PreflopHandRangeMatrixSelector(
                 availableRanges: availableRanges,
                 selectedValue: selectedRange.value,
                 onChanged: (newValue) {

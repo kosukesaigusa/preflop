@@ -14,7 +14,7 @@ import '../../style/screen.dart';
 import '../../style/typography.dart';
 import '../../util/card.dart';
 import '../../widget/application_info_text.dart';
-import '../../widget/preflop_hand_range_matrix_dropdown.dart';
+import '../../widget/preflop_hand_range_matrix_selector.dart';
 import '../../widget/rank_display.dart';
 import '../matrix/matrix_page.dart';
 import '../review/review_page.dart';
@@ -128,7 +128,7 @@ class QuizPage extends HookConsumerWidget {
                     spacing: 20,
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      PreflopHandRangeMatrixDropdown(
+                      PreflopHandRangeMatrixSelector(
                         availableRanges: availableRanges,
                         selectedValue: selectedRange.value,
                         onChanged: (newValue) {

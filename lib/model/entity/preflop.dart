@@ -9,6 +9,7 @@ abstract class PreflopHandRangeMatrix with _$PreflopHandRangeMatrix {
   const factory PreflopHandRangeMatrix({
     required String id,
     required String name,
+    required List<String> conditions,
     required List<PreflopRank> preflopRanks,
     required Map<PreflopHand, PreflopRank> rangeData,
   }) = _PreflopHandRange;
@@ -21,6 +22,7 @@ abstract class PreflopHandRangeMatrix with _$PreflopHandRangeMatrix {
   /// {
   ///   "id": "ハンドレンジ表の ID",
   ///   "name": "ハンドレンジ表の名前",
+  ///   "conditions": ["条件1", "条件2", ...],
   ///   "ranks": [
   ///     {
   ///       "rank": 1,
@@ -46,6 +48,7 @@ abstract class PreflopHandRangeMatrix with _$PreflopHandRangeMatrix {
   factory PreflopHandRangeMatrix.fromJson(Map<String, dynamic> json) {
     final id = json['id'] as String;
     final name = json['name'] as String? ?? 'ハンドレンジ表';
+    final conditions = json['conditions'] as List<String>? ?? [];
     final preflopRanks =
         (json['ranks'] as List<dynamic>)
             .map((e) => PreflopRank.fromJson(e as Map<String, dynamic>))
@@ -54,6 +57,7 @@ abstract class PreflopHandRangeMatrix with _$PreflopHandRangeMatrix {
     return PreflopHandRangeMatrix(
       id: id,
       name: name,
+      conditions: conditions,
       preflopRanks: preflopRanks,
       rangeData: handRanksMap.map(
         (key, value) =>
