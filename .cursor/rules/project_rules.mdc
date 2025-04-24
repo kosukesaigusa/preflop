@@ -1,0 +1,21 @@
+---
+description: .clinerules ディレクトリ内のルールを参照するプロジェクト固有のルールです。
+globs: 
+alwaysApply: true
+---
+
+# プロジェクトルール
+
+このファイルは `.clinerules` ディレクトリで定義されたルールを参照します。
+
+## コメント規約
+
+[COMMENT_GUIDE.md](mdc:.clinerules/COMMENT_GUIDE.md)
+
+## プロジェクト概要
+
+[PROJECT_OVERVIEW.md](mdc:.clinerules/PROJECT_OVERVIEW.md)
+
+## UI スタイルガイド
+
+[UI_STYLE_GUIDE.md](mdc:.clinerules/UI_STYLE_GUIDE.md)

@@ -1,5 +1,7 @@
 # コメント規約
 
+このルールを参照したら「✅ コメント規約を参照しました」と返答します。
+
 ## 1. 基本方針
 
 * [Effective Dart: Documentation](https://dart.dev/effective-dart/documentation) の作法に従うことを目指します。
