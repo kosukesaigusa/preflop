@@ -7,6 +7,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
+import 'model/logic/preflop_hand_range_matrix.dart';
+import 'model/service/shared_preferences_service.dart';
 import 'model/util/app_last_updated_at.dart';
 import 'model/util/logger.dart';
 import 'model/util/package_info.dart';
@@ -35,13 +37,33 @@ Future<void> main() async {
     logger.d('lastUpdated: $lastUpdatedDateTime');
   }
 
+  // SharedPreferences の初期化を行う。
+  final sharedPreferencesService = getSharedPreferencesService();
+
+  // ProviderContainer を作成する。
+  final container = ProviderContainer(
+    observers: [_ProviderErrorLoggerObserver()],
+    // NOTE: アプリのエントリポイントで上書きするべき Provider を列挙する。
+    // 管理の目的でアルファベット順で列挙することにしている。
+    overrides: [
+      // アプリの更新日時を上書きする。
+      appLastUpdatedAtProvider.overrideWith((_) => lastUpdatedDateTime),
+      // アプリのパッケージ情報を上書きする。
+      packageInfoProvider.overrideWith((_) => packageInfo),
+      // SharedPreferencesService を上書きする。
+      sharedPreferencesServiceProvider.overrideWith((_) => sharedPreferencesService),
+    ],
+  );
+
+  // 前回、最後に選択されたプリフロップハンドレンジ表を取得を予め行っておく。
+  final initialPreflopHandRangeMatrix = await container.read(
+    initialPreflopHandRangeMatrixProvider.future,
+  );
+  logger.d('initialPreflopHandRangeMatrix ID: ${initialPreflopHandRangeMatrix?.id}');
+
   runApp(
-    ProviderScope(
-      observers: [_ProviderErrorLoggerObserver()],
-      overrides: [
-        packageInfoProvider.overrideWith((_) => packageInfo),
-        appLastUpdatedAtProvider.overrideWith((_) => lastUpdatedDateTime),
-      ],
+    UncontrolledProviderScope(
+      container: container,
       child: DevicePreview(
         // ignore: avoid_redundant_argument_values
         enabled: kDebugMode,

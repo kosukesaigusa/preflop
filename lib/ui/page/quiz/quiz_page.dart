@@ -7,6 +7,7 @@ import '../../../model/entity/hand.dart';
 import '../../../model/entity/preflop.dart';
 import '../../../model/entity/preflop_hand_range_quiz.dart';
 import '../../../model/entity/quize_review_filter.dart';
+import '../../../model/logic/last_selected_preflop_hand_range_matrix_use_case.dart';
 import '../../../model/logic/preflop_hand_range_matrix.dart';
 import '../../../model/logic/preflop_hand_range_quiz.dart';
 import '../../style/color.dart';
@@ -42,8 +43,11 @@ class QuizPage extends HookConsumerWidget {
     // 利用可能なハンドレンジ一覧を取得する。
     final availableRanges = ref.watch(availablePreflopHandRangeMatricesProvider);
 
-    // 選択中のハンドレンジをローカル状態で管理する。
-    final selectedRange = useState<PreflopHandRangeMatrix>(availableRanges.first);
+    // 選択中のハンドレンジを管理する。
+    final selectedRange = useState<PreflopHandRangeMatrix>(
+      // 前回最後に選択されたハンドレンジ表が存在する場合はそれを選択状態にする。
+      ref.read(eagerlyInitializedSelectedPreflopHandRangeMatrixProvider) ?? availableRanges.first,
+    );
 
     return Scaffold(
       floatingActionButton: Row(
@@ -134,6 +138,10 @@ class QuizPage extends HookConsumerWidget {
                         onChanged: (newValue) {
                           if (newValue != null) {
                             selectedRange.value = newValue;
+                            // 最後に選択されたハンドレンジ表を保存する。
+                            ref
+                                .read(saveLastSelectedPreflopHandRangeMatrixUseCaseProvider)
+                                .invoke(newValue);
                           }
                         },
                       ),

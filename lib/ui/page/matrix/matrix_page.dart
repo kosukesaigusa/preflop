@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
 import '../../../model/entity/preflop.dart';
+import '../../../model/logic/last_selected_preflop_hand_range_matrix_use_case.dart';
 import '../../../model/logic/preflop_hand_range_matrix.dart';
 import '../../style/color.dart';
 import '../../style/screen.dart';
@@ -32,7 +33,8 @@ class MatrixPage extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     // 利用可能なハンドレンジ一覧を取得する。
     final availableRanges = ref.watch(availablePreflopHandRangeMatricesProvider);
-    // 選択中のハンドレンジをローカル状態で管理する。初期値は必須引数から取得。
+
+    // 選択中のハンドレンジを管理する。
     final selectedRange = useState<PreflopHandRangeMatrix>(initialSelectedMatrix);
 
     return Scaffold(
@@ -50,6 +52,10 @@ class MatrixPage extends HookConsumerWidget {
                 onChanged: (newValue) {
                   if (newValue != null) {
                     selectedRange.value = newValue;
+                    // 最後に選択されたハンドレンジ表を保存する。
+                    ref
+                        .read(saveLastSelectedPreflopHandRangeMatrixUseCaseProvider)
+                        .invoke(newValue);
                   }
                 },
               ),
